@@ -4,37 +4,21 @@
 % modified by Dylan Beaudette, 2006,2010
 % modified  and source uploaded to github by Alex Mandel, 2014
 % Source code available at http://github.com/wildintellect/ucdthesis
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	Compiling Instructions:
-%	compile w/ LaTeX
-%	compile w/ bibtex
-%	compile w/ pdflatexmk
-%	compile w/ bibtex
-%	compile w/ pdflatexmk
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	TO-DO
-%	track down missing refs
-%	fix quotes and other stuff in IBE
-%	write abstract (steal from Fitch?  or DDIG?)
-%	acknowledgements (maybe remove from chapters?)
-
-\documentclass[11pt]{ucdthesis}
+% \documentclass[11pt]{ucdthesis}
 %\documentclass[10pt,twoside,final]{ucdthesis}
 % \documentclass[10pt,twoside,draft]{ucdthesis}
 % \documentclass[10pt,oneside,final]{ucdthesis}
 
 % TODO: this makes strange things happen in the header...
 % this is the version that grad studies wants
-% \documentclass[11pt,oneside,final]{ucdthesis}
+\documentclass[11pt,oneside,draft]{ucdthesis} %%SRM compiles faster as draft
+%\documentclass[11pt,oneside,final]{ucdthesis}
 
 % when we are giving people drafts, use more of the page:
-% \usepackage[letterpaper,left=0.75in,right=0.75in,top=1.25in,bottom=0.5in]{geometry}
+\usepackage[letterpaper,left=1in,right=1in,top=1.6in,bottom=1in]{geometry}
 % need this for the \foreach command
-\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{tikz}
-\usepackage{longtable}
+\usepackage[utf8]{inputenx} %make umlauts ok again
 % Turn on single spacing with \ssp.
 % Turn on double spacing with \dsp.
 % By default, your dissertation is double spaced, as is required by UCD.
@@ -70,9 +54,22 @@
 %    \end{Verbatim}
 % \usepackage{fancyvrb}
 
+%multiple graphs and subcaptions
+\usepackage{subcaption}
+
+%chemistry stuffffff
+\usepackage[version=4]{mhchem}
+\usepackage{wasysym}
+
 
 % more flexible math support
 \usepackage{amsmath}
+
+%allow for sideways figures
+\usepackage{rotating}
+
+%allow for math within paragraph
+\usepackage{siunitx}
 
 % allow some pages to be landscape
 \usepackage{lscape}
@@ -80,11 +77,19 @@
 % more flexible definition of table environments
 \usepackage{ctable}
 
+%adding authors and affiliations to documents
+\usepackage{authblk}
+
 %need this for \includegraphics{}
 \usepackage{graphicx}
 
 %enable the listings package specifically for including programming code
 \usepackage{listings}
+
+
+
+%symbols SRM -- makes 'Doctor of Philosophy' not appear on first page 
+%%%\usepackage{gensymb}
 
 %Special hack to make code listings not break pages, fyi they must be short then
 \usepackage{float}
@@ -101,15 +106,23 @@
 %use this to put figures side by side
 %\usepackage{subfigure}
 
+
+% nice looking, parenthetical references
+% \usepackage[uniquename=false,uniquelist=false,sorting=nyt,natbib=true, citestyle=authoryear, bibstyle=mla, refsection =chapter,backend=biber]{biblatex}
+\usepackage[%uniquename=false,uniquelist=false,
+backend=biber,style=apa,
+% citestyle=authoryear,bibstyle=numeric,sorting=nty,
+defernumbers=true,refsection=chapter,natbib=true]{biblatex}
+\DeclareLanguageMapping{english}{american-apa}
+
+\addbibresource{proposal.bib}
+
  % PDF links --- > breaks with some bibliography entries
 %\usepackage{hyperref}
 
-% nice looking, parenthetical references
-\usepackage[sorting=nyt,natbib=true,citestyle=authoryear,bibstyle=authoryear,maxnames=3,refsection
-=chapter]{biblatex}
 %\usepackage{chapterbib} % incompatible with biblatex
-\bibliography{proposal}
-\defbibheading{bibliography}{%
+
+\defbibheading{bibliography}{
 	\section{References}
 	}
 	
@@ -131,7 +144,7 @@
 % http://www.kronto.org/thesis/tips/custom-captions.html
 % http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
 % does this have any effect?
-%\usepackage{caption}
+\usepackage{caption}
 % \renewcommand{\captionfont}{\small\itshape}
 %
 \usepackage[hypcap,font=singlespacing]{caption}
@@ -156,6 +169,46 @@
 \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
 
 
+%Use an additional package to make bookmarks point to the top to tables, figures and listings
+%\usepackage[all]{hypcap}
+
+%Alex's customizations
+\usepackage{indentfirst} %Indents first paragraph of chapter
+\usepackage{datatool} %Allows import of csv and other data-tables
+\usepackage{varwidth}
+\usepackage{color}
+\usepackage{rotating}
+\AtEveryBibitem{\clearfield{month}} %Cleaner references without month being printed
+
+
+%%%BJB ADDED packages
+\usepackage[]{makecell}
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{url}
+\usepackage[export]{adjustbox} %easily center figures
+\DeclareRobustCommand{\VAN}[3]{#2} % set up van for citation
+
+%%%SRM added packages
+\usepackage{tabularx} %better tables
+\usepackage{booktabs,caption}
+\usepackage[flushleft]{threeparttable}
+\usepackage{changepage}
+\usepackage{lscape}
+\usepackage{amsmath}
+
+% add counter for subsub sections
+\setcounter{secnumdepth}{3}
+
+%\usepackage{appendix}
+
+
+%for supp table of innovations
+\usepackage{longtable} %supplemental table
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}} %centers longtable
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}} %right justifies longtable
+
 % PDF formatting options, indexing, hyperlinking, with control over link style
 %Set PDF Metadata
 \usepackage[pdftex,
@@ -166,6 +219,7 @@
             %pdfproducer={Latex with hyperref, or other system},
             %pdfcreator={pdflatex, or other tool}
             ]{hyperref}
+
 \hypersetup{
 	%driver=pdftex,
 	colorlinks=true,
@@ -175,20 +229,8 @@
     filecolor=magenta
 }
 
-%Use an additional package to make bookmarks point to the top to tables, figures and listings
-\usepackage[all]{hypcap}
-
-%Alex's customizations
-\usepackage{indentfirst} %Indents first paragraph of chapter
-\usepackage{datatool} %Allows import of csv and other data-tables
-\usepackage{varwidth}
-\usepackage{color}
-\usepackage{rotating}
-\AtEveryBibitem{\clearfield{month}} %Cleaner references without month being printed
-
 %%% Document Portion:
 \begin{document}
-
 
 %
 %% Title, Front Matter, and Abstract:
@@ -209,23 +251,46 @@
 % TODO: this is only for draft copies !!
 % start line number printing
 %
-% \linenumbers
+%\linenumbers
 
+%\nocite{*}
+% chapter 0
+%\chapter{Real Title Here}
+%\input{introduction} %This looks for introduction.tex
+%\DeclareRobustCommand{\VAN}[3]{#3}
+%\printbibliography[heading=bibliography]
 
-
-% chapter 1
-\chapter{Disentangling the effects of geographic and ecological isolation on genetic differentiation}
-\input{chapter1} %This looks for chapter1.tex
+% chapter 1 introduction
+%\chapter{Real Title Here}
+%\input{chapter1_introduction} %This looks for chapter1.tex
+%\printbibliography[heading=bibliography]
 
 % chapter 2
-\chapter{Isolation by Environment}
+%\chapter{Real Title Here}
 \input{chapter2} %This looks for chapter2.tex
+\input{appendixCh1}
+\printbibliography[heading=bibliography]
 
 % chapter 3
-\chapter{A Spatial Framework for Understanding Population Structure and Admixture}
-\input{chapter3} %This looks for chapter3.tex
+%\chapter{Real Title Here}
+%\input{chapter3} %This looks for chapter3.tex
+%\printbibliography[heading=bibliography]
 
-\part*{\addcontentsline{toc}{part}{Bibliography}Bibliography}
+% chapter 4
+%\chapter{Real Title Here}
+%\input{chapter4} %This looks for chapter4.tex
+%\printbibliography[heading=bibliography]
+
+% chapter 5
+%\chapter{Real Title Here}
+%\input{chapter5} %This looks for conclusion.tex
+%\printbibliography[heading=bibliography]
+
+% chapter 6 conclusions
+%\chapter{Real Title Here}
+%\input{chapter6_conclusion} %This looks for conclusion.tex
+%\printbibliography[heading=bibliography]
+
 % note that the 'plainnat' style does not allow URL's in the bibtex entry
 %
 % some ideas here:
@@ -237,17 +302,32 @@
 
 
 % To enable this it will need to be added to toc so it's not in a chapter
-\printbibliography[heading=none]
+%\printbibliography[heading=bibliography]
+
 % the appendix:
 % there are several sections, that don't really fit into the main chapters
 %
-%\part*{\addcontentsline{toc}{part}{Appendices}Appendices}
+\part*{\addcontentsline{toc}{part}{Appendices}Appendices}
+  
 %\appendix
+\renewcommand{\thepart}{\Alph{part}}
+\renewcommand{\thesection}{\Alph{section}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand\thefigure{\thesection.\arabic{figure}}
+\renewcommand\thetable{\thesection.\arabic{table}}
+\setcounter{figure}{0}    
+\setcounter{table}{0}    
+\setcounter{section}{0}
+
+
+
+%\input{appendixCh1}
+%\printbibliography[heading=bibliography]
+
+%\input{appendixCh3} %turned off SRM 05172020 to help compile quickly
+%\printbibliography[heading=bibliography]
 
 % reset page style to fancy
 %\pagestyle{fancyplain}
-
-% \input{appendix}
-
 
 \end{document}
