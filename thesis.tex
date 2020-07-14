@@ -115,7 +115,7 @@ backend=biber,style=apa,
 defernumbers=true,refsection=chapter,natbib=true]{biblatex}
 \DeclareLanguageMapping{english}{american-apa}
 
-\addbibresource{proposal.bib}
+\addbibresource{ref.bib}
 
  % PDF links --- > breaks with some bibliography entries
 %\usepackage{hyperref}
@@ -192,7 +192,8 @@ defernumbers=true,refsection=chapter,natbib=true]{biblatex}
 %%%SRM added packages
 \usepackage{tabularx} %better tables
 \usepackage{booktabs,caption}
-\usepackage[flushleft]{threeparttable}
+\usepackage{threeparttable}
+\usepackage{array, multirow}
 \usepackage{changepage}
 \usepackage{lscape}
 \usepackage{amsmath}
@@ -267,29 +268,27 @@ defernumbers=true,refsection=chapter,natbib=true]{biblatex}
 
 % chapter 2
 %\chapter{Real Title Here}
-\input{chapter2} %This looks for chapter2.tex
-\input{appendixCh1}
-\printbibliography[heading=bibliography]
+%\input{chapter2} %This looks for chapter2.tex
+%\input{appendix_ch2}
+%\printbibliography[heading=bibliography]
 
 % chapter 3
 %\chapter{Real Title Here}
 %\input{chapter3} %This looks for chapter3.tex
+%\input{appendi_ch3}
 %\printbibliography[heading=bibliography]
 
 % chapter 4
 %\chapter{Real Title Here}
 %\input{chapter4} %This looks for chapter4.tex
+%\input{appendix_ch4}
 %\printbibliography[heading=bibliography]
 
 % chapter 5
 %\chapter{Real Title Here}
-%\input{chapter5} %This looks for conclusion.tex
-%\printbibliography[heading=bibliography]
+\input{chapter5_conclusion} %This looks for chapter5_conclusion.tex
+\printbibliography[heading=bibliography]
 
-% chapter 6 conclusions
-%\chapter{Real Title Here}
-%\input{chapter6_conclusion} %This looks for conclusion.tex
-%\printbibliography[heading=bibliography]
 
 % note that the 'plainnat' style does not allow URL's in the bibtex entry
 %
@@ -307,17 +306,17 @@ defernumbers=true,refsection=chapter,natbib=true]{biblatex}
 % the appendix:
 % there are several sections, that don't really fit into the main chapters
 %
-\part*{\addcontentsline{toc}{part}{Appendices}Appendices}
+%\part*{\addcontentsline{toc}{part}{Appendices}Appendices}
   
 %\appendix
-\renewcommand{\thepart}{\Alph{part}}
-\renewcommand{\thesection}{\Alph{section}}
-\renewcommand{\thesubsection}{\arabic{subsection}}
-\renewcommand\thefigure{\thesection.\arabic{figure}}
-\renewcommand\thetable{\thesection.\arabic{table}}
-\setcounter{figure}{0}    
-\setcounter{table}{0}    
-\setcounter{section}{0}
+%\renewcommand{\thepart}{\Alph{part}}
+%\renewcommand{\thesection}{\Alph{section}}
+%\renewcommand{\thesubsection}{\arabic{subsection}}
+%\renewcommand\thefigure{\thesection.\arabic{figure}}
+%\renewcommand\thetable{\thesection.\arabic{table}}
+%\setcounter{figure}{0}    
+%\setcounter{table}{0}    
+%\setcounter{section}{0}
 
 
 

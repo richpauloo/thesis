@@ -2070,13 +2070,13 @@
   <!-- CITATION DATA -->
   <!-- SECTION 0 -->
   <bcf:bibdata section="0">
-    <bcf:datasource type="file" datatype="bibtex">proposal.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
   </bcf:section>
   <!-- SECTION 1 -->
   <bcf:bibdata section="1">
-    <bcf:datasource type="file" datatype="bibtex">proposal.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="1">
   </bcf:section>
@@ -2085,7 +2085,7 @@
   </bcf:section>
   <!-- SECTION 2 -->
   <bcf:bibdata section="2">
-    <bcf:datasource type="file" datatype="bibtex">proposal.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="2">
   </bcf:section>
@@ -2094,7 +2094,7 @@
   </bcf:section>
   <!-- SECTION 3 -->
   <bcf:bibdata section="3">
-    <bcf:datasource type="file" datatype="bibtex">proposal.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="3">
   </bcf:section>
@@ -2103,7 +2103,7 @@
   </bcf:section>
   <!-- SECTION 4 -->
   <bcf:bibdata section="4">
-    <bcf:datasource type="file" datatype="bibtex">proposal.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="4">
   </bcf:section>
@@ -2112,134 +2112,18 @@
   </bcf:section>
   <!-- SECTION 5 -->
   <bcf:bibdata section="5">
-    <bcf:datasource type="file" datatype="bibtex">proposal.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">ref.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="5">
-    <bcf:citekey order="1">uscensus2017</bcf:citekey>
-    <bcf:citekey order="2">Dieter2018</bcf:citekey>
-    <bcf:citekey order="3">Harter2003</bcf:citekey>
-    <bcf:citekey order="4">oswcr</bcf:citekey>
-    <bcf:citekey order="5">theis1935relation</bcf:citekey>
-    <bcf:citekey order="5">theis1940source</bcf:citekey>
-    <bcf:citekey order="5">sophocleous2000safe</bcf:citekey>
-    <bcf:citekey order="5">Greene2018</bcf:citekey>
-    <bcf:citekey order="5">Perrone2019</bcf:citekey>
-    <bcf:citekey order="6">Cismowski2006</bcf:citekey>
-    <bcf:citekey order="6">Bertoldi1991</bcf:citekey>
-    <bcf:citekey order="7">Harter2012</bcf:citekey>
-    <bcf:citekey order="7">Balazs2011</bcf:citekey>
-    <bcf:citekey order="7">Ransom2017</bcf:citekey>
-    <bcf:citekey order="8">Welch2000</bcf:citekey>
-    <bcf:citekey order="8">Ahuja2008</bcf:citekey>
-    <bcf:citekey order="9">Jurgens2008</bcf:citekey>
-    <bcf:citekey order="9">Fujii1995</bcf:citekey>
-    <bcf:citekey order="10">Robertson1991</bcf:citekey>
-    <bcf:citekey order="10">Ellis2002</bcf:citekey>
-    <bcf:citekey order="11">Hanak2011</bcf:citekey>
-    <bcf:citekey order="11">Medellin-azuara2016</bcf:citekey>
-    <bcf:citekey order="12">observedDW</bcf:citekey>
-    <bcf:citekey order="13">Mitchell2017</bcf:citekey>
-    <bcf:citekey order="13">Feinstein2017</bcf:citekey>
-    <bcf:citekey order="14">Johnson2015</bcf:citekey>
-    <bcf:citekey order="14">Johnson2017</bcf:citekey>
-    <bcf:citekey order="15">oswcr</bcf:citekey>
-    <bcf:citekey order="16">Perrone2017</bcf:citekey>
-    <bcf:citekey order="17">Perrone2019</bcf:citekey>
-    <bcf:citekey order="18">Gailey2019</bcf:citekey>
-    <bcf:citekey order="19">Famiglietti2014</bcf:citekey>
-    <bcf:citekey order="19">wada2010global</bcf:citekey>
-    <bcf:citekey order="19">doll2012impact</bcf:citekey>
-    <bcf:citekey order="19">siebert2010groundwater</bcf:citekey>
-    <bcf:citekey order="20">Rhoades2018</bcf:citekey>
-    <bcf:citekey order="21">Swain2018</bcf:citekey>
-    <bcf:citekey order="22">Diffenbaugh2015</bcf:citekey>
-    <bcf:citekey order="22">Cook2015</bcf:citekey>
-    <bcf:citekey order="23">Tebaldi2006</bcf:citekey>
-    <bcf:citekey order="23">Lobell2011</bcf:citekey>
-    <bcf:citekey order="24">SGMA</bcf:citekey>
-    <bcf:citekey order="25">Scanlon2012</bcf:citekey>
-    <bcf:citekey order="25">Faunted.2009</bcf:citekey>
-    <bcf:citekey order="25">Hanak2011</bcf:citekey>
-    <bcf:citekey order="26">Brush2013</bcf:citekey>
-    <bcf:citekey order="27">Brush2013</bcf:citekey>
-    <bcf:citekey order="27">Faunted.2009</bcf:citekey>
-    <bcf:citekey order="28">Lund2018</bcf:citekey>
-    <bcf:citekey order="28">Feinstein2017</bcf:citekey>
-    <bcf:citekey order="28">Mount2018</bcf:citekey>
-    <bcf:citekey order="29">Faunted.2009</bcf:citekey>
-    <bcf:citekey order="30">Hanak2019</bcf:citekey>
-    <bcf:citekey order="31">Scanlon2012</bcf:citekey>
-    <bcf:citekey order="31">Xiao2017</bcf:citekey>
-    <bcf:citekey order="32">Hanak2011</bcf:citekey>
-    <bcf:citekey order="33">dwrgwl2017</bcf:citekey>
-    <bcf:citekey order="34">oswcr</bcf:citekey>
-    <bcf:citekey order="35">gwl</bcf:citekey>
-    <bcf:citekey order="36">observedDW</bcf:citekey>
-    <bcf:citekey order="37">Pauloo2019</bcf:citekey>
-    <bcf:citekey order="38">Tullis1989</bcf:citekey>
-    <bcf:citekey order="38">Helweg1983</bcf:citekey>
-    <bcf:citekey order="39">gwl</bcf:citekey>
-    <bcf:citekey order="40">DeutschC.V.andJournel1992</bcf:citekey>
-    <bcf:citekey order="40">Varouchakis2012</bcf:citekey>
-    <bcf:citekey order="41">Laurent1963</bcf:citekey>
-    <bcf:citekey order="41">JournelA.G.Huijbregts1978</bcf:citekey>
-    <bcf:citekey order="42">stoyan1994fractals</bcf:citekey>
-    <bcf:citekey order="43">us2009manual</bcf:citekey>
-    <bcf:citekey order="44">Brush2013</bcf:citekey>
-    <bcf:citekey order="44">Faunted.2009</bcf:citekey>
-    <bcf:citekey order="45">Hanak2011</bcf:citekey>
-    <bcf:citekey order="45">Medellin-azuara2016</bcf:citekey>
-    <bcf:citekey order="46">Perrone2017</bcf:citekey>
-    <bcf:citekey order="46">Feinstein2017</bcf:citekey>
-    <bcf:citekey order="47">Gailey2019</bcf:citekey>
-    <bcf:citekey order="48">Hanak2019</bcf:citekey>
-    <bcf:citekey order="48">Gailey2019</bcf:citekey>
-    <bcf:citekey order="49">theis1935relation</bcf:citekey>
-    <bcf:citekey order="50">dwrgwl2017</bcf:citekey>
-    <bcf:citekey order="51">Hanak2019</bcf:citekey>
-    <bcf:citekey order="52">Kocis2017</bcf:citekey>
-    <bcf:citekey order="53">Dahlke2018</bcf:citekey>
-    <bcf:citekey order="54">ayuso2011quantifying</bcf:citekey>
-    <bcf:citekey order="55">Xanke2017</bcf:citekey>
-    <bcf:citekey order="56">Maples2019</bcf:citekey>
-    <bcf:citekey order="57">Hanak2019</bcf:citekey>
-    <bcf:citekey order="58">Gailey2019</bcf:citekey>
-    <bcf:citekey order="59">Perrone2019</bcf:citekey>
-    <bcf:citekey order="60">gailey2017inactive</bcf:citekey>
-    <bcf:citekey order="61">Famiglietti2014</bcf:citekey>
-    <bcf:citekey order="62">London2018</bcf:citekey>
-    <bcf:citekey order="63">Gailey2019</bcf:citekey>
-    <bcf:citekey order="63">Perrone2017</bcf:citekey>
-    <bcf:citekey order="63">OSullivan2010</bcf:citekey>
-    <bcf:citekey order="63">JournelA.G.Huijbregts1978</bcf:citekey>
-    <bcf:citekey order="64">Harbaugh2000</bcf:citekey>
-    <bcf:citekey order="65">Brush2013</bcf:citekey>
-    <bcf:citekey order="66">Faunted.2009</bcf:citekey>
-    <bcf:citekey order="67">Medellin-azuara2016</bcf:citekey>
-    <bcf:citekey order="68">Hanak2011</bcf:citekey>
-    <bcf:citekey order="69">Diffenbaugh2015</bcf:citekey>
-    <bcf:citekey order="69">Cook2015</bcf:citekey>
-    <bcf:citekey order="69">Swain2018</bcf:citekey>
-    <bcf:citekey order="69">Rhoades2018</bcf:citekey>
-    <bcf:citekey order="69">VanLoon2016</bcf:citekey>
-    <bcf:citekey order="70">Hanak2011</bcf:citekey>
-    <bcf:citekey order="71">Tullis1989</bcf:citekey>
-    <bcf:citekey order="72">gwl</bcf:citekey>
-    <bcf:citekey order="73">Stedinger1980</bcf:citekey>
-    <bcf:citekey order="74">DeutschC.V.andJournel1992</bcf:citekey>
-    <bcf:citekey order="74">Varouchakis2012</bcf:citekey>
-    <bcf:citekey order="75">Laurent1963</bcf:citekey>
-    <bcf:citekey order="75">JournelA.G.Huijbregts1978</bcf:citekey>
-    <bcf:citekey order="76">cadwr2017</bcf:citekey>
-    <bcf:citekey order="77">cadwr2017</bcf:citekey>
-    <bcf:citekey order="78">cadwr2016</bcf:citekey>
-    <bcf:citekey order="78">cadwr2017</bcf:citekey>
-    <bcf:citekey order="79">Medellin-azuara2016</bcf:citekey>
-    <bcf:citekey order="80">Lund2018</bcf:citekey>
-    <bcf:citekey order="81">james2013introduction</bcf:citekey>
-    <bcf:citekey order="82">Gailey2019</bcf:citekey>
-    <bcf:citekey order="83">Pauloo2019</bcf:citekey>
-    <bcf:citekey order="84">observedDW</bcf:citekey>
+    <bcf:citekey order="1">alley2002flow</bcf:citekey>
+    <bcf:citekey order="2">konikow2013groundwater</bcf:citekey>
+    <bcf:citekey order="2">taylor2013ground</bcf:citekey>
+    <bcf:citekey order="2">wada2010global</bcf:citekey>
+    <bcf:citekey order="2">wada2012nonsustainable</bcf:citekey>
+    <bcf:citekey order="3">wada2011modelling</bcf:citekey>
+    <bcf:citekey order="4">hanson2012method</bcf:citekey>
+    <bcf:citekey order="5">milly2008stationarity</bcf:citekey>
+    <bcf:citekey order="5">mirchi2013climate</bcf:citekey>
   </bcf:section>
   <!-- SECTION 0 (cont.) -->
   <bcf:section number="0">

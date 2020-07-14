@@ -1,355 +1,551 @@
+%--------------------------------------------------------%
+%	TITLE
+%--------------------------------------------------------%
 
-%This is an example for a chapter, additional chapter can be added in the skeleton-thesis
-%To generate the final document run latex, build and quick build commands on the skeleton-thesis file not this one.
-%This is chapter 2, the default skeleton thesis expects 2 chapters
-\chapter[Sensitivity of Hydrologic and Geologic Parameters on Recharge Processes in a Highly-Heterogeneous, Semi-Confined Aquifer System]{Sensitivity of Hydrologic and Geologic Parameters on Recharge Processes in a Highly-Heterogeneous, Semi-Confined Aquifer System.\footnote[1]{This chapter is in review at \textit{Hydrology and Earth System Sciences (HESS)}: Maples, S. R., Foglia, L, Fogg G. E., \& Maxwell, R. M. ``Sensitivity of Hydrologic and Geologic Parameters on Recharge Processes in a Highly-Heterogeneous, Semi-Confined Aquifer System''. (Preprint doi:10.5194/hess-2019-412)}}
+\chapter[Anthropogenic Basin Closure and Groundwater Salinization (ABCSAL)]{Anthropogenic Basin Closure and Groundwater Salinization (ABCSAL).\footnote[1]{This chapter has been submitted to \textit{Journal of Hydrology}: Pauloo, R. A., Fogg, G. E., Guo, Z., \& Harter, T. ``Anthropogenic Basin Closure and Groundwater Salinization (ABCSAL)''. (Preprint 10.1002/essoar.10502733.1)}}
 
-%~~~~~~~~~~~~~~~~~ ABSTRACT ~~~~~~~~~~~~~~~~~
+%--------------------------------------------------------%
+%	ABSTRACT
+%--------------------------------------------------------%
 \section{Abstract}
 
-\noindent Increasing reliance on groundwater resources has been observed worldwide during the past 50–70 years and has led to unsustainable groundwater abstraction in many regions, especially in semi-arid and arid alluvial groundwater basins. Managed aquifer recharge (MAR) has been promoted to replenish overdrafted groundwater basins and augment surface water supply. However, MAR feasibility in alluvial groundwater basins is complicated by complex geologic architecture that typically includes laterally-continuous, fine-texture confining units that can impede both recharge rates and regional propagation of increases in hydraulic head. Greater feasibility of MAR hinges on identifying locations where rapid, high-volume recharge that provides regional increases in pressure head are possible, but relatively little research has evaluated the factors that control MAR feasibility in alluvial groundwater basins. Here, we combine a transition probability Markov-chain geostatistical model of the subsurface geologic heterogeneity of the east side of the northern Central Valley, California, with the 3D, variably-saturated water flow code, ParFlow, to explore the variability of MAR feasibility in this region. We use a combination of computationally-efficient local and global sensitivity analyses to evaluate the relative importance of factors that contribute to MAR feasibility. A novel proxy parameter approach was used to describe the configuration and proportions of subsurface hydrofacies and water table depth for sensitivity analyses, and results suggest that recharge potential is relatively more sensitive to the variability of this proxy parameter than to the variablity of individual hydrofacies hydraulic properties. Results demonstrate that large variability of MAR feasibility is typical for alluvial aquifer systems and that outsized recharge rates are possible in select locations where interconnected, coarse-texture hydrofacies occur.
+\noindent Global food systems rely on irrigated agriculture, and most of these systems in turn depend on fresh sources of groundwater. In this study, we demonstrate that groundwater development, even without overdraft, can transform a fresh, open basin into an evaporation dominated, closed-basin system, such that most of the groundwater, rather than exiting via stream baseflow and lateral subsurface flow, exits predominantly by evapotranspiration from irrigated lands. In these newly closed hydrologic basins, just as in other closed basins, groundwater salinization is inevitable because dissolved solids cannot escape, and the basin is effectively converted into a salt sink. We first provide a conceptual model of this process, called ``\textbf{A}nthropogenic \textbf{B}asin \textbf{C}losure and groundwater \textbf{SAL}inization'' (ABCSAL). We examine the temporal dynamics of ABCSAL using the Tulare Lake Basin, California, as a case study for a large irrigated agricultural region with Mediterranean climate, overlying an unconsolidated sedimentary aquifer system. Even with modern water management practices that arrest historic overdraft, results indicate that shallow aquifers (36 $m$ deep) exceed maximum contaminant levels for total dissolved solids on decadal timescales. Intermediate (132 $m$) and deep aquifers (187 $m$), essential for drinking water and irrigated crops, are impacted within two to three centuries. Hence, ABCSAL resulting from groundwater development constitutes a largely unrecognized constraint on groundwater sustainable yield on similar timescales to aquifer depletion in the Tulare Lake Basin, and poses a serious challenge to groundwater quality sustainability, even when water levels are stable. Results suggest that agriculturally intensive groundwater basins worldwide may be susceptible to ABCSAL.
 
-%~~~~~~~~~~~~~~~~~ INTRODUCTION ~~~~~~~~~~~~~~~~~
-%%%\clearpage
-\section{Introduction} \label{sec:intro} 
-
-
-Geologic heterogeneity strongly affects both the movement of water in the subsurface and the exchange of water between subsurface and surface stores; however, rarely are enough data available to explicitly represent heterogeneous geologic features in groundwater models \citep{koltermann1996heterogeneity,deMarsily2005heterogeneity}. Instead, models typically simplify and/or upscale heterogeneity to represent subsurface flows for purposes of regional-scale water resources management \citep[e.g.,][]{fogg1986groundwater,phillips1991calibration}. Upscaling methods have been the focus of numerous studies \citep[e.g.,][]{renard1997calculating, fogg2000connected, neuman2003multifaceted, fleckenstein2008efficient}, and coarse-resolution models with upscaled (i.e., effective) hydrologic properties are often adequate for regional-scale flow studies, but typically lack enough detail to reliably capture some phenomena, like recharge and transport processes, that are strongly influenced by geologic heterogeneity. 
-
-To represent the influence of geologic heterogeneity on flow and transport phenomena, many approaches have relied on stochastic methods, like transition probability based indicator geostatistics which can represent heterogeneous features while honoring measured data \citep{carle1996tprogs,weissmann1999multi,weissmann1999three}. These approaches represent geologic heterogeneity with hydrogeologic facies categories, each of which is assigned effective values or probability densities for estimates of hydraulic properties. By categorizing facies according to depositional environment rather than texture alone, the predictable geometries (i.e., facies mean lengths, proportions, and juxtapositions) of these features can be more accurately represented with sparse data. Studies that rely on these methods show strong influence of subsurface heterogeneity on groundwater/surface-water interactions and recharge processes \citep{LeeSiYong2004thesis,fleckenstein2006river,engdahl2010evaluation,liu2014thesis}, including managed aquifer recharge (MAR) \citep{maples_2019}, especially for instances when the mean lengths and proportions of high-permeability facies allow for percolation, i.e., formation of connected networks \citep{fogg2000connected,harter2005finite}.
-
-Accurately assigning aquifer properties in models can be a challenge because they are scale dependent attributes that are challenging to measure and can vary over many orders of magnitude in typical aquifer systems \citep[e.g.,][]{sudicky1986natural,gelhar1992critical,weissmann1999multi}. While aquifer tests can accurately constrain estimates of hydraulic conductivity ($K$) for high-permeability facies, they are typically unreliable for estimating $K$ of low-permeability (i.e.,  aquitard) facies \citep{fogg1986groundwater,fogg1998geologically}, which have been shown to influence pumping response \citep{fogg2000connected} and be important for accommodating recharge \citep{maples_2019}.
-Reconciling typically sparse measurements of aquifer properties from aquifer tests with the representation of effective values in models is often the source of large uncertainty because parameterization of the properties in models is scale dependent \citep{sudicky1991contaminant}, and is typically achieved through model calibration.
-
-The contaminant transport community has long recognized the strong influence of $K$ scaling and geologic heterogeneity on transport processes \citep[e.g.,][]{gelhar1992critical,sudicky1991contaminant,koltermann1996heterogeneity}, and recent work has extended these concepts to assess their role on runoff generation, evapotranspiration (ET), and feedbacks between subsurface and land-surface water in integrated hydrologic models \citep{srivastava2014insights,gilbert2016global,foster2019sensitivity}, but relatively little research has focused on the influence these factors for MAR processes specifically. Recent work has highlighted the importance of connected networks of high-$K$ facies for MAR \citep{maples_2019}, but to our knowledge the sensitivity of MAR processes to these heterogeneous geologic features as compared to other uncertain hydraulic properties has not been formally evaluated. 
-
-Sensitivity analyses are a fundamental diagnostic tool to provide insight into the relative importance of the parameterization of aquifer properties among other inputs to complex hydrologic models \citep{saltelli2004sensitivity}. Sensitivity analyses can be broadly categorized as local or global methods, where local methods provide sensitivity evaluation at a single location in the parameter space \citep{hill2007effective}, while global approaches explore sensitivities throughout a multi-dimensional parameter space \citep{saltelli2008global}. Many studies have shown the diagnostic utility of local approaches \citep[e.g.,][]{foglia2009sensitivity}; however, local approaches are generally less robust than global approaches, especially for non-linear models \citep{saltelli2008global}. On the other hand, global methods are typically orders of magnitude more computationally expensive than local approaches.
-
-Here, we simulate variably-saturated MAR dynamics in a highly-resolved representation of complex subsurface geologic heterogeneity of a clastic, unconsolidated sedimentary aquifer system that includes both interconnected, high-$K$ sand and gravel deposits intermingled with silt- and clay-dominated sediments. We use a combination of local and global sensitivity analyses to provide insight into the relative importance of the subsurface geologic facies configuration and parameterization of subsurface hydraulic properties on MAR processes. This work provides insight into important factors to consider when investigating potential MAR sites and also highlights the utility of a combination of computationally-frugal local and global sensitivity analyses for computationally-intensive hydrologic models.
+%--------------------------------------------------------%
+% Introduction
+%--------------------------------------------------------%
+\section{Introduction}  
 
 
-%~~~~~~~~~~~~~~~~~ MATERIALS AND METHODS ~~~~~~~~~~~~~~~~~
-%~~~~~~~~~~~~~~~~~ SUBSECTION boundary conditions ~~~~~~~~~~~~~~~~~
-\section{Materials and Methods} \label{sec:MM}
-\subsection{Local Hydrogeology and Domain Extent} \label{ssec:MM_hydrogeology}
-The model domain covers about 1640 km\textsuperscript{2} of the east side of the northern Central Valley, California, near the convergence of the lower portions of the American and Cosumnes Rivers with the Sacramento River (Fig. \ref{fig:domain}). The domain comprises a low-angle alluvial fan complex that is typical of the Central Valley where previous studies have documented the presence of  deposits that are favorable for recharge \citep{shlemon1967landform,meirovitz2010thesis}, including massive, interconnected, highly-permeable sand and gravel deposits known as incised valley fill [IVF, \citep{weissmann2004influence, weissmann2005factors}] that form from  river incision and deposition events during cyclic Plio-Pleistocene Sierra Nevada glaciation. In places, multiple IVF deposits have been shown to overlap and interconnect from land surface into the deeper aquifer system, forming massive, coarse-texture, relatively high-permeability pathways for recharge that bypass local, otherwise laterally-extensive confining units. These features have been shown to accommodate recharge volumes that are orders of magnitude greater than would be possible over the rest of the landscape \citep{maples_2019}. Other studies have shown that IVF features likely occur on river fans throughout the Central Valley \citep{weissmann2005factors}, and in similar glacially-influenced rivers \citep{pierce1983pleistocene} but are still largely undocumented.
+Groundwater from major aquifer systems supplies 43\% of the world's irrigation water \citep{Siebert2010}. As a result of excessive groundwater development and land use change, groundwater quantity and quality in these agriculturally intensive groundwater basins has been significantly impacted. Numerous global and regional studies document aquifer depletion related to agricultural withdrawal \citep{Brush2013, Doll2012, Famiglietti2014, Faunted.2009, Gleeson2012, Russo2017, Scanlon2012, Siebert2010, Vorosmarty2014, Wada2014}. Anthropogenic contaminants to groundwater include nitrates, which originate from agricultural fertilizers \citep{Burow2008}, pesticides \citep{Burow2008, Burow1998}, and animal farming \citep{Harter2012}. Groundwater pumping may even mobilize naturally-occurring contaminants such as arsenic \citep{winkel2011arsenic, smith2018overpumping} and uranium \citep{Jurgens2008, Jurgens2010}.
 
-%% FIGURE 1
-\begin{figure*}[t]
-\centering
-\includegraphics[width=16.5cm]{ch2_figs/Fig_01_080619_HESS.pdf}
-\caption{Location of model domain in the in the Central Valley aquifer system in California, and (a) inset of the uppermost layer of the model hydrofacies overlain over aerial imagery of the Central Valley and local river systems.}
-\label{fig:domain}
-\end{figure*}
+Another class of groundwater contaminants are total dissolved solids (TDS), also referred to as salts or salinity. TDS are sourced both naturally (e.g., produced by rock-water interactions) and anthropogenically (e.g., imported by surface water for irrigation). 
+Elevated TDS is an indicator of human impact on freshwater systems \citep{Ayers1985, Kaushal2014}, and reduces agricultural productivity \citep{Lopez-Berenguer2009, Munns2002, Pessarakli2011}, which has prompted states to set agricultural irrigation water quality goals, (e.g., 450 mg/L in California) \citep{swrcb2019b}. For drinking water, the United States Environmental Protection Agency and the state of California recommend a secondary maximum contaminant level of 500 mg/L TDS \citep{swrcb2019a, swrcb2019b}. Water high in TDS may exhibit discoloration, unpleasant odor and taste, and may be unsuitable for human consumption or irrigation \citep{Hem1985}. Fresh water is defined as containing TDS less than 1,000 mg/L, brackish water ranges from 1,000 to 10,000 mg/L, and saline water ranges from 10,000 to 100,000 mg/L \citep{Fetter2001}. 
 
-The local hydrostratigraphy of the area is described in detail by \cite{meirovitz2010thesis} and \cite{maples_2019}. In general, the two major rivers intersecting the domain, the American and Cosumnes Rivers, have markedly different depositional characteristics. The American River drains a large ($>$4000 km\textsuperscript{2}), high-elevation catchment that extends to the Sierra Nevada crest [$>$3000 m above mean sea level (amsl)]. As a result, the American River was greatly influenced by cyclic plio-pleistocene glaciation that deposited IVF in the domain area. Conversely, the Cosumnes River catchment is smaller (900  km\textsuperscript{2}) and lower in elevation. As a result, deposits from the Cosumnes River do not contain IVF and are typically finer in texture. In some locations in the domain area, Quaternary and Holocene channel avulsion of the American River resulted in a more southwest course that intersects the current path of the Cosumnes river, creating complex overlapping stratigraphy in that area. Cross-cutting IVF and overlapping paleochannel networks in the domain area result in an aquifer system that is typically unconfined (and sometimes perched) or semi-confined at shallow depths and increasingly confined with depth  \citep{fleckenstein2006river,liu2014thesis,niswonger2008influence}. Groundwater pumping in the region typically occurs at depths $>$30 m in the deeper semi-confined or confined portion of the aquifer system \citep{liu2014thesis}.
+Groundwater salinization is widely studied \citep{Greene2016soil} in terms of (1) seawater intrusion \citep{bear1999seawater, Werner2013}, (2) naturally-occurring salinization in closed surface-water basins (i.e., endorheic basins and playas) \citep{Eugster1978, Hardie1970}, (3) high water tables causing groundwater evaporation and soil salinization via capillary rise \citep{Datta2002, barrett2003interaction, chaudhuri2014, hillel1992out}, and (4) soil salinization due to irrigation \citep{hanson1999agricultural, bernstein1973leaching, hillel2000salinity}. This study describes a fifth type of groundwater salinization that remains largely unexplored: salinization of an entire groundwater basin created by historically excessive pumping, then sustained by the inability of a closed groundwater system to discharge salts. Henceforth, we refer to this fifth type as ``\textbf{A}nthropogenic \textbf{B}asin \textbf{C}losure and groundwater \textbf{SAL}inization'' (ABCSAL). 
 
-%~~~~~~~~~~~~~~~~~ SUBSECTION hydrofacies model development ~~~~~~~~~~~~~~~~~
-\subsection{Hydrofacies Model Development} \label{ssec:MM_tprogs_model}
-Transition probability Markov-chain geostatistics (TPROGS) \citep{carle1996tprogs,carle1997modeling,carle1999t}, was used to simulate the subsurface distribution of hydrofacies in the domain area (Fig. \ref{fig:domain_3d}). Model development is described in detail by \cite{meirovitz2010thesis} and \cite{maples_2019}. Roughly 1200 well logs, soil surveys, geologic cross-sections and mapped paleochannels were used as conditioning data for the TPROGS model. Geologic data were binned into four textural categories: gravel, sand, muddy sand, and mud (undifferentiated silt and/or clay) [Table \ref{table:textural_characteristics} \citep{fleckenstein2004managing,meirovitz2010thesis}]. "Mud" refers to silt and clay undifferentiated, because most of the subsurface data available  only identify the fine-grained sediments and are not sufficiently detailed to distinguish silt from clay. From these data the proportions for each facies were calculated directly. Through geologic analysis of the data, additional parameters were estimated describing the mean lengths of each hydrofacies along the principal directions and the embedded transition probabilities to represent cross-correlation between different facies. Because the depositional characteristics of the American and Cosumnes fans were markedly different, individual models of each were produced and subsequently combined  by  \cite{meirovitz2010thesis}. 
+This fifth type of salinization, ABCSAL, is related to naturally-occurring closed basin salinization (case (2) above), but has significantly different phenomenology. It is therefore useful to first consider the difference between an open, fresh hydrologic basin, and a naturally closed, saline basin. 
 
-%% FIGURE 2
-\begin{figure}[t]
-\centering
-\includegraphics[width=9.0cm]{ch2_figs/Fig_02_080619_HESS.pdf}
-\caption{Three-dimensional representation of the model domain.}
-\label{fig:domain_3d}
+An open, fresh groundwater basin has sufficient natural outlets for TDS, such as baseflow to streams and lateral subsurface flow across basin boundaries, which maintains a balance between salinity that is naturally generated within the basin (i.e., mineral dissolution) and salinity that is exported out of the basin. Basins containing fresh groundwater exist only because they have outlets for both the circulating groundwater and the dissolved salts therein, originating from intrabasin rocks and sediments \citep{domenico1998physical}. 
+
+In contrast, closed hydrologic basins -- common in arid to semiarid regions worldwide -- naturally form when (a) outflow by surface water or groundwater flows is absent or small, and (b) evaporation is the dominant mechanism by which water exits the basin \citep{Hardie1970, Eugster1978, Jones1978}. Because TDS concentrations in precipitation are low (around $10^1$ $mg/L$), most TDS originates from rock-water reactions in surface runoff and in the subsurface. Salts may accumulate at the evaporative boundaries of the basin: at or immediately below the surface where discharging groundwater evaporates or at the bottom of a surface depression in terminal and sometimes ephemeral lakes that collect runoff, baseflow, and spring outflow \citep{Wooding1997, richter1986geochemistry}. Examples of naturally closed hydrologic basins with saline features at or near the land surface are found worldwide: playas and salt flats such as those in the Great Basin (USA) and Salar de Uyuni (Bolivia); saline lakes like the Great Salt Lake (USA) and the Dead Sea (Middle east); in extremely arid deserts such as the Arabian and Atacama; and in the unsaturated subsurface of semi-arid regions with insufficient precipitation to recharge groundwater \citep{Scanlon1997, kreitler1993geochemical}. 
+
+In this paper, we argue that sufficient groundwater development can lower groundwater levels in an open to semi-open and relatively fresh basin, thus converting it into a closed basin, which then salinates in a distinctly different manner from those described in (1) - (4). First, moderate to large amounts of groundwater development may result in sufficient reduction of groundwater levels that reduce or eliminate natural baseflow to streams \citep{Russo2017, Barlow2015, Hunt1999} and reverse existing groundwater gradients at subsurface outflow boundaries (Figure \ref{fig:conceptual_model_gw_sal}A). Progressively greater closed basin conditions diminish and eventually entirely eliminate natural TDS export from the groundwater basin (Figure \ref{fig:conceptual_model_gw_sal}B). Furthermore, if the basin is irrigated, crop evapotranspiration becomes the dominant water outflow from the basin, leaving behind salts that are returned to the groundwater basin via irrigation return flows and recharge from precipitation. Across the globe, water level stabilization in such overdrafted basins is sometimes achieved by importing additional surface water. However, water imports can add significant salt to the basin. Moreover, even when balancing the water budget with imported water, this does not stop the ABCSAL process if groundwater does not have exits (e.g., baseflow to streams or lateral subsurface outflow), and if water continues to leave the basin predominantly through evapotranspiration, which leaves behind salts. Although these latter two conditions are similar to those in a naturally closed basin (2) \citep{Hardie1970, Jones1978}, vertical groundwater fluxes under ABCSAL are in the opposite direction from natural basin salinization and thus, the location of salinization is different. In a naturally closed basin, salinization occurs at the land surface due to upward groundwater discharge. Under ABCSAL, pumping and recharge from irrigation lead to a net downward flux, then mobilize salts left behind by irrigated crops downward into the production zone of the groundwater basin, before they are recycled by pumping wells to the land surface and the process repeats.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{ch3_figs/mm_conceptual_model_gw_sal_2_stages.pdf}
+	\caption{Conceptual model of ABCSAL. (A) Open basin, pre-groundwater development: surface and groundwater systems connect. Groundwater discharges dissolved solids into surface water which exits the basin. Groundwater at this stage is predominantly fresh (e.g., $<$ 1,000 mg/L). (B) Closed basin: groundwater pumping causes elimination of baseflow to streams. Lower groundwater levels cause subsurface inflow to drain adjacent basins. Pumped groundwater is concentrated by evapotranspiration (ET) when applied for irrigation. Salts migrate into the production zone of the aquifer, driven by vertical hydraulic gradients from recharge and pumping. Although these figures showtwo extremes (open and closed), partially-closed basins also exist.}
+	\label{fig:conceptual_model_gw_sal}
 \end{figure}
 
-%% TABLE 1
-\input{ch2_tables/Table_1_textural_characteristics.tex}
 
-The model uses an orthogonal grid geometry with 181 $\times$ 227 $\times$ 265 cells in the x-, y-, and z- directions, respectively. The x- and y- directions of the grid were rotated 17.85 degrees counterclockwise from the cardinal directions, and the z-direction was oriented vertically. Cell sizes were 200 $\times$ 200 $\times$ 1 m. The total domain size is 36.2 $\times$ 45.4 $\times$ 0.265 km, in the x-, y- and z-directions, respectively. Cells located above land surface were designated as inactive in the model, resulting in about 7.3 million active cells in the domain area. 
+Importantly, we point out that the long-term continuous decline of groundwater storage is not a necessary condition for ABCSAL. Rather, even in basins where groundwater levels are stable and hence assumed to be free of overdraft, as long as they remain physically closed, they will salinate. Furthermore, although for simplicity we describe basins as either ``open" or ``closed", in reality, closure ranges from 0-100 \% (i.e., fully open to fully closed), and gradations of basin closure exist, which impact the rate of salinization and hence, the long-term temporal and vertical spatial salt distribution. Except for the most extremely exploited aquifers (one of which we explore in this study), many aquifers will fall somewhere between fully open to fully closed and not exactly at one extreme. 
 
-%~~~~~~~~~~~~~~~~~ SUBSECTION hydrologic model development ~~~~~~~~~~~~~~~~~
-%~~~~~~~~~~~~~~~~~ sub-subsection governing eqns ~~~~~~~~~~~~~~~~~
-\subsection{Hydrologic Model Development} \label{ssec:MM_parflow_model}
-\subsubsection{Governing Equations} \label{sssec:gov_eqn}
-Three-dimensional, variably-saturated water flow was simulated with the hydrologic modeling code, ParFlow \citep{ashby1996parallel,jones2001newton,kollet2006integrated}, which couples surface and subsurface flow with the 2-D diffusive or kinematic wave equation, and solves the 3-D mixed form of Richards' Equation for variably-saturated subsurface flow: 
+In this research, we illustrate the development of ABCSAL in a historically open, freshwater basin using the agriculturally intensive Tulare Lake Basin (TLB) in California's southern Central Valley as a case study. Previous research in the TLB has shown evidence of salt accumulation in groundwater via simple water and salt budgets \citep{Kenneth1975}, and shallow aquifer salt accumulation from sediment dissolution processes in highly-soluble calcium and magnesium carbonates and sulfates \citep{Schoups2005}. Other studies have shown that TDS concentrations in TLB groundwater have increased over the last century \citep{Hansen2018, Lindsey2018}, and suggested this is the result of pumping for municipal and irrigation supply which has caused shallow, higher TDS groundwater to be driven downward into deeper aquifers. We are not aware of prior work that has placed these trends into the context of ABCSAL, or quantified potential rates of salinization across a range of aquifer depths and timescales. 
 
-\begin{equation}
-S_s S_w(h) \frac{\partial h}{\partial t} + \phi \frac{\partial S_w(h)}{\partial t} 
-= \nabla \cdot \textbf{q}+ q_r(x,z)
-\label{richards_eqn1}
-\end{equation}
-\noindent where
-\begin{equation}
-\textbf{q}
-= \phi S_w (h) \textbf{v}
-= -\textbf{K}_s (x) k_r (h) \nabla (h+z)
-\label{richards_eqn2}
-\end{equation}
+Our aim in this study is to assess the first order salt balance and timescales over which the TLB as a large production aquifer system becomes regionally degraded over most of the vertical extent of its nearly 200 $m$ thick main production zone. We conservatively assume that, under recent state regulation, groundwater overdraft is arrested, but not reversed. We compare timescales of ABCSAL degradation against the estimated lifespan of the greater Central Valley aquifer (i.e., 390 years at historical overdraft rates) \citep{Faunted.2009}, challenge the notion that the depletion of groundwater storage is a more urgent issue than the degradation of groundwater quality in the TLB (and in other basins with ABCSAL conditions), and consider the water management implications and the steps required to reverse extensive basin-scale groundwater salinization. The management would likely involve both hydrologic opening of the basin to provide natural outlets for salt, a reduction of sources of salinity, and the development of regional groundwater quality management models \citep{Fogg2006, CRWQCB2018}. The adaptation might involve the eventual desalination of most groundwater pumped from the basin, producing a future economic burden that should be anticipated and evaluated, as it bears on the security of water, food, and energy resources. 
 
-\noindent In these equations $S_s$ is specific storage [L\textsuperscript{$-$1}], $S_w$ is relative saturation [$-$], $h$ is pressure head [L], $t$ is time [T], $\phi$ is porosity [$-$], $\textbf{q}$ is Darcy flux [L T\textsuperscript{$-$1}], $q_r$ is a source/sink term [T\textsuperscript{$-$1}], $z$ is elevation [L], $\textbf{v}$ is the subsurface flow veolicty [L T\textsuperscript{$-$1}], $\textbf{K}_s(\textbf{x})$ is the saturated hydraulic conductivity tensor [L T\textsuperscript{$-$1}], and $k_r$ is relative permeability [$-$]. The van Genuchten relations \citep{vangenuchten1980} describe $S_w$ and $k_r$ as a function of $h$ in the unsaturated zone, with parameters for air entry pressure $\alpha$ [L\textsuperscript{$-$1}], pore size distribution $n$ [$-$], and residual saturation $S_{res}$ [$-$].
+This paper is organized as follows: first, we describe the hydrogeology, water budget, and water quality of the study site. Then we describe and justify our approach involving a simple 1D mixing cell solute transport model. Next, we present our results, and finally, we discuss the implications of the research, the limitations of our approach, and the extensibility of the study to other areas.  
 
-%~~~~~~~~~~~~~~~~~ sub-subsection boundary conditions ~~~~~~~~~~~~~~~~~
-\subsubsection{Boundary Conditions} \label{ssec:MM_BCs}
-Model boundary conditions are discussed in greater detail in \cite{liu2014thesis} and \cite{maples_2019}. The locations of domain boundaries were chosen to simplify the assignment of boundary conditions for the flow model. The eastern boundary roughly coincides with the Sierra Nevada foothills, and the northern, southern, and western boundaries roughly coincide with local surface water bodies (Fig. \ref{fig:domain}). A specified head boundary condition was applied for the eastern boundary to coincide with the local groundwater head distribution estimated from local monitoring well data \citep{liu2014thesis}. A general head boundary of 0 m amsl was set 1 km beyond the western boundary to approximate the Sacramento River and Sacramento-San Joaquin Delta along the northwestern, and southwestern portions of the western boundary, respectively. No-flow boundary conditions were applied along northern, southern, and bottom boundaries because the regional groundwater flow direction is generally from east to west. Model spin up and recharge simulations used combinations of specified-flux and specified-head upper boundary conditions and are described in greater detail in subsequent sections.
 
-%~~~~~~~~~~~~~~~~~ sub-subsection model spinup ~~~~~~~~~~~~~~~~~
-\subsubsection{Model Spinup and Calibration} \label{sssec:MM_spinup}
+%--------------------------------------------------------%
+% Methods
+%--------------------------------------------------------%
+\section{Methods}
 
-Model spinup and calibration are described in greater detail in \cite{liu2014thesis} and \cite{maples_2019}. To summarize, a 16-yr. simulation period was used to bring the simulated hydrology into dynamic equilibrium. This period represents 1970–1985, which includes both a wet (1984) and dry (1977) year. Water budget components, including groundwater discharge, recharge and boundary flows along with facies hydraulic properties were estimated and adjusted manually to simulate a realistic water budget, water table configuration, and vertical hydraulic gradients during the calibration process. An initial potentiometric surface was specified using interpolated groundwater level data. Monthly estimated urban and agricultural groundwater pumping rates were applied as specified fluxes representing wells screened in lower portions of the domain that coincide with typical screened intervals of municipal and agricultural pumping wells in the region. Dominant sources of recharge for the region include stream recharge from the American River, Cosumnes River, and Deer Creek, as well as deep percolation from agricultural and urban return flows. Weekly estimates of spatially-distributed river stage for the streams were applied as specified heads along coincident land surface cells. Monthly estimates of urban and agricultural recharge volumes were applied as a specified-flux boundary condition across the top of the domain to simulate deep percolation of agricultural and urban return flows and to equilibrate soil moisture conditions in the near-surface UZ cells. Hydraulic properties for each facies category were calibrated manually (Table \ref{table:facies_properties}) and are consistent with the range of literature values for the Central Valley, California, and for similar alluvial systems \citep{anderson2015applied,botros2009spatial,fleckenstein2004managing,frei2009patterns,maserjian1993hydrogeologic,niswonger2008influence,sager2012effects}.
+\subsection{Study area}
+\label{ss_2_1}
 
-%% TABLE 2
-\input{ch2_tables/Table_2_parameter_ranges.tex}
+In selecting the TLB as our study site, we looked for (1) a history of intensive groundwater pumping and irrigation, (2) availability of historical water budget and water quality data, and (3) social and economic significance. The TLB (Figure \ref{fig:tb_study_site}) occupies the southern third of the Central Valley, California and is bounded by the Coast Ranges to the west, the Tehachapi Mountains to the south, and the southern Sierra Nevada to the east. Geology strongly influences dissolved solid concentrations in the clastic sedimentary aquifer system composed of fluvial and alluvial fan deposits. Calcium and magnesium sulfates and carbonates in Coast Range sediment in the western TLB are more soluble than sediments from the predominately crystalline rocks of the Sierra Nevada to the east, thus the groundwater in the western basin tends to have higher TDS \citep{Fujii1995, belitz1990, deverel1988}. Fresh groundwater in the TLB spans depths from land surface to around 1,000 $m$ where brackish water and marine deposits limit the development of groundwater resources \citep{Program2010, Kang2016}. Above this deep brackish zone is a major freshwater aquifer system. In combination with a natural endowment of significant, but intermittent runoff from surrounding uplands, abundant fresh groundwater has transformed the TLB into one of the most heavily irrigated and economically productive agricultural regions in the world \citep{Hanak2011}. At its peak in the 1980s, approximately 14,164 $km^2$ of its 44,110 $km^2$ were irrigated \citep{TNC2014}. Today roughly 12,140 $km^2$ remain irrigated, with a total gross value of all agricultural crops and products at \$23.4 billion USD in 2017 \citep{kern2018, kings2018, fresno2018, tulare2018}. \\
 
-All simulations were performed using the Cheyenne high-performance cluster at NCAR's Computational and Information Systems Laboratory (doi:10.5065/D6RX99HX). The numerical problem was distributed on 540 cores for each simulation. Approximately 450 model evaluations were required for the exploratory simulations, local sensitivity analyses, and global sensitivity analyses described in subsequent sections, which required approximately 400,000 core-hours of computing time in total. The large computational expense for each simulation (890 core-hours per simulation, on average) required that computationally resources be allocated efficiently. 
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\01_mm\code\tb_study_site\tb_map.R
+% tb_with_riv.pdf
+% 01_mm\ai\study_site_water_budget.ai
+% numbers come from archived (commented out Table 5)
 
-%~~~~~~~~~~~~~~~~~ SUBSECTION Exploratory Simulations ~~~~~~~~~~~~~~~~~
-%~~~~~~~~~~~~~~~~~ sub-subsection site selection ~~~~~~~~~~~~~~~~~
-\subsection{Exploratory Simulations} \label{ssec:MM_exploratory_sims}
-\subsubsection{Site Selection} \label{sssec:MM_site_selection}
-One hundred 1 km\textsuperscript{2} recharge sites, each encompassing 25 upper-boundary cells, were chosen to approximate hypothetical MAR infiltration basins (Fig. \ref{fig:domain_characteristics}a). Each site was randomly selected from a 910 km\textsuperscript{2} region within the domain that excluded locations within 5 km of lateral domain boundaries to minimize the influence of boundary conditions. The 100 exploratory sites encompass roughly 6\% of the total domain area, which was deemed sufficient to sample the variability of site characteristics observed across the domain. The size of each site was chosen to reflect a regional-scale MAR site, which range from large networks of basins $>$25 km\textsuperscript{2} in size \citep[e.g.,][]{kernFAQ} to individual infiltration basins over several hectares or smaller \citep[e.g.,][]{beganskas2017coupling} in California.
-
-%% FIGURE 3
-\begin{figure*}[t]
-\centering
-\includegraphics[width=16.5cm]{ch2_figs/Fig_03_080619_HESS.pdf}
-\caption{Plan view of the model domain, where (a) $K\textsubscript{sat}$ of the uppermost model layer (i.e., the surface expression) at all 41,087 x,y cell locations is overlaid with the locations of 100 randomly-sampled 1-km\textsuperscript{2} exploratory recharge sites (red squares) randomly chosen from 910 potential locations. (b) Arithmetic, (c) geometric, and (d) harmonic mean of vertical $K\textsubscript{sat}$ for unsaturated zone (UZ) facies (i.e., $K\textsubscript{geom}$, $K\textsubscript{arith}$, $K\textsubscript{harm}$, respectively) are shown for all x,y cell locations, along with (e) coarse-texture (gravel and sand) fraction of UZ facies ($UZ\textsubscript{coarse}$), (f) simulated initial depth-to-water ($WTD$), and (g) $K\textsubscript{geom}$ multiplied by $WTD$ ($K\textsubscript{geom} \times WTD$).}
-\label{fig:domain_characteristics}
-\end{figure*}
-%~~~~~~~~~~~~~~~~~ sub-subsection site characteristics ~~~~~~~~~~~~~~~~~
-\subsubsection{Site Characteristics} \label{ssec:MM_site_char}
-
-\cite{maples_2019} highlighted that the (1) relative proportions, and degree of vertical interconnection, of coarse-texture facies (sand and gravel) and (2) the unsaturated-zone thickness beneath recharge sites are important factors for recharge feasibility. In this study, we sought to develop site characteristics to describe recharge feasibility at the 100 exploratory sites across the domain. First, we use a heuristic approach of simple averages to bound the expected range of effective (i.e., upscaled) vertical $K\textsubscript{S}$ at all 41,087 x,y cell locations across the domain, where the arithmetic and harmonic mean ($K\textsubscript{arith}$ and $K\textsubscript{harm}$) are the upper and lower bounds, respectively, and the geometric mean ($K\textsubscript{geom}$) is an intermediate value. $K\textsubscript{arith}$ and $K\textsubscript{harm}$ are typically used to approximate groundwater flow parallel and perpendicular to layering, respectively, in anisotropic systems \citep{freeze1979groundwater}. This concept has been generally been extended to variably-saturated flow \citep{mualem1984anisotropy, yeh1985stochastic1, yeh1985stochastic3, assouline2006anisotropy}. \cite{fogg2000connected} showed that vertical groundwater flow in systems with vertically-connected networks of permeable facies tends toward values between $K\textsubscript{arith}$ and $K\textsubscript{geom}$. For each x,y cell location across the domain, $K\textsubscript{arith}$, $K\textsubscript{geom}$, and $K\textsubscript{harm}$ are given as:
-
-\begin{equation}
-K\textsubscript{arith} = \frac{K\textsubscript{1}+K\textsubscript{2}+...+K\textsubscript{n}}{n}
-\label{Karith_eqn}
-\end{equation}
-
-\begin{equation}
-K\textsubscript{geom} = {\sqrt[n]{K\textsubscript{1}\times K\textsubscript{2}\times ...\times K\textsubscript{n}}}
-\label{Kgeom_eqn}
-\end{equation}
-
-\begin{equation}
-K\textsubscript{harm} = \frac{n}{\frac{1}{K\textsubscript{1}}+\frac{1}{K\textsubscript{2}}+...+\frac{1}{K\textsubscript{n}}}
-\label{Kharm_eqn}
-\end{equation}
-
-\noindent where $n$ is the number of vertically-coincident cells from the land surface to the initial water table depth (i.e., the unsaturated-zone cells) for each x,y cell location. In addition, the initial unsaturated-zone thickness ($WTD$) and proportion of coarse-texture sand and gravel unsaturated-zone facies ($UZ\textsubscript{coarse}$) at each x,y cell location across the domain were included as metrics. Additional metrics were developed for each x,y cell location by combining individual metrics, i.e., $WTD$ was used as a multiplier for $K\textsubscript{arith}$, $K\textsubscript{geom}$, $K\textsubscript{harm}$, $Surf\textsubscript{coarse}$, and $UZ\textsubscript{coarse}$. Spatial distributions of select metrics at all x,y cell locations are shown in Fig. \ref{fig:domain_characteristics}.
-
-Site characteristics were calculated for the 100 1 km$^2$ exploratory sites from these metrics by determining the average and maximum value of $K\textsubscript{arith}$, $K\textsubscript{geom}$, and $K\textsubscript{harm}$ for the 25 x,y cell locations encompassing each site. In addition, the proportion of coarse-texture facies at land surface ($Surf_{coarse}$) were calculated for each site. Site characteristics are described in detail in Table \ref{table:site_characteristics}. Each site was further evaluated according to whether there was vertical connectivity (i.e., percolation) of coarse-texture facies from land surface to the aquifer system. Percolation was evaluated for a control volume encompassing all cells from the land surface to the initial water table depth (i.e., unsaturated-zone cells) at the 25 x,y cell locations encompassing each site. Percolation was defined within each site control volume by a 6-connectivity metric \citep{pardo2003connec3d}, in which neighboring gravel and sand cells are said to be connected if they intersect along a face. Coarse-texture facies were said to percolate if any combination of gravel and sand facies were interconnected within the control volume from land-surface to the initial water table.
-
-%% TABLE 3
-\input{ch2_tables/Table_3_variable_predictor_desc.tex}
-
-%~~~~~~~~~~~~~~~~~ sub-subsection recharge scenarios ~~~~~~~~~~~~~~~~~
-\subsubsection{Recharge Scenarios and Model Post-Processing} \label{sssec:MM_rech_scenarios_post_processing}
-To evaluate the system response to recharge stress and recovery, recharge simulations were run individually at each site for a 90-day period, wherein recharge was simulated during the initial 30-day period followed by a 60-day recovery period in which no recharge was simulated. During the initial 30-day recharge period, surface ponding was approximated by a specified head boundary condition representing 10 cm of ponding at the 25 upper-boundary cells coincident with each recharge site, with no recharge specified for the remaining upper-boundary cells throughout the domain. Each simulation comprises two independent model evaluations---the first, described above, and an additional, concurrent 90-day model evaluation in which no recharge was specified for all upper-boundary cells, i.e., as a no-recharge scenario.  Results were output at 5-day intervals for all model evaluations. Following \cite{maples_2019}, recharge responses were isolated from other model stimuli by differencing $h$, and total subsurface water storage ($TSS$) from each colocated cell at 5-day intervals, in each concurrent recharge and no-recharge model evaluation. In this way, perturbations in $h$ and $TSS$ result from the recharge stress alone, while other stimuli, including transient model response to regional boundary condition effects, are eliminated. For each simulation, $h$ perturbations were evaluated at a 10-cm threshold. The initial condition (at $t=0$ days) for all recharge and no-recharge model evaluation was the $h$ distribution from the end of the model spin up period. Each of the 100 recharge model evaluations were differenced from the same no-recharge model evaluation, so in total, the 100 simulations required 101 model evaluations. 
-
-Domain-wide perturbations in $h$ and $TSS$ from recharge stress were evaluated for all 100 recharge simulations at the end of the 30-day recharge period to calculate the volumetric extent of subsurface pressure perturbation, $P\textsubscript{30d}$ [L\textsuperscript{$3$}], and the effective recharge rate, $R\textsubscript{30d}$ [L T\textsuperscript{$-1$}], respectively. Similarly, domain-wide perturbations in $TSS$ were evaluated at the end of the entire 90-day simulation and were further delineated according to whether the change-in-storage occurred in fine-texture (muddy sand and mud) or coarse-texture (sand and gravel) facies, so that the proportion of the total recharge volume accommodated by fine-texture facies, $V\textsubscript{fines, 90d}$ [$-$], could be evaluated. Previous work has highlighted the importance of fine-texture facies for accommodating recharge, especially during late time \citep[e.g.,][]{maples_2019}. All model outputs used for subsequent analyses are shown in Table \ref{table:site_characteristics}.
-
-%~~~~~~~~~~~~~~~~~ sub-subsection proxy parameters relations ~~~~~~~~~~~~~~~~~
-\subsubsection{Relations between Site Characteristics and Recharge Potential} \label{sssec:MM_relations}
-To better understand the relationships between site characteristics (predictors) and model outputs (variables), correlations (Pearson's $r$, Spearman's rho, and Kendall's tau) were evaluated between all variable and predictor pairs for all 100 simulations at all 100 exploratory sites. Variables and predictors are described in Table \ref{table:site_characteristics}. The purpose of evaluating correlations between variables and predictors was to determine if any site characteristics could be used to reasonably predict model outputs with empirical relations. Log\textsubscript{10} data transformations were selectively performed on variables and predictors to improve normality prior to calculation of Pearson's $r$. Transformations were not performed for Spearman's rho and Kendall's tau, as neither require normal distributions for prediction.
-
-%~~~~~~~~~~~~~~~~~ sub-subsection proxy parameters in sensitivity analyses ~~~~~~~~~~~~~~~~~
-\subsubsection{Development of a Geologic Proxy Parameter for Sensitivity Analyses} \label{sssec:MM_proxy_parameter}
-
-A combination of local and global sensitivity analyses described in subsequent sections were employed to evaluate the relative importance of (1) the parameterization of aquifer properties and (2) geologic configuration on recharge potential. Unlike the parameters describing aquifer properties, which can be systematically adjusted to evaluate sensitivities, the geologic configuration cannot be similarly adjusted at each recharge site. To incorporate descriptions of geologic configuration in sensitivity analyses of recharge potential, a novel geologic proxy parameter ($GPP$) approach was employed using relations between site characteristics and model outputs described in section \ref{sssec:MM_relations}.
-
-A $GPP$ was developed for each variable ($R\textsubscript{30d}$, $P\textsubscript{30d}$, and $V\textsubscript{fines, 90d}$) by ranking the correlations of all predictors described in section \ref{sssec:MM_relations}, with each variable. For each variable, the predictor from the highest ranked predictor-variable correlation was selected as the $GPP$ for that respective variable. Empirical regression relations were then developed between each variable and its respective $GPP$. In this way, the regression relation aggregates information derived from the 100 exploratory simulations to evaluate the effect of adjusting each $GPP$ on its corresponding variable (i.e., the effect of geologic configuration on recharge responses). This novel proxy parameter approach is analogous to a transfer function \citep[e.g.,][]{wosten2001pedotransfer}, in that it describes the influence of complex geologic heterogeneity on recharge processes with relatively easily-derived relations between site characteristics and recharge responses.
-
-For subsequent local and global sensitivity analyses, where parameters are systematically adjusted to evaluate their respective influence on model response, $GPP$ was adjusted either by using the empirical regression relations between each variable and its respective $GPP$, or by relocating the recharge site within the domain to a location with the corresponding $GPP$ value. These procedures are described in more detail in subsequent section \ref{ssec:MM_sensitivty}. By using this novel proxy parameter approach, we are able to both capture this geologic complexity and also reduce the overall computational expense for sensitivity analyses, albeit with some predictive uncertainty related to the empirical regression relations.
-
-%~~~~~~~~~~~~~~~~~ SUBSECTION sensitivity analyses ~~~~~~~~~~~~~~~~~
-\subsection{Sensitivity Analyses using Fit-Independent Statistics} \label{ssec:MM_sensitivty}
-
-All sensitivity simulations were initialized with the $h$ distribution from the end of the model spin up and were simulated and post-processed following the approach outlined in section \ref{sssec:MM_rech_scenarios_post_processing}. In summary, each simulation comprises two concurrent model evaluations that are run with the same parameter sets (i.e., a recharge and a no-recharge model evaluation) which were then differenced to isolate recharge stresses from other model stimuli, including transient model responses to changes in parameter values. Unlike the exploratory simulations described in section \ref{sssec:MM_relations}, which used a single no-recharge model evaluation for differencing with all 100 recharge model evaluations, each simulation used for sensitivity analyses required a combination of unique recharge and no-recharge model evaluations in which parameter values were similarly adjusted for both model evaluations.   
-
-%~~~~~~~~~~~~~~~~~ sub-subsection DSS ~~~~~~~~~~~~~~~~~
-\subsubsection{Local Sensitivity Analyses} \label{sssec:MM_local_sensitivity}
-Parameter sensitivities were evaluated locally using the dimensionless-scaled sensitivity ($DSS$) and composite-scaled sensitivity ($CSS$) metrics, which are a computationally-frugal screening methods used to compare the relative importance of different parameters to the estimation of a simulated model output \citep{hill2007effective}. $DSS$ for simulated output $i$ and parameter $j$ are calculated as 
-
-\begin{equation}
-    DSS_{ij} = \bigg(\frac{\partial y_i^'}{\partial b_j}\bigg)\bigg\rvert_\textbf{b}\left|b_j\right|\omega_{ii}^{1/2}
-    \label{dss_eqn}
-\end{equation}
-
-\noindent where $y_i^'$ is the $i$th simulated output, $b_j$ is the $j$th estimated parameter, $\partial {y_i^'}/\partial b_j$ is the derivative (i.e., the sensitivity) of the simulated output with respect to the $j$th parameter, $\textbf{b}$ is the vector of parameter values at which sensitivities are evaluated, and $\omega_{ii}^{1/2}$ is the weight of the $i$th simulated output. For this work, simulated outputs were $P\textsubscript{30d}$, $R\textsubscript{30d}$, $V\textsubscript{fines, 90d}$ for each simulation and each were weighted equally at unity.
-
-Composite-scaled sensitivities ($CSS$) were calculated to estimate the total amount of sensitivity provided by each parameter across multiple sites and for multiple model outputs
-
-\begin{equation}
-    CSS_{j} = \displaystyle\sum_{i=1}^{n}\bigg[{(DSS_{ij})^2}\big\rvert_\textbf{b}/{n}\bigg]^{1/2}
-    \label{css_eqn}
-\end{equation}
-
-\noindent where $DSS_{ij}$ is from equation \ref{dss_eqn}, and $n$ is the total number of simulated outputs $i$ associated with parameter $j$. 
-
-$DSS$ were estimated for simulated model outputs $R\textsubscript{30d}$, $P\textsubscript{30d}$ and $V\textsubscript{fines, 90d}$ by perturbing each hydraulic-property parameter ($n = 24$) by 10\% of its total range (Table \ref{table:DSS_par_ranges}). Results from the exploratory simulations show that recharge response is highly dependent on site choice, so $DSS$ was evaluated at four representative sites which span a large range of recharge potential. Each of the four representative sites were chosen to correspond with the 25th, 50th, 75th and 95th percentile of recharge potential, as estimated by $GPP$. These sites are hereto referred to as q25, q50, q75, and q95, respectively. A total of 96 simulations [i.e., 24 parameters (Table \ref{table:DSS_par_ranges}) $\times$ 4 sites] were required to estimate $DSS$ for the three model outputs for each simulation ($R\textsubscript{30d}$, $P\textsubscript{30d}$ and $V\textsubscript{fines, 90d}$). For example, a $DSS$ estimate requires perturbation of a given hydraulic-property parameter (i.e., $\partial b_j$) at a given site by a percentage of the parameter range (e.g., by 10\%) to evaluate the response in a model output (i.e., $\partial y_i^'$). To incorporate $GPP$ in $DSS$ analyses, an alternative approach was developed using the predictive regression relation between $GPP$ and $R\textsubscript{30d}$ rather than by performing an additional model evaluation. Accordingly, a 10\% perturbation of $GPP$ can be estimated using the predictive regression relation ($R\textsubscript{30d} = 0.0954 \times GPP + 13.432$; Fig. \ref{fig:proxy_par_relation}a) to approximate the corresponding response in $R\textsubscript{30d}$ (i.e., $\partial y_i^'$). $CSS$ were calculated for $R\textsubscript{30d}$, $P\textsubscript{30d}$ and $V\textsubscript{fines, 90d}$ by combining $DSS$ estimates for each model output across sites q25, q50, q75, and q95 for each of 24 model parameters and for $GPP$.
-
-%~~~~~~~~~~~~~~~~~ sub-subsection method of morris ~~~~~~~~~~~~~~~~~
-\subsubsection{Global Sensitivity Analyses} \label{sssec:MM_global_sensitivity}
-A measure of global sensitivity was provided by the method of \cite{morris1991factorial}, which relies on the calculation of elementary effects, i.e., local derivatives sampled one-at-a-time (OAT) on a grid that covers the parameter space. The method of Morris creates a trajectory through the parameter space by perturbing each parameter $x\textsubscript{j}$ along a grid by a step $\Delta\textsubscript{j}$. A sequence of $p$ perturbations is required to obtain one trajectory for a model with $p$ parameters. For each trajectory, the elementary effect for a single parameter, $EE_j$, is calculated as the ratio of the perturbation in model output to the perturbation of the parameter
-
-\begin{equation}
-EE\textsubscript{j} = \frac{f(x\textsubscript{1},...,x\textsubscript{j}+\Delta\textsubscript{j},...,x\textsubscript{p})-f(x)}{\Delta\textsubscript{j}}
-\label{morris_eqn}
-\end{equation}
-
-\noindent where $f(x)$ is the evaluation of the function at the prior point in the trajectory. Calculating the elementary effects for $p$ parameters using a single trajectory requires $p+1$ simulations. Because the elementary effect for any single trajectory does not account for interactions between parameters and depends strongly on the location of the initial point, $x$, in the parameter space, the method of Morris performs the OAT approach over multiple trajectories, $N$, within the parameter space using a factorial sampling approach. A variation of the original approach was employed to resolve issues related to opposite signs of elementary effects affecting the calculation of total-order sensitivity \citep{campolongo2007effective}, in which the total-order sensitivity of each parameter, $\mu_j^*$, was calculated as the mean of the absolute values of $N$ elementary effects
-
-\begin{equation}
- \mu_j^* = \frac{1}{N}\displaystyle\sum_{k=1}^N \left|EE_j^k\right|
- \label{mu_eqn}
-\end{equation}
-
-Unlike $DSS$ approaches, the method of Morris required significantly greater computational resources for an equivalent number of parameters, so a sub-set of three parameters  were included in the Morris approach. Results from local sensitivity analyses suggest that $K\textsubscript{s}$ and $GPP$ are relatively important parameters for recharge potential. Computational expense was further reduced by pairing parameters, i.e., $K\textsubscript{s}$ of gravel and sand, and of muddy-sand and mud, effectively reducing these four parameters into two describing 'coarse-' and 'fine-texture' facies, respectively. By pairing parameters, $K\textsubscript{s}$ of gravel and sand (and of muddy sand and mud) are perturbed within their respective parameter ranges together, reducing the total number of parameters from five to three, requiring four ($p+1$) simulations to calculate the elementary effect for a single trajectory. Sensitivity indices were calculated using a sample size of $N = 20$ trajectories, resulting in a total of 80 simulations. \cite{herman2013method} demonstrated that the method of Morris with $N = 20$ trajectories produced similar sensitivity results to the Sobol' method \citep{sobol2001global} with $>$2 orders-of-magnitude fewer model evaluations.
-
-To further reduce the computational expense, the total simulation time was reduced from 90 to 10 days, during which recharge was applied for the entire simulation. Sensitivity indices, Morris $\mu_j^*$, were only evaluated with respect to the effective recharge rate at the end the 10-day simulation period, $R\textsubscript{10d}$ [cm d\textsuperscript{$-1$}]. Morris $\mu_j^*$ was not evaluated with respect to other model outputs describing pressure perturbation or volume of recharge accommodated by fines because $GPP$ was determined to be an inadequate predictor of these model outputs.
-
-To incorporate $GPP$ in the Morris framework, a novel approach was developed in which the location of the sampling site was varied to correspond with the requisite $GPP$ parameter choice. For example, if a hypothetical sensitivity analysis required evaluation of the model with $GPP$ at the 50th quantile (q50; i.e., the median value), the model would be run using the site with the nearest corresponding $GPP$ value from the 100 exploratory sites described in section \ref{ssec:MM_exploratory_sims}. In this way, the variability of $GPP$ as identified in the exploratory simulations can be sampled directly  by simply varying the location of the recharge site within the domain. The Morris approach was implemented with open-source library developed by \cite{herman2017salib}.
-
-%~~~~~~~~~~~~~~~~~ RESULTS ~~~~~~~~~~~~~~~~~
-%~~~~~~~~~~~~~~~~~ SUBSECTION Exploratory Simulations ~~~~~~~~~~~~~~~~~
-\section{Results and Discussion} \label{sec:RD}
-\subsection{Exploratory Simulations} \label{ssec:R_exploratory_sims}
-Results from the exploratory simulations at the 100 selected sites show a wide range of $R\textsubscript{30d}$, $P\textsubscript{30d}$, and $V\textsubscript{fines, 90d}$ across sites (Fig. \ref{fig:box_plots}). $R\textsubscript{30d}$ varied over 2 orders of magnitude and were non-normally distributed, with a maximum, minimum, and mean value of 66.4, 0.5, and 8.6 cm d\textsuperscript{-1}. $P\textsubscript{30d}$ were similarly non-normally distributed and also showed a large range, varying over 4 orders of magnitude. Maximum, minimum, and mean $P\textsubscript{30d}$ were 1.6 $\times$ 10\textsuperscript{5}, 33, and 1.9 $\times$ 10\textsuperscript{3} m\textsuperscript{3}, respectively. These results highlight that a small number of sites have outsize recharge potential compared with most of the landscape. $R\textsubscript{30d}$ and $P\textsubscript{30d}$ were positively correlated ($r > 0.70$), demonstrating the physical relation between these recharge benefits. The proportion of recharge accommodated by fine-texture facies ($V\textsubscript{fines, 90d}$) also showed large variability across sites, ranging from 0.13 to 1.00, with a mean value of 0.69. The high proportion of $V\textsubscript{fines, 90d}$ observed here is consistent with previous findings that suggest that fine-texture facies are the largest reservoir for MAR in this aquifer system \citep{maples_2019}. $V\textsubscript{fines, 90d}$ was negatively correlated with both $R\textsubscript{30d}$ and $P\textsubscript{30d}$ ($r > 0.70$), which indicates that when interconnected, coarse-texture pathways are present, a greater proportion of MAR is accommodated in the coarse-texture aquifer system.
-
-%% FIGURE 4
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=7.75cm]{ch2_figs/Fig_04_080619_HESS.pdf}
-\caption{Box plots of the (a) 30-day average recharge rate, $R\textsubscript{30d}$ and (b) 30-day pressure perturbation area of influence, $R\textsubscript{30d}$ for all exploratory simulations ($n = 100)$. Additionally, sites were parsed according to whether there was vertical interconnection of coarse-texture facies from land surface to the initial water table depth (i.e., interconnected sites, $n = 23$), or whether sites did not have interconnection of coarse-texture facies (i.e., disconnected sites, $n = 77$). For each box, the red horizontal line indicates the median, and the bottom and top edges of the box indicate the 25th and 75th percentiles, respectively. The whiskers extend to the most extreme data points not considered outliers, and the outliers are plotted individually using the '+' symbol.}
-\label{fig:box_plots}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{ch3_figs/study_site_water_budget_riv.pdf}
+	\caption{The TLB overlies an agriculturally intensive sedimentary aquifer in California's southern Central Valley. Significant changes are observed in selected decadal hydrologic year water budget terms derived from C2VSim at (A) early-groundwater-development (not to be confused with pre-groundwater-development) and (B) post-groundwater-development timescales in the TLB. Notably, gaining streams transition to losing streams, and increases are observed in pumping, evapotranspiration (ET), and recharge (from diversions and natural sources, like streams, lakes, and watersheds). All terms are aggregated at the scale of the TLB, except for subsurface inflow, which is calculated at the northern TLB boundary. Note that this is not the TLB groundwater budget (Table \ref{tab_gwb}) nor the land surface and rootzone budget (SI Appendix Table \ref{ap_b_lsb}), but rather, a combination of ground and surface water budget terms that illustrate hydrologic change and show the main inputs (recharge) and outputs (pumping and evapotranspiration). Major rivers (shown in blue) from north to south include the San Joaquin, Kings, Kaweah, Tule, and Kern. Minor streams and tributaries are not shown.}
+	\label{fig:tb_study_site}
 \end{figure}
 
-%~~~~~~~~~~~~~~~~~ sub-subsection connectivity ~~~~~~~~~~~~~~~~~
-\subsubsection{Influence of Coarse-Texture Connectivity} \label{sssec:R_connectivity}
+Although a TLB water budget from pre-development times is not available, the surface and subsurface hydrologic characteristics of the basin, which is a part of the larger Central Valley sedimentary basin (Figure \ref{fig:tb_study_site}), indicate that it was hydrologically open. We first discuss the surface hydrologic aspects. Despite the shallow topographic depression in which Tulare Lake used to exist, the freshwater lake periodically filled up and overflowed northward into the San Joaquin River \citep{grunsky1898irrigation, Davis1959}, providing an outlet for any accumulated salts. Reconstructions of historical Tulare Lake level indicate that in 19 of the 29 years from 1850 to 1878, it filled up and flowed out of the basin to the north \citep{USBR1970}. This water and salt exit via intermittent surface inundation would be different than, say, baseflow to a stream, but would accomplish the same flushing function. No overflows are documented after 1878 due to the diversion of tributary waters for agricultural irrigation and municipal water use \citep{ecorp2007}. 
 
-Of the 100 exploratory sites, 23 were shown to have interconnected coarse-texture gravel and sand facies from land surface to the initial water table depth. $R\textsubscript{30d}$, $P\textsubscript{30d}$, and $V\textsubscript{fines, 90d}$ were parsed according to whether they were interconnected (Fig. \ref{fig:box_plots}). Results show that mean $R\textsubscript{30d}$ and $P\textsubscript{30d}$ were 2.2$\times$ and 2.3$\times$ greater, respectively, for interconnected sites than for non-interconnected sites (14.7 vs 6.7 cm d\textsuperscript{-1}, and 1.6$\times$10\textsuperscript{4} vs. 6.9$\times$10\textsuperscript{3} m\textsuperscript{3}, respectively). Mean $V\textsubscript{fines, 90d}$ were 1.3$\times$ greater for non-interconnected sites than for interconnected sites.  Distributions of $R\textsubscript{30d}$ and $P\textsubscript{30d}$ for interconnected and non-interconnected sites differed significantly according to the two-sample Kolmogorov-Smirnov test. Interconnected and non-interconnected distributions of $V\textsubscript{fines, 90d}$ were not significantly different.
 
-These results indicate that sites with interconnected coarse-texture facies have greater $R\textsubscript{30d}$ and $P\textsubscript{30d}$ potential. However, this metric is not entirely diagnostic of recharge potential. As shown in Fig. \ref{fig:box_plots}a,b, some interconnected sites exhibited low $R\textsubscript{30d}$ and $P\textsubscript{30d}$. This is likely because some interconnected sites with shallow water table depths have limited unsaturated pore volume to accommodate large recharge volumes. In addition, the interconnection metric described herein only describes vertical interconnection of coarse-texture facies for unsaturated-zone cells that are vertically coincident with the recharge site, and does not consider whether these coarse facies connect with the greater aquifer network outside of the unsaturated-zone control volume. Results also show that some seemingly disconnected sites have large recharge potential. Indeed, the interconnection metric described here does not account for any lateral interconnection from land surface to the greater aquifer network, which could explain this behavior. In reality, the simplified estimator of connectivity used here likely underestimates the number of interconnected sites.
+\bgroup
+\setlength{\tabcolsep}{1.3em}
 
-%~~~~~~~~~~~~~~~~~ SUBSECTION correlations ~~~~~~~~~~~~~~~~~
-%~~~~~~~~~~~~~~~~~ sub-subsection correlation matrices ~~~~~~~~~~~~~~~~~
-\subsection{Recharge Metrics} \label{ssec:R_rech_metrics}
-\subsubsection{Correlation Matrices} \label{sssec:R_correlation_matrix}
- A matrix of correlations (Pearson's $r$) of pairs of site characteristics and simulated outputs for the 100 exploratory simulations was generated to better understand the relationships between variables (Fig. \ref{fig:correlations}). Strong correlation ($r > 0.70$)  was observed for 6 of 52 pairs of site characteristics and simulated outputs. Strong correlation was also observed among many site characteristics and among the majority of simulated outputs (i.e, collinearity), which can make the choice of an optimal proxy parameter more challenging. Site characteristics that include $K\textsubscript{harm}$ were not shown in the correlation matrix because we were not able to improve normality of the distribution these data with a Log\textsubscript{10} data transformation; however, additional correlation metrics (Fig. \ref{fig:correlations_ranked}) indicate that site characteristics that include $K\textsubscript{harm}$ may also be strongly correlated.
- 
- %% FIGURE 5
-\begin{figure}[t]
+% 01_mm_plots_tables.R in F:/ ... POst_QE_Research/DISSERTATION/01_mm
+% average annual GW budget table - 1961-10-31 to 2001-09-30
+% but a lot is added in the caption and table footnote, so beware changing this!!
+% in MCMM.R:
+% mg_to_metric_tons(sum(annual_fluxes$mass_flux[n]))/1e6, where n = the term desired
+
 \centering
-\includegraphics[width=9.0cm]{ch2_figs/Fig_05_080619_HESS.pdf}
-\caption{Correlations (Pearson's $r$) for all combinations of site characteristics and model outputs. Correlations among site characteristics are bounded by a solid red box, and correlations between site characteristics and model outputs are bounded by a dashed red box.}
-\label{fig:correlations}
+\begin{threeparttable}
+	\begin{table}[H]
+		\caption{Average annual groundwater and salt budget for the TLB (equation \ref{eq: gw_budget}) from C2VSim (1961-10-31 to 2001-09-30), and the modified no-overdraft budget used in this analysis (equation \ref{eq: gw_budget_mod}).}
+	
+		\begin{tabular}{rlrrrr}
+			\label{tab_gwb}
+			
+			
+			
+			& \textbf{Source} & $\bm{Q \: \: (km^3/yr)}$ & $\bm{C \: \: (mg/L)}$ & $\bm{m \: \: (Metric \: Mtons)}$ & \\ 
+			\hline
+			\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{\textbf{Historical budget}}}}
+			& $R$ & 2.451 & 32.5 & 8.027E-02 & \\
+			& $B$ & 0.236 & 32.5 & 7.475E-03 \\ 
+			& $C$ & 0.572 & 32.5 & 1.852E-02 \\ 
+			& $I$ & 0.011 & 32.5 & 3.250E-04 \\ 
+			& $P$ & -6.761 & * & * \\ 
+			& $N$ & 1.883 & * & * \\ 
+			& $RWI$ & - & - & * & \\ 
+			& $\Delta S$ & -1.608 &  &  \\ 
+			
+			\hline
+			
+			\parbox[t]{2mm}{\multirow{9}{*}{\rotatebox[origin=c]{90}{\textbf{Alternate budget}}}}
+			& $R$ & 2.451 & 32.5 & 8.027E-02 & \\ 
+			& $B$ & 0.236 & 32.5 & 7.475E-03 & \\ 
+			& $C_{alt}$ & 0 & - & - & \\
+			& $M$ & 0.678 & 32.5 & 2.204E-02 & \\ 
+			& $I$ & 0.011 & 32.5 & 3.250E-04 & \\ 
+			& $P_{alt}$ & -5.259 & * & * & \\ 
+			& $N$ & 1.883 & * & * & \\ 
+			& $RWI$ & - & - & * & \\ 
+			& $\Delta S_{alt}$ & 0 & - & - & \\ 
+			\hline
+			\multicolumn{4}{l}{\scriptsize{* non-constant term calculated at each time step}} 
+		\end{tabular}
+		
+		
+		$Q$ is the volumetric flow rate, $C$ is the concentration of TDS, and $m$ is the mass of salt. Groundwater budget terms are:
+		%$W$ = stream gain, 
+		$R$ = recharge from streams, lakes, and watersheds, 
+		%$L$ = lake gain,
+		$B$ = lateral mountain front recharge from streams and watersheds,
+		$C$ = subsidence flow,
+		$C_{alt}$ = subsidence flow to eliminate overdraft (along with $M_{alt}$ and $P_{alt}$),
+		$M$ = managed aquifer recharge to eliminate overdraft (along with $C_{alt}$ and $P_{alt}$), 
+		$I$ = subsurface inflow from the north,
+		$P$ = groundwater pumping,
+		$P_{alt}$ = alternate groundwater pumping to eliminate overdraft (along with $M$ and $C_{alt}$),
+		$N$ = net deep percolation (recharge from the land surface through vadose zone and into saturated groundwater),
+		$RWI$ are rock-water interactions.
+		$\Delta S$ = change in groundwater storage.
+		$\Delta S_{alt}$ = change in groundwater storage for the modified budget. 
+		The modified budget eliminates overdraft by reducing $P$ to $P_{alt}$ according to equation (\ref{eq: pumping_in_cells}), and introducing recharge $M$. 
+		
+	\end{table}
+	
+\end{threeparttable}
+
+\egroup
+
+\clearpage
+
+
+The subsurface characteristics also indicate open hydrologic conditions. There is significant evidence that groundwater flowed northward into the adajacent San Joaquin Basin in pre-development times (circa early 1900s). This evidence includes (1) historical measurements of Central Valley groundwater TDS showing lowest TDS values in the TLB, with increasing TDS to the north into the San Joaquin Basin \citep[Table 23]{mendenhall1916ground}, consistent with northward groundwater flow and the accompanying down-hydraulic-gradient groundwater chemistry evolution that is routinely observed in sedimentary basins, e.g., \citep{palmer1984geochemical}; (2) the regional, south-to-north topographic gradient to provide the driving force for gravity-driven flow in the same direction, out of the TLB, even if there existed shallower, local groundwater flow components from north to south at the subtle depression that collected Tulare Lake (e.g., refer to classic work of \cite{toth1970conceptual} on topographically controlled, gravity-driven flow systems); and (3) horizontal stratification of fine- and coarse-textured sediments in the Central Valley sedimentary basin that results in much lower effective hydraulic conductivities in the vertical direction than the horizontal e.g., \citep{weissmann2002dispersion, Faunted.2009}, thereby minimizing influence of subtle topographic features like the Tulare Lake depression on all but the shallowest groundwater flow components (e.g., refer to \cite{toth1970conceptual} and related work).
+
+Summarizing, our conceptual model of the pre-development TLB hydrologic system is one in which the subtle topographic depression that collected the typically 12 $m$ deep Tulare Lake \citep{preston1990tulare}, together with the periodic overflow of the lake and discharge to the north, resulted in a partly open surface drainage system. Further, the larger topographic and geologic structure of the basin, together with groundwater chemistry evidence, indicates there was net-northward groundwater flow, making the TLB groundwater system an open hydrologic basin in pre-development times.
+
+Parts of TLB may have been salinating to some degree before development due to shallow evaporation of groundwater and surface water (case (3) in Introduction), in contrast to the ABCSAL process that we describe in this paper. Portions of the TLB closed under pre-development conditions would lead to salt accumulation in and near its playas (e.g., Buena Vista Lake, Tulare Lake): an evaporative boundary of the basin and endpoint to all surface water discharge (case (2) above). This is consistent with observations of high salinity near and in these lakebeds \citep{Hansen2018, Fujii1995}. Although there exist local areas of shallow groundwater with elevated salinity on the west side of the TLB, these areas are typically associated with salt mobilization out of alluvial sediments originating from marine sedimentary source rocks in the Coast Ranges, and not from basin closure.
+
+By the time regional groundwater levels were mapped in the early twentieth century, the TLB showed signs of closure: groundwater flow across the northern boundary was minimal, and flowed north to south, into the TLB \citep{mendenhall1916ground, ingerson1941hydrology}. Although pre-groundwater-development (pre-1850) water budgets are unavailable, two large-scale, regional groundwater flow models of the Central Valley \citep{Brush2013, Faunted.2009} provide decadal groundwater budgets for early- (1932-1941) and post-groundwater-development (2000-2009) timescales.
+
+Relative to the decadal hydrologic water year budgets of early-groundwater-development, post-groundwater-development water budgets show much higher pumping, crop evapotranspiration, and recharge \citep{Brush2013}. As groundwater levels fell, gaining streams transitioned to losing streams, and subsurface inflow along the northern basin boundary slightly increased (Figure \ref{fig:tb_study_site}). Groundwater discharge to surface water almost entirely ceased. Surface water exits the basin in rare years when the Kings, Kaweah, and Kern rivers produce sufficiently large floods, mostly runoff from the surrounding uplands. Evapotranspiration from irrigated crops has become the dominant water outflow, and this flow is much greater than it was during early-groundwater-development \citep{Brush2013}. Taken together, these hydrologic changes have transitioned the TLB into an anthropogenically closed groundwater system with commensurate onset of ABCSAL.  
+
+
+
+
+%
+%---------------- MODEL DEVELOPMENT ------------------%
+%
+\subsection{Mixing Cell Model Development}
+\label{ss_2_3}
+
+Given the large space and time scales of interest, and the large-scale effectively one-dimensional vertical flow conditions in the basin due to pumping and recharge, we used a lumped parameter approach based on upscaling water fluxes of a fully three-dimensional groundwater model. % was employed as an appropriately parsimonious modeling tool. 
+Although local hydrogeologic conditions vary and can lead to locally complex three-dimensional flow and transport, our focus here is on large scale salinization behavior and time scales, thus an upscaled model was appropriately parsimonious. %which is well-captured with a one-dimensional approach. %We assess results against existing fully three-dimensional flow and salt transport models that also address aquifer heterogeneity, albeit at spatial scales significantly smaller than the TLB, to ascertain the appropriateness of the mixing cell approach chosen here.
+Moreover, upscaling the advection dispersion equation to regional scales remains a scientific and computing challenge \citep{guo2019adaptive, guo2019upscaling} beyond the scope of this study.
+
+Mixing cell models, also called discrete-state compartment models, are computationally inexpensive and have successfully been used in place of complex flow models to provide rapid, first-order estimates of water budgets, mass flux, and contaminant concentrations \citep{Campana1975, Campana1984, Campana1987, Carroll2008, Kirk1990}. A mixing cell approach segments the system into a set of control volumes. In each time step of the model, water and salt masses are passed between the cells, and new concentrations are calculated at each cell. Here, we represent the TLB groundwater system through a one-dimensional, vertical column of discrete control volumes (cells), given the predominance of vertical downward flow at the aquifer system scale. We assume that each cell consists of a fraction $f$ of sediments participating in groundwater flow and salt transport with porosity $\eta$. We neglect flows and rock-water interactions in sediments not participating in transport, of proportion $1-f$ (more details below). The thickness of each cell is chosen such that the advective travel time ($\Delta t$) of water and salt downward through each cell is exactly 50 years (synchronized tipping bucket model, see equation \ref{eq: discretization}) below, thus full mixing occurs at each cell even as the groundwater flow velocity decreases with depth. To determine the mixing cell parameters, water fluxes throughout the vertical domain (e.g., recharge, vertical flow rate, pumping) are obtained by averaging (i.e., mass-conservative upscaling) the TLB portion of a fully three-dimensional, heterogeneous groundwater flow model of the Central Valley \citep{Brush2013}.  
+
+The salt accumulation in a mixing cell at a discrete time $k$ is a mass balance of the initial mass ($m_k$) $[M]$, incoming mass ($m_k^{in}$) and exiting mass ($m_k^{out}$).  
+
+\begin{equation}
+m_{k+1} = m_k + m_k^{in} - m_k^{out}
+\label{eq: mass_balance}
+\end{equation}  
+
+Input and output mass terms can be calculated for each term in the water and salt budget (Table \ref{tab_gwb}), from their input and output concentration ($C_k^{in}$, $C_k^{out}$ $[ML^{-3}]$) and input and output volumetric flow ($Q_k^{in}$, $Q_k^{out}$ $[L^3]$):
+
+\begin{equation}
+m_k^{in} = C_k^{in} Q_k^{in}   \: \: ; \: \:  m_k^{out} = C_k^{out} Q_k^{out}
+\label{eq: m_in_cell}
+\end{equation}
+
+Finally, the concentration in a mixing cell at time step $k$ is:
+
+\begin{equation}
+C_{k+1} = \frac{m_k + m_k^{in} - m_k^{out} + \rho V}{V f \eta}
+\label{eq: c_in_cell}
+\end{equation}
+
+
+where $V$ $[L^3]$ is the total cell volume, $f$ $[-]$ is the fraction of sediments actively participating in groundwater flow and salt transport, $\eta$ $[-]$ is the porosity of those sediments, and $\rho$ $[ML^{-3}]$ is rock-water interaction coefficient. The fraction $f$ is found to be 0.99 \citep{Brush2013}, which in the C2VSim model includes all textures but the Corcoran clay, a relatively impermeable clay layer comprising around 1\% of the model volume. Porosity, $\eta$, is set to 0.40, the average for the TLB. Coarse and fine sediment porosities do not appreciably differ, averaging around 0.40 with an interquartile range of 0.39 - 0.41 for all textures, as demonstrated in abundant core analyses \citep{Johnson1968}, and discussed further in SI Appendix Table \ref{ap_b_porosity_boot} and Figure \ref{ap_b_porosity_boot_hist}; hence, we did not consider varying $\eta$ across aquifer layers. 
+
+To account for mass contribution from natural dissolution of geologic minerals, we define a zero order source term called the rock-water interaction coefficient $\rho$ $[ML^{-3}]$. Rock dissolution along groundwater flow paths is well documented in sedimentary aquifers \citep{palmer1984geochemical, oetting1996regional, toth1999groundwater, mahlknecht2004groundwater, cloutier2008multivariate}. We obtain a representative mass dissolution rate from the slope of a representative TDS profile for the TLB from land surface to the base of fresh water \citep{Williamson1989, Kang2016}. The product of the rock-water interaction coefficient $\rho$ and the cell volume ($V$) is the additional mass accumulated from rock-water interactions in the cell. We also evaluate an alternative scenario with $\rho =$ 0. 
+
+We solve (\ref{eq: c_in_cell}) sequentially over the stacked mixing cells from top to bottom and across seven 50-year time steps from 1960 (initial condition) to 2310 (synchronized tipping bucket approach) to obtain the variation of salinity with depth and time. 
+
+The discretization, $\Delta z_j$, of the stacked series of mixing cells (Figure \ref{fig:conceptual_model_mm}) is driven by the time step, $\Delta t$ = 50 years, and the representative basin-scale vertical Darcy velocity, $q_j$, within the $j^{th}$ mixing cell:
+
+\begin{equation}
+\Delta z_j =  \frac{q_j}{f \eta}  \cdot  \Delta t
+\label{eq: discretization}
+\end{equation}
+
+Since $q_j$ is depth dependent, we solve (\ref{eq: discretization}) sequentially for $j$ = 1...m, beginning at the water table to compute the vertical discretization of the stacked mixing cell model. Here, we assume that the inflow into a mixing cell, $q_{j-1, j}$ is representative of the flow rate $q_j$ throughout the cell. Thus -- to compute cell thicknesses with equation (\ref{eq: discretization}) -- the pumping, $P_j$, lateral basin flow $I_j$, or subsidence flow $C_j$ (Figure \ref{fig:conceptual_model_mm}) conceptually flow into or out of the mixing cell bottom. The following sections provide further details on the parametrization of (\ref{eq: c_in_cell}) and (\ref{eq: discretization}).
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{ch3_figs/mm_conceptual_model.pdf}
+	\caption{Conceptual land-rootzone model and groundwater mixing cell model with surface area $A$, porosity $\eta$, aquifer fraction $f$, rock-water interaction coefficient $\rho$, and $m$ cells. The cell thickness $\Delta z_j$ is given per equation (\ref{eq: discretization}), where average linear velocity $v_j$ = $q_j / f \eta$. The cell volume $V_j$ is the total bulk volume of the rock including aquifer and non-aquifer material. The TDS in cell $j$ is calculated by equation (\ref{eq: c_in_cell}). The land and root budget (SI Appendix Table \ref{ap_b_lsb}) accounts for pumping ($P$), surface water diversions ($D$), precipitation ($Pt$), evapotranspiration ($E$), runoff ($Ro$), return flow ($Rf$), and net deep percolation ($N$). $N$ enters the top of the groundwater mixing cell model along with recharge from streams, lakes, and watersheds ($R$), boundary inflow from mountain front recharge ($B$), and managed aquifer recharge ($M$). Internal flows from subsurface inflow from the north ($I$), subsidence flow ($C$), and pumping ($P$) are distributed proportional to cell volume, e.g., equation (\ref{eq: pumping_in_cells}). The average annual groundwater and salt budget is reported in Table \ref{tab_gwb}.}
+	\label{fig:conceptual_model_mm}
 \end{figure}
-%~~~~~~~~~~~~~~~~~ sub-subsection ranked correlations ~~~~~~~~~~~~~~~~~
-\subsubsection{Ranked Correlations} \label{sssec:R_ranked_correlations}
- Additional correlation metrics (Pearson's $r$, Spearman's rho, and Kendall's tau) between $R\textsubscript{30d}$ and site characteristics were ranked and are shown in Fig. \ref{fig:correlations_ranked}. Results show that site characteristics that include some variation of $K\textsubscript{arith}$, $K\textsubscript{geom}$, or $K\textsubscript{harm}$ were, in general, more correlated with $R\textsubscript{30d}$ than site characteristics that only include $WTD$, $UZ\textsubscript{coarse}$, and $Surf\textsubscript{coarse}$. $K\textsubscript{geom} \times WTD$ was, on average, most correlated with $R\textsubscript{30d}$.
- 
-%% FIGURE 6
-\begin{figure}[t]
-\centering
-\includegraphics[width=9.0cm]{ch2_figs/Fig_06_080619_HESS.pdf}
-\caption{Ranked correlations (Pearson's $r$, Spearman's Rho, and Kendall's Tau) of site characteristics with 30-day average recharge rate ($R\textsubscript{30d}$). $\dagger$Pearson's $r$ was not evaluated for site characteristics where the normality of the distribution could not be improved with a Log\textsubscript{10} data transformation.}
-\label{fig:correlations_ranked}
-\end{figure} 
- 
-In general, site characteristics that included $K\textsubscript{geom}$ and $K\textsubscript{harm}$ were slightly more correlated with $R\textsubscript{30d}$ than site characteristics that included $K\textsubscript{arith}$. We speculate that this behavior is related to the dominantly vertical flow direction of recharge across typically horizontal facies configurations. Previous work has shown that $K\textsubscript{geom}$ and $K\textsubscript{harm}$ best describe upscaled $K$ for these flow configurations in this domain \citep[Yunjie Liu, personal communication;][]{fogg1986groundwater}.
- 
-Interestingly, site characteristics that included only $WTD$, $UZ\textsubscript{coarse}$, and $Surf\textsubscript{coarse}$ were poorly correlated ($r < 0.20$) with $R\textsubscript{30d}$. This finding has important implications for determining MAR site suitability because many GIS-derived indices of recharge suitability rely solely on soil and/or surface geology to determine geologic suitability for recharge. These results suggest that even more detailed geologic descriptions that estimate deeper fractions of coarse-texture facies may not fully capture recharge potential. Instead, metrics that include some description of upscaled vertical $K$ appear to be most diagnostic of recharge potential.
 
-%~~~~~~~~~~~~~~~~~ SUBSECTION recharge extrapolation ~~~~~~~~~~~~~~~~~
-\subsection{Recharge Extrapolation} \label{ssec:R_rech_extrapolation}
 
-The relation between site-averaged $K\textsubscript{geom}\times DTW$ and $R\textsubscript{30d}$ was determined to be the best predictor and was used to predict $R\textsubscript{30d}$ for subsequent sensitivity analyses by treating $K\textsubscript{geom}\times DTW$ as a $GPP$ (Fig. \ref{fig:proxy_par_relation}a). The linear regression relation between $K\textsubscript{geom}\times DTW$ and $R\textsubscript{30d}$ was highly significant ($p < 0.01$), and correlation coefficients ($r^2$) showed that empirical regression explained 70\% of the variation in the data. $K\textsubscript{geom}\times DTW$ was the most correlated site characteristic with model outputs $P\textsubscript{30d}$ and $V\textsubscript{fines, 90d}$; however, linear regression relations for $K\textsubscript{geom}\times DTW$ and $P\textsubscript{30d}$ and $V\textsubscript{fines, 90d}$ were deemed insufficient for prediction  ($r\textsuperscript{2}< 0.40$) and were not incorporated in sensitivity analyses.
 
-%% FIGURE 7
-\begin{figure}[t]
-\centering
-\includegraphics[width=8cm]{ch2_figs/Fig_07_080619_HESS.pdf}
-\caption{(a) Relation between the geologic proxy parameter ($K\textsubscript{geom} \times WTD$), and the 30-day average recharge rate ($R\textsubscript{30d}$) for all exploratory simulations, where dashed lines indicate the 95\% confidence interval. (b) The relation is shown with $K\textsubscript{geom} \times WTD$ on a Log\textsubscript{10} scale, where red circles indicate the original and perturbed sites at which dimensionless scaled sensitivity ($DSS$) was estimated. (c) The inset illustrates the procedure for estimating the perturbed site (e.g., q75*) from the original site (e.g., q75) for $DSS$, using the regression relation, where $\partial b_j$ is the change in $K\textsubscript{geom} \times WTD$ and $\partial y'_i$ is the estimated corresponding change in $R\textsubscript{30d}$.}
-\label{fig:proxy_par_relation}
+%
+%---------------- BOUNDARY CONDITIONS ------------------%
+%
+\subsection{Boundary conditions, model parameters, and stochastic simulation}
+\label{ss_2_4}
+
+Initial conditions, boundary conditions, and model parameters are informed by the C2VSim groundwater flow model developed by the California Department of Water Resources \citep{Brush2013}, publicly available water quality data \citep{CSWRCB}, and previous field studies of the TLB. The following describes methods used to determine (1) water and salt budgets, (2) salt fluxes from evaporative concentration and pumped groundwater, (3) the groundwater velocity-depth profile, (4) the initial TDS-depth profile, and (5) spatial parameters and aquifer properties. Lastly, we discuss the simulation timescale and the role of stochastic simulation.
+
+%
+%---------------- SALT/WATER BUDGETS ------------------%
+%
+\subsubsection{Water and salt budgets}
+\label{ss_2_5}
+
+The water budget is based on C2VSim version 3.02, a 3 layer and 1,392 element, regional scale, finite-element groundwater flow model of California's Central Valley alluvial aquifer system \citep{Brush2013}. C2VSim is an application of the Integrated Water Flow Model (IWFM) \citep{Dogrul2018}, a water resources management and planning model that simulates surface water, stream-groundwater interaction, vadose zone flow, and groundwater flow. In the C2VSim model, California's Central Valley aquifer is separated into 21 subregions, and detailed land surface, root zone, and groundwater budgets for each subregion are calculated at monthly time steps from the 1923 to 2009 hydrologic years. The TLB is represented by subregions 14-21. Because of its detailed representation of surface-groundwater interaction, groundwater pumping, three-dimensional aquifer structure, and calibration, C2VSim was chosen as a reasonable representation of the TLB water budgets, groundwater velocities, and thus chosen to develop the mixing cell model. 
+
+The C2VSim model was run for the 40-year period from 1961-10-31 to 2001-09-30 to obtain an average annual TLB groundwater budget (an equivalent average annual landscape/root zone budget is provided in SI Appendix Table \ref{ap_b_lsb}). This post-groundwater development water management time frame is characterized by pumping and overdraft, in addition to wet, dry, above normal, below normal, and critical water year types. The C2VSim change in groundwater storage is defined as:
+
+\begin{equation}
+\Delta S = R + B + C + I + N - P
+\label{eq: gw_budget}
+\end{equation}
+
+where $\Delta S$ is change in groundwater storage [$L^3$], $R$ is basin recharge from streams, lakes, and watersheds [$L^3$], $B$ is lateral mountain front recharge from streams and watersheds [$L^3$], $C$ is subsidence based flow from clay compaction [$L^3$], $I$ is subsurface inflow from the north [$L^3$], $N$ is net deep percolation predominately from irrigation water [$L^3$], and $P$ is groundwater pumping [$L^3$]. The dominant budget terms are $P$, $R$, and $N$ (Table \ref{tab_gwb}). 
+
+To demonstrate ABCSAL under long-term conditions that avoid further overdraft (but not basin closure), we solve the mixing cell model equations (\ref{eq: c_in_cell}) - (\ref{eq: discretization}) alternatively for $\Delta S_{alt}$ = $\Delta C_{alt}$ = 0. Overdraft is eliminated with an alternate budget (Table \ref{tab_gwb}), which adds managed aquifer recharge, $M$ as inflow to the top mixing cell (Figure \ref{fig:conceptual_model_mm}), and reduces pumping to an alternative pumping level, $P_{alt}$. We add $M$ = 0.68 $km^3$, which was determined by a prior study as the maximum theoretical recharge available to the San Joaquin Valley (which includes the TLB), assuming unlimited infrastructure and water transfer ability \citep{Hanak2019}. Eliminating overdraft in this way effectively maintains a steady-state, saturated model that remains closed to due to lack of baseflow and groundwater outflow. Hence, the water level is immobile, but the salt front can move, thus simulating salt migration without drying out cells due to overdraft.
+
+Since $M$ represents captured surface water flow, we assign it the same TDS as natural water (32.5 $mg/L$), discussed below. We also simulated $M$ with a TDS of 0 $mg/L$ (SI Appendix Table \ref{ap_b_p_sim_m_with_tds_0}
+) and found that it had a negligible impact on resulting salt concentrations presented in this study (SI Appendix Table \ref{ap_b_p_sim}). 
+
+The alternate, reduced pumping $P_{alt}$, is computed by rearranging (\ref{eq: gw_budget}), adding $M$, and setting $\Delta S_{alt}$ = $C_{alt}$ = 0:
+
+\begin{equation}
+P_{alt} = R + B + M + I + N 
+\label{eq: p_alt}
+\end{equation}
+
+%[THE FOLLOWING ONLY IF YOU WERE TO USE YOUR CURRENT RESULTS FROM 2010 AS INITIAL CONDITIONS FOR YOUR RUNS USING (6) FOR THE PERIOD FROM 2010 to 2265:]
+%We use (5) to simulate the historic period 1960-2010, and the resulting concentration profile as initial condition for using (6) to solve for flow and transport conditions from 2010 - 2265.
+
+Therefore, the modified no-overdraft alternate groundwater budget is:  
+
+\begin{equation}
+\Delta S_{alt} = R + B + C_{alt} + M + I + N - P_{alt} = 0
+\label{eq: gw_budget_mod}
+\end{equation}
+
+
+The salt budget is calculated by assigning a TDS concentration to each term in the groundwater budget (\ref{eq: gw_budget_mod}). TDS for natural waters (e.g., stream, lake, and managed aquifer recharge budget terms) were determined to be 32.5 $mg/L$, by computing the median of the sampling distribution of sample TDS medians in TLB stream samples \citep{nwis} from 1951 - 2019 (SI Appendix Figure \ref{ap_b_nat_waters} and Table \ref{ap_b_gw_and_sw_c_summary}). Similarly, the TDS of diverted surface water was calculated to be 264.5 $mg/L$, as the average annual water and salt budget from 1985 - 1994 of two major surface water conveyance structures, the California State Water Project and the State Water Project \citep{Cismowski2006} (SI Appendix Table \ref{ap_b_gw_and_sw_c_summary}). Salt and water budgets are detailed in Table \ref{tab_gwb}. 
+
+
+%
+%---------------- VELOCITY DEPTH PROFILE ------------------%
+%
+\subsubsection{Velocity-depth profile}
+\label{ss_2_6}
+
+To explicitly solve for the mixing cell discretization (\ref{eq: discretization}), we fit a linear model to the C2VSim vertical Darcy velocities, reported for each finite element cell in the three layer C2VSim grid at the layer-to-layer boundaries. Due to increases in recharge and pumping caused by groundwater development and irrigation, the groundwater flow system is vertically dominant, and thus supports the application of a 1D, vertically oriented model. To account for groundwater velocity change in the alternate groundwater budget (\ref{eq: gw_budget_mod}), groundwater velocity is scaled proportional to the decrease in vertical volumetric flow rate, $P_{alt}/(P + C)$ = 0.85 (a 15 \% reduction). This is equivalent to the ratio of net downward volumetric flow in the alternate budget to the net downward volumetric flow in the historical budget (Table \ref{tab_gwb}). 
+
+\begin{equation}
+q(z) = (\beta_0 + \beta_1 z) \cdot \frac{P_{alt}}{P+C}
+\label{eq: vel}
+\end{equation}
+
+where $\beta_0$ and $\beta_1$ are the regression coefficients (SI Appendix Table \ref{ap_b_velocity_coefficients}), and the overall change (reduction) in velocity is -15\%. Mixing cell thickness (\ref{eq: discretization}) is determined by computing $q_j$ from (\ref{eq: vel}) for the depth, $z$, of the bottom of the mixing cell $j-1$ (top of cell $j$). To ensure consistency between the water balance terms in (\ref{eq: gw_budget}) and the approximated vertical velocity profile (\ref{eq: vel}), we compute the water mass balance error, $MB_{error, j}$, for each mixing cell $j$:
+
+\begin{equation}
+MB_{error, j} = q_{j-1,j} + I_j - P_{alt,j} - q_{j,j+1}
+\label{eq: mb_error_inside}
+\end{equation}
+
+For the uppermost mixing cell $j$ = 1, we rearrange (\ref{eq: mb_error_inside}), replacing $q_{j-1,j}$ for the sum of $N$, $R$ and $B$, and ignoring subsurface inflow $I_j$ (Figure \ref{fig:conceptual_model_mm}):
+
+\begin{equation}
+MB_{error, 1} = N + R + B + M - P_{alt,1} - q_{1,2}
+\label{eq: mb_error_top}
+\end{equation}
+
+The cell by cell budget and mass balance errors (which are effectively zero, and equivalent to the cell-by-cell change in storage) are reported in SI Appendix Table \ref{ap_b_cbc}.
+
+
+%
+%---------------- EVAPOCONCENTRATION ------------------%
+%
+\subsubsection{Evapoconcentration and pumping}
+\label{ss_2_7}
+
+Evapotranspiration removes a majority of total applied water, leaving behind dissolved solids in the crop rootzone that eventually migrate into groundwater. We model the evapoconcentration of TDS in total applied water (a combination of pumped groundwater and imported surface water diversions) by accounting for the application efficiency \citep{burt1997irrigation}, and thus the fraction of water that remains after evapotranspiration:  
+
+\begin{equation}
+C_N = \left( \frac{m_D + m_P}{V_D + V_P} \cdot \frac{1}{1 - E_a} \right) = \frac{C_{D,P}}{1 - E_a}
+\end{equation}
+
+$C_N$ is the concentration of net deep percolation after accounting for evapotranspiration. $m_D$ and $m_P$ are the mass, and $V_D$ and $V_P$ are the volume of surface water diversions ($D$) and pumping ($P$), respectively. $C_{D,P}$ is the concentration of total applied water from surface water diversions and pumping (calculated by mixing diversions and pumped groundwater in their respective proportions, see SI Appendix Table \ref{ap_b_velocity_coefficients}), and $E_a$ is the application efficiency, which has a measured regional average of 0.78 in the Tulare Basin \citep{sandoval2013spatial}, and agrees with measured values in hydrologically similar areas \citep{hanson1995, howell2003irrigation}. Alternatively, the C2VSim landscape/soil water budget (SI Appendix Table \ref{ap_b_lsb}) provides an application efficiency, $E_a$, of 0.88 when considering the amount of water infiltrating into the soil and deep percolation. For sensitivity analysis, we run simulations for several $E_a$ between 0.78 and 0.88 to further explore model outcome uncertainty.
+
+For the stacked mixing cell model, we assume that $P_{alt}$ in the no-overdraft groundwater budget (\ref{eq: p_alt}) is distributed uniformly with depth, from the water table to the last mixing cell $m$. Similarly, we assume lateral inflow $I$ is uniformly distributed across depth, from cell 2 to cell $m$. Therefore, pumping is proportional to mixing cell thickness, and the salt mass flux due to pumping during time step $k$ in mixing cell $j$ is:
+
+\begin{equation}
+m_{j,k} = \frac{V_j f \eta}{f \eta \sum_{i=1}^{n} V_i} P C_{j,k}
+\label{eq: pumping_in_cells}
+\end{equation}
+
+Noting that the $f \eta$ term drops out, and summing over all mixing cells at time $k$ gives the total mass flux from groundwater pumping ($m_{P, k}$):  
+
+\begin{equation}
+m_{P, k} = \sum_{j=1}^{n} \frac{V_j}{\sum_{i=1}^{n} V_i} P C_{j, k}
+\end{equation}
+
+
+
+
+%
+%---------------- INITIAL CONCENTRATION ------------------%
+%
+\subsubsection{Initial TDS-depth profile}
+\label{ss_2_8}
+
+The initial TDS-depth profile is determined by fitting a linear model to the pre-1960 TDS-depth measurements (Figure \ref{fig:predev_tds_bc}) \citep{CSWRCB}. Due to the influence of freshwater recharge at the land surface and rock-water interactions, pre-1960 TDS generally increases with depth, consistent with observations of increasing TDS with depth in the region \citep{Kang2016, Kharaka1992, Program2010}. \\  
+
+% in F:\Box Sync\Research\Post QE Research\DISSERTATION\01_mm\code\02_reanalyze_gw_tds.R
+% search predev_tds_bc.pdf
+% edited in ai/predev_tds_bc.ai
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{ch3_figs/predev_tds_bc.pdf}
+	\caption{Pre-1960 groundwater quality generally decreases with depth, reaching an average concentration of 1,000 mg/L at 526 $m$ deep. The initial TDS-depth concentration at $t$ = 0 is approximated by a linear model, shown as a black line. The transparent, grey rectangle shows the depth of the mixing cell model (212 $m$).}
+	\label{fig:predev_tds_bc}
 \end{figure}
 
-Domain-wide $K\textsubscript{geom}{\times}WTD$ was converted to $R\textsubscript{30d}$ using the predictive relation described above (Fig. \ref{fig:rech_extrapolation}). Results show that 84\% of the domain has $R\textsubscript{30d}$ potential $<$10 cm d\textsuperscript{-1}, while 6\% of the domain has $R\textsubscript{30d}$ potential $>$25 cm d\textsuperscript{-1}, and a small portion of the domain has $R\textsubscript{30d}$ potential $>$150 cm d\textsuperscript{-1}. These results show a large contrast between locations with high recharge potential and those with low recharge potential which supports previous findings indicating that a small fraction of the landscape has recharge potential that is orders-of-magnitude greater than the rest of the landscape \citep{maples_2019,fleckenstein2006river}. Deposition of IVF within the domain area has been documented by \cite{meirovitz2010thesis} and explains the presence of these high recharge potential locations.
 
-%% FIGURE 8
-\begin{figure}[t]
-\centering
-\includegraphics[width=9.0cm]{ch2_figs/Fig_08_080619_HESS.pdf}
-\caption{Domain-wide estimated distribution of 30-day average recharge rate $R\textsubscript{30d}$.}
-\label{fig:rech_extrapolation}
+%
+%-------- ENSEMBLE SIMULATION ------------%
+%
+\subsubsection{Ensemble simulation}
+\label{ss_2_9}
+
+We assign a uniform probability distribution to the parameters of which we are least certain and discrete values to those that are measured (SI Appendix Table \ref{ap_b_geometry}), then perform Monte Carlo simulation to generate an ensemble output. The mixing cell model is evaluated 1,000 times -- which the computational simplicity of a lumped model permits; modeling uncertainty in this way with a distributed parameter, 3D flow and transport model would be computationally prohibitive. Parameter ranges are estimated from literature for rock-water interaction coefficient \citep{Williamson1989, Kang2016}, detailed in section \ref{ss_2_3}. As described in section \ref{ss_2_7}, application efficiency is both measured \citep{sandoval2013spatial}, and calculated from C2VSim \citep{Brush2013}.  
+
+To show the influence of rock-water interactions on the progression of closed basin salinization, we simulate two basic scenarios:  
+
+\begin{enumerate}
+	\item No rock-water interactions: mass accumulates from water budget inputs.  
+	\item Rock-water interactions are present: mass accumulates from water budget inputs, but also internally via rock-water interactions (see section \ref{ss_2_3} for details).  
+\end{enumerate} 
+
+
+
+
+%--------------------------------------------------------%
+% Results
+%--------------------------------------------------------%
+
+\section{Results}
+\label{s_3}
+
+%
+%----------- GW and SALT BUDGET ---------------%
+%
+\subsection{Groundwater and salt budget}
+\label{ss_3_1}
+
+The average historical C2VSim groundwater budget in the TLB from 1961-10-31 to 2001-09-30 (Table \ref{tab_gwb}) reflects post-groundwater development conditions. Pumping removes an average of -6.76 $km^3/yr$ from the groundwater system. Natural recharge from streams, lakes, and watersheds adds an average of 2.45 $km^3/yr$, and net deep percolation of agricultural irrigation adds an average of 1.89 $km^3/yr$. Smaller sources of water inflow include subsidence flow (0.57 $km^3/yr$), lateral mountain front recharge from streams and watersheds (0.24 $km^3/yr$), and subsurface inflow from the north (0.01 $km^3/yr$). 
+
+The alternate budget (Table \ref{tab_gwb}) used in this study eliminates overdraft ($\Delta S$ = 0), and is identical to historical budget described above, except that pumping $P_{alt}$ is reduced to -5.26 $km^3/yr$, managed aquifer recharge $M$ is added at a rate of 0.68 $km^3/yr$, and subsidence flow $C_{alt}$ is reduced to 0. Importantly, in this alternative budget the basin remains closed.
+
+Salt inputs to the system (Figure \ref{fig:salt_ec}A) come from pumped groundwater, water budget terms, and rock-water interactions.
+
+
+Groundwater pumping for agriculture is unlike other water budget terms ($I, M, R, B$) and rock-water interactions in that it does not \textit{add} new salt into the system, but rather \textit{recycles} existing salt from deeper layers to the land surface and back into shallow groundwater via irrigation (discussed in Section \ref{ss_3_3}). In the no rock-water interactions scenario ($\rho = $ 0), the median mass recycled by pumped groundwater exceeds the mass input of all other water budget terms by a factor of 1.7 to 3.5
+% MCMM.R df5$m[c(43,49)]/(df5$m[c(36,41)] + df5$m[c(29,35)])
+depending on the timeframe considered. When rock-water interactions are present ($\rho > $ 0), they initially contribute a comparable mass to groundwater pumping (around 4 metric $Mtons$), but with time, salt accumulates in the aquifer, and the mass recycled by groundwater pumping exceeds the mass imparted by rock-water interactions (Figure \ref{fig:salt_ec}A). 
+
+Annually, surface water diversions add 1.5 
+% MCMM.R   df5$m[1]/1e6
+metric $Mtons$ of salt to the study site. This is around 4
+% MCMM.R   (df5$m[1]/1e6 ) / (df5$m[8]/1e6)
+times the amount of all other non-pumping water budget terms combined ($I, M, R, B$), which add only 0.35 
+% MCMM.R   df5$m[8]/1e6
+metric $Mtons$. We estimate that rock-water interactions add between 3.3 metric $Mtons$ and 4.6
+% MCMM.R   c(df5$p5[22], df5$p95[28])/1e6
+metric $Mtons$ of salt annually. This exceeds the mass introduced by imported surface water and is comparable to the mass recycled by groundwater pumping. 
+
+
+% in Github/Monte-Carlo-Mixing-Model/code/MCMM.R
+% search p23.pdf
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{ch3_figs/p23.pdf}
+	\caption{Annual mass flux and TDS of selected budget terms. The height of each column is the ensemble median result, and the width of error bars, if present, is the interquartile range of the ensemble distribution. (A) Pumped groundwater contributes more mass than surface water diversions and all other water budget terms combined (represented by their symbol: $I, W, R, B$). (B) TDS of \textit{pumped groundwater} is diluted when mixed with imported surface water, which forms \textit{total applied water}. However, evapotranspiration concentrates total applied water, which enters the groundwater system as \textit{net deep percolation}. Over time in a closed basin system, the groundwater salinates, which in turn increases the concentration of total applied water and net deep percolation. }
+	\label{fig:salt_ec}
 \end{figure}
 
-%~~~~~~~~~~~~~~~~~ SUBSECTION Sensitivity analyses ~~~~~~~~~~~~~~~~~
-\subsection{Sensitivity Analyses} \label{ssec:R_sensitivty_analyses}
 
-Realistic ranges of model parameters describing eight hydraulic properties for four facies types ($n = 24$ model parameters) are shown in Table \ref{table:DSS_par_ranges} along with an estimated range of $GPP$. Ranges for model parameters were chosen from literature values for the Central Valley California, and for similar alluvial systems \citep{anderson2015applied,botros2009spatial,fleckenstein2004managing,frei2009patterns,maserjian1993hydrogeologic,niswonger2008influence,sager2012effects}. Model parameters were assumed to be distributed uniformly within each of these ranges for simplicity. The range of $GPP$ was determined from the range observed from the 100 exploratory sites described in section \ref{ssec:MM_exploratory_sims}. The distribution $GPP$ was observed to be approximately log-normal, so a Log\textsubscript{10} data transformation was performed for subsequent sensitivity analyses. 
 
-%% TABLE 4
-\input{ch2_tables/Table_4_par_perturbation.tex}
+Due to the closed-basin hydrology of the study site, there are no exits for salt to leave the system. Instead, pumping and irrigation recycle salts within the basin, and evapotranspiration by crops at the land surface increases the concentration of net deep percolation, which recharges groundwater (Figure \ref{fig:salt_ec}B). 
 
-%~~~~~~~~~~~~~~~~~ sub-subsection DSS ~~~~~~~~~~~~~~~~~
-\subsubsection{Local Sensitivity Analyses} \label{sssec:R_local_sensitivity}
-$GPP$ perturbations to estimate $DSS$ for sites q25, q50, q75, and q95 using predictive regression relations are are illustrated in Fig. \ref{fig:proxy_par_relation}b,c. $DSS$ and $CSS$ results for each model parameter and $GPP$ with respect to $R\textsubscript{30d}$ is shown in Fig. \ref{fig:DSS_r30}. $DSS$ results (Fig. \ref{fig:DSS_r30}a) show that for low recharge potential sites q25 and q50, $K\textsubscript{s}$ of mud and muddy sand facies were the most sensitive parameters with respect to $R\textsubscript{30d}$. For high recharge potential sites q75 and q95, $GPP$ was the most sensitive parameter. These findings demonstrate that $K\textsubscript{s}$ of fine-texture facies is the dominant driver of recharge potential for low recharge potential sites and the configuration of facies and water table depth is relatively less important. However, for high recharge potential sites, which presumably have a higher proportion of coarse-texture facies, the configuration of facies and water depth becomes the dominant driver of recharge potential. In general, $DSS$ of all parameters were  greater for sites with higher recharge potential than for sites with low recharge potential.
+Evapoconcentration by crops at the land surface increases the average concentration of total applied water (pumped groundwater combined with surface water diversions) by 5.1 - 6.8
+% (filter(EC_dat2, time == 0 & legend == "C") %>% slice(1) %>% .$p5 ) / (filter(EC_dat2,time == 0 & legend == "B") %>% slice(1) %>% .$p95 ) 
+% (filter(EC_dat2, time == 0 & legend == "C") %>% slice(1) %>% .$p95 ) / (filter(EC_dat2,time == 0 & legend == "B") %>% slice(1) %>% .$p5 ) 
+times its original amount, regardless of whether rock-water interactions are absent or present. As previously discussed, since pumped groundwater concentration increases with time, total applied water and thus net deep percolation also become increasingly saline over time.  
 
-$CSS$ results for $R\textsubscript{30d}$ (Fig \ref{fig:DSS_r30}b) show that, in general, $GPP$ was the most sensitive parameter for $R\textsubscript{30d}$ when aggregated across all 4 sites. In general, $K\textsubscript{s}$ and $\phi$ were also sensitive with respect to $R\textsubscript{30d}$. It is unsurprising that $\phi$ is sensitive to $R\textsubscript{30d}$ because specific yield ($S\textsubscript{y}$), which is not explicitly parameterized in ParFlow, is closely related to $\phi$. Moreover, \cite{maples_2019} showed that the majority of recharge volume in this alluvial system is accommodated by filling unsaturated-zone pore volume, which is controlled primarily by $S\textsubscript{y}$, and by association in this model, by $\phi$. Empirical fitting parameters describing unsaturated-zone texture and soil water retention, $\alpha$, $n$, and $S\textsubscript{res}$, were relatively insensitive, especially for sites q75 and q95. This suggests that while unsaturated pore volume is important for recharge, the unsaturated flow processes are not particularly important, at least when considering infiltration of ponded water, which typically allows for rapid wetting-front advancement through the unsaturated zone, especially for high recharge potential sites. Once saturated conditions are achieved from land surface to the initial water table, $K_s$ becomes the primary factor controlling the recharge rate.  Results suggest that saturated storage properties, i.e., $S\textsubscript{s}$, were also relatively unimportant. This likely because most recharge volume is accommodated by filling unsaturated pore volume, and is thus more dependent on $\phi$ (and $S\textsubscript{y}$) than on $S\textsubscript{s}$.
 
-%% FIGURE 9
-\begin{figure*}[t]
-\centering
-\includegraphics[width=7.75cm]{ch2_figs/Fig_09_080619_HESS.pdf}
-\caption{(a) Dimensionless scaled sensitivities ($DSS$) evaluated for each model parameter and model output $R\textsubscript{30d}$ at sites q25, q50, q75, and q95, and (b) composite scaled sensitivities ($CSS$) evaluated for each parameter and model output at all sites. $\dagger$ $DSS$ and $CSS$ values below 0.001 are not shown.}
-\label{fig:DSS_r30}
-\end{figure*}
 
-Normalized $DSS$ for sites q25, q50, q75, and q95, and normalized $CSS$ for all sites are shown in Fig. \ref{fig:DSS}. $DSS$ were scaled to the range [0,1] (i.e., normalized) for each group of parameters for a given site and a given model output. For example, all $DSS$ values at q25 for $R\textsubscript{30d}$ were normalized to the maximum value of $DSS$ for that group of parameters. $CSS$ were similarly scaled for each group of parameters for given model output. Because $DSS$ and $CSS$ values are influenced by the units of each model output, normalization allows for comparison of their relative magnitudes between model outputs. Results show similar sensitivity importance for each model output, wherein $K\textsubscript{s}$ and $\phi$ are generally the most sensitive parameters, while $S\textsubscript{s}$, $\alpha$, $n$, and $S\textsubscript{res}$ are all relatively unimportant. $DSS$ and $CSS$ of $GPP$ were not evaluated for $P\textsubscript{30d}$ and $V\textsubscript{fines, 90d}$ because regression relations between site characteristics and these outputs were generally poor compared to those for $R\textsubscript{30d}$, as noted in section \ref{ssec:R_rech_extrapolation}.
 
-$DSS$ and $CSS$ results for $GPP$ demonstrate the novel usage of empirical regression relations in a local sensitivity analysis framework. By perturbing $GPP$ in this way, constancy of other parameters can be maintained in a way that would be otherwise difficult if $GPP$ was perturbed by changing the location of the recharge site. Performing local sensitivity analyses at multiple sites spanning a range of recharge potential allowed for comparison of $DSS$ sensitivities across sites and highlights differences of parameter sensitivities for low- and high-recharge potential sites. Our findings demonstrate that (1) facies permeability and unsaturated-zone storage properties are important factors for recharge potential, and (2) the configuration of subsurface geology and water table depth is particularly important for the total recharge volume that can be accommodated at a particular site, especially for high recharge potential sites.
+%
+%----------- GW SAL EVOLUTION ---------------%
+%
+\subsection{Progression of groundwater salinization}
+\label{ss_3_3}
 
-%% FIGURE 10
-\begin{figure*}[t]
-\centering
-\includegraphics[width=16.5cm]{ch2_figs/Fig_10_080619_HESS.pdf}
-\caption{Normalized dimensionless scaled sensitivities ($DSS$) evaluated for each model parameter and model outputs (a) $R\textsubscript{30d}$, (b) $P\textsubscript{30d}$, and (c) $V\textsubscript{fines, 90d}$ at sites q25, q50, q75, and q95, and normalized composite scaled sensitivities ($CSS$) evaluated for each parameter and model output at all sites. $DSS$ and $CSS$ of parameters were scaled to the range [0,1] (i.e., normalized). $\dagger DSS$ and $CSS$ of $GPP$ were not evaluated for $P\textsubscript{30d}$ and $V\textsubscript{fines, 30d}$. $\ddagger$ $DSS$ and $CSS$ values below 0.01 are not shown.}
-\label{fig:DSS}
-\end{figure*}
+The shallow aquifer (36 $m$) is heavily impacted by the recycling of salts via pumping and irrigation, and exceeds the freshwater concentration threshold (1,000 $mg/L$) within decadal timescales (Figure \ref{fig:p_sim}). Intermediate (132 $m$) and deep aquifers (187 $m$) exceed 1,000 $mg/L$ within century-long timescales. \\
 
-%~~~~~~~~~~~~~~~~~ sub-subsection method of morris ~~~~~~~~~~~~~~~~~
-\subsubsection{Global Sensitivity Analyses} \label{sssec:R_global_sensitivity}
-
-Morris $\mu*$ values from global sensitivity analyses indicate that $GPP$ is the most sensitive parameter when compared with $K\textsubscript{sat}$ of coarse- and fine-texture facies (Fig. \ref{fig:Morris}). These results are consistent with findings from local sensitivity analyses which also showed that $GPP$ was the most important parameter with respect to $R\textsubscript{30d}$. Unlike $DSS$ and $CSS$ results, which compared $GPP$ against model parameters for each facies, Morris analysis combined $K\textsubscript{s}$ parameters for coarse- and fine-texture facies which, in turn, increased the influence of those parameters on $R\textsubscript{30d}$ relative to $GPP$. Even so, results indicate that $GPP$ is the most important parameter with respect to $R\textsubscript{30d}$. These results further highlight the importance of the configuration of subsurface geology and water table depth for groundwater recharge potential.
-
-%% FIGURE 11
-\begin{figure}[t]
-\centering
-\includegraphics[width=9.0cm]{ch2_figs/Fig_11_080619_HESS.pdf}
-\caption{Morris $\mu*$ value of $R\textsubscript{10d}$ for $GPP$ and $K\textsubscript{sat}$ of coarse-texture (gravel and sand) and fine-texture (muddy sand and mud) facies, where bars represent each $\mu*$ estimate, and whiskers represent the respective 95\% confidence interval of the estimate.}
-\label{fig:Morris}
+% in Github/Monte-Carlo-Mixing-Model/MM_no_RWI.Rmd
+% search p_sim.pdf
+% edited in AI in DISSERTATION/01_mm/ai/p_sim_both2.ai
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{ch3_figs/p_sim_both2.pdf}
+	\caption{Progression of groundwater salinization ensemble results for two scenarios (with and without rock-water interactions). RWI stands for rock-water interactions. The blue and purple lines show the ensemble median concentration for the two scenarios, and the interquartile range (IQR) of the ensemble simulations is shown as a grey shaded area. Complete statistics are provided in SI Appendix Table \ref{ap_b_p_sim}.}
+	\label{fig:p_sim}
 \end{figure}
 
-Morris results demonstrate a novel incorporation of $GPP$ within a global sensitivity analysis framework, and was unique as compared to incorporation of $GPP$ in local sensitivity analyses described in section \ref{sssec:R_local_sensitivity}. Unlike the local methods, which used an empirical relation to incorporate an estimate of $GPP$ sensitivity, the method used for the Morris approach directly varied $GPP$ within the parameter space by moving the recharge site to the location with the requisite $GPP$ parameter value. Unlike the local approaches, which required constancy among all other parameters as each parameter is perturbed and thus required usage of an empirical relation to perturb $GPP$, the Morris approach varies all parameters globally, which allowed for $GPP$ to be included explicitly within the approach. Consistency of the results of the local and global approaches despite these methodological differences for incorporating $GPP$ highlights the robustness of these findings. 
 
-%~~~~~~~~~~~~~~~~~ Section Discussion ~~~~~~~~~~~~~~~~~
-\section{Discussion} \label{Discussion}
+Uncertainty in the salt balance results from parameter uncertainty expressed in the Monte Carlo simulation (section \ref{ss_2_9}), which affects the distribution of calculated salt concentrations at the salt front. Deeper layer insensitivity results from being insulated from the salt front -- a top down source. Accordingly, shallow layer uncertainty increases over time because salt is continuously added through top-down irrigation and recharge. 
 
-Many studies have evaluated sensitivity of diffuse recharge in hydrologic and landscape models \citep[e.g., ][]{hartmann2017enhanced, mccallum2010impacts}. Other studies have evaluated sensitivities related to subsurface heterogeneity and permeability upscaling in variably-saturated flow models \citep[e.g.,][]{gilbert2016global,foster2019sensitivity,srivastava2014insights} and on MAR specifically \citep[e.g.,][]{rahman2013integrated,heilweil2015variably}, but to our knowledge, this is the first study to use a 3-dimensional variably-saturated water flow code with a detailed representation of geologic heterogeneity to evaluate the importance of hydraulic properties and geologic configuration on MAR dynamics with a combination of local and global sensitivity analyses.
+Let us first summarize the results with no rock-water interactions. At the beginning of the simulation (year 1960), initial TDS concentration increases gradually with depth (Figure \ref{fig:predev_tds_bc} and SI Appendix Table \ref{ap_b_p_sim}). Shallow aquifer salinity is 506 $mg/L$. After 50 $yrs$ with $\rho = $ 0, average shallow aquifer salinity reaches a median concentration of 975 $mg/L$ with an interquartile range (IQR) of 871 - 1,124 $mg/L$. Thus, the TDS-depth profile at $t =$ 50 begins to invert (i.e., shallow aquifer salinity exceeds deep aquifer salinity), consistent with modern-day observed TDS-depth relationships in the TLB \citep{Hansen2018}. After 200 $yrs$ (year 2160), shallow aquifers reach brackish TDS levels with a median TDS of 1,314 $mg/L$ (IQR: 1,100 - 1,654 $mg/L$). Finally, after 300 $yrs$ (year 2310), median shallow aquifer TDS approaches nearly 1,574 $mg/L$ (IQR: 1,264 - 2,103 $mg/L$). 
 
-Our approach includes novel incorporation of geologic architecture as a geologic proxy parameter (i.e., $GPP$). Of the many approaches to develop a $GPP$ of recharge potential from descriptions of subsurface geologic and hydrologic characteristics, our results show that a $GPP$ which combines metrics related to upscaled vertical $K\textsubscript{s}$ and unsaturated zone thickness was most diagnostic of recharge potential. In addition, results from local and global sensitivity analyses indicate that this $GPP$ is equally or more important as characterizing the hydraulic properties of any particular facies for recharge potential. Consistency among results for both local and global approaches shows that these findings are reasonably robust and highlights the importance of accurately characterizing the subsurface configuration of coarse-texture facies in clastic sedimentary aquifer systems. While a $GPP$ was shown to be the most important parameter with both approaches, we also show that parameters related to unsaturated-zone storage and facies permeability (i.e., $\phi$ and $K\textsubscript{s}$, respectively) were also important for MAR. In contrast, we show that parameters related to unsaturated-zone geologic texture and soil water retention, along with saturated-zone storage properties (i.e., $\alpha$, $n$, $S\textsubscript{res}$, and $S\textsubscript{s}$) were relatively unimportant. We speculate that these parameters are relatively unimportant because our simulations typically showed that surface ponding initiated rapid downward wetting-front advancement through the unsaturated zone, quickly developing fully saturated conditions from land surface to the water table. In systems dominated by diffuse recharge, these parameters may be more sensitive.
+Intermediate and deep aquifers are impacted much later than shallow systems, and exceed the freshwater TDS threshold on timescales of two to three centuries. After 200 $yrs$ (year 2160), intermediate aquifer median TDS exceeds 1,000 $mg/L$ (IQR: 861 - 1,048 $mg/L$). After 300 $yrs$ (year 2260), deep aquifers (IQR: 867 - 1020 $mg/L$) experience the first arrival of the lumped salt front. 
 
-Findings presented here for a semi-confined alluvial aquifer system show large spatial variability of recharge rates that are dependent primarily on subsurface geologic configuration. we show that select locations in the domain area are capable of accommodating orders-of-magnitude greater recharge benefit than would be possible over the rest of the landscape. These findings are consistent with previous studies that indicate that favorable site characteristics, including connect networks of coarse-texture IVF, are present in the American-Cosumnes River area of the Central Valley, California \citep{meirovitz2010thesis,maples_2019}, but likely occur over a small fraction of the domain area. Other studies have shown that IVF deposits occur elsewhere in California's Central Valley \citep[e.g.,][]{weissmann2005factors} and in other major river fans that drain high-elevation, glacially-influenced catchments \citep[e.g.,][]{pierce1983pleistocene}. Identifying sites that can accommodate large MAR volumes during short windows is especially valuable in places like California, where excess surface water available for recharge typically occurs from a few precipitation events \citep{dettinger2011atmospheric} during short ($<$ 10 day) windows \citep{kocis2017availability}. 
+In the ``rock-water interactions present'' scenario ($\rho >$ 0), the progression of groundwater salinization follows approximately the same trend and timescale as the scenario without rock-water interactions (described above), but the resulting concentrations are significantly greater, and deep groundwater salinates faster. In both scenarios, the greatest change in salinity occurs in the shallow aquifer within the first 50 $yrs$, which is due to the introduction of mass from total applied water (i.e., diversions and pumped groundwater), and the inability for that mass to exit because of basin closure. Moreover, regardless of whether rock-water interactions are included, the slope of the TDS-depth profile (Figure \ref{fig:p_sim}) gradually inverts and amplifies, and shallow groundwater becomes saltier than deep groundwater. Thus, even in the absence of rock-water interactions, moderate and constant salt inputs (mostly due to recycled groundwater and imported surface water) are sufficient to salinate shallow aquifers within decades, and deep aquifers within centuries. 
 
-Our results show that cursory investigations of soil or surficial geology are likely insufficient to adequately characterize MAR favorability, especiall in areas where the goal is to recharge large volumes of water over relatively small, dedicated recharge basins. Instead, our findings indicate that more thorough investigations of subsurface geologic architecture and aquifer configuration are needed to accurately characterize MAR feasibility. We found that metrics that consider the geologic configuration of facies and provide some measure of upscaled vertical $K\textsubscript{s}$ are the best predictors of recharge feasibility. We show that connectivity metrics that determine whether coarse-texture facies interconnect from land surface to the saturated zone are also helpful, but not fully diagnostic of recharge potential. Interestingly, our results show that metrics describing unsaturated-zone thickness, fraction of coarse-texture facies at land surface, and fraction of coarse-texture unsaturated-zone facies are insufficient when each is considered alone. This finding has important implications because several GIS-derived metrics of recharge potential describing recharge suitability of surficial soils have been developed for California and elsewhere \citep{ogeen2015sagbi,adham2010study,ghayoumian2007application}. We consider these products as valuable, albeit incomplete metrics that are likely complemented by more detailed investigations of deeper subsurface geologic architecture. 
 
-Importantly, no single $GPP$ described herein was a fully diagnostic metric of recharge potential at all sites. This result is not surprising given the complexity of geologic architecture and variability of aquifer configuration sampled across sites in the domain, which are challenging to fully captured with a single metric. For example, all site characteristics described here were developed only for those model cells that are vertically-coincident with each site footprint, and do not account for possible preferential pathways in adjacent cells outside of the immediate site footprint. We acknowledge that further research into this phenomena could provide additional insight into developing site-specific $GPP$, but is outside the immediate scope of this work. We also acknowledge some limitations of our sensitivity analyses. For example, reliance on imperfect empirical regression relations to include measures of geologic configuration in local methods likely introduced uncertainty to $DSS$ and $CSS$ estimates for this parameter. In addition, inclusion of all model parameters describing facies hydraulic properties in the Morris approach would have been valuable, but was infeasible given the computational resources for the simulations required. In addition, parameter-range uncertainty contributes some uncertainty to rankings of parameter importance. 
+%
+%----------- Study strengths and limitations ---------------%
+%
 
-Our simulations also do not consider some subsurface geologic conditions that influence MAR. Clastic sedimentary aquifer systems are typically replenished naturally over longer timescales \citep{taylor2013ground} because even productive aquifer systems are commonly composed mostly of fine-texture sediments \citep[e.g.,][]{fogg1986groundwater,fogg2000connected}, that form nearly ubiquitous, multiple confining layers that inhibit direct recharge of the interconnected sand and gravel body networks that comprise the aquifer system. The presence of laterally-continuous aquitard facies have been well documented portions of the southern Central Valley \citep{phillips1991calibration,faunt2009groundwater}, and in other unconsolidated alluvial aquifer systems in California \cite[e.g.,][]{DWRcoachella}. While not present within the domain area, these features have been shown to uniformly impede recharge to confined aquifer systems where they are present. In addition, we do not consider some surface conditions that affect real-world MAR, like topographic site limitations, evaporative losses, and clogging effects \citep{bouwer2002artificial}. We emphasize that this study is not a thorough site investigation of the American-Cosumnes area. The TPROGS approach is inherently stochastic and conditioning data to inform the model are sparse in places \citep{maples_2019}. In addition, the single TPROGS realization used for our simulations provides only a single representation of possible facies distributions within the domain. Our findings are presented as a proof-of-concept to explore the importance of geologic heterogeneity on MAR in a hypothetical but physically-realistic domain.
+\subsection{Additional perspective on the model}
+\label{ss_3_4}
 
-Our findings have important implications for assessing MAR feasibility and for understanding MAR processes in clastic alluvial aquifer systems in California and globally, where accelerating groundwater overdraft and increasing water scarcity are observed \citep{scanlon2012groundwater, famiglietti2011satellites, wada2011modelling}. Our results highlight the importance of identifying and cataloging locations with favorable geology for recharge, especially in light of recently-passed groundwater management legislation in California that mandates limiting both the "chronic lowering of groundwater levels" and "significant and unreasonable reductions in groundwater storage" \citep{kiparsky2016designing}. While studies have shown that implementation of MAR can lead to more sustainable groundwater management \citep[e.g.,][]{niswonger2017managed}, widespread adoption of of MAR is still hampered by a number of challenges, including institutional barriers to water-rights transference and water accounting uncertainty \citep{asano2016artificial}, infrastructure limitations, including land acquisition and water conveyance costs \citep{gailey2018approaches}, and water quality considerations \citep{hartog2017water}. Our approach, which combines a detailed representation of subsurface geology with physically-realistic water flow physics in a sensitivity analysis framework, can (1) help guide site investigations and data collection methods for proposed MAR projects, and (2) improve representation of recharge processes in management-focused, typically coarse-resolution groundwater models. 
+Lumped mixing cell models have a relatively small number of parameters, are computationally inexpensive, conceptually simple, and importantly, can represent the dominant hydrologic features of a system. These strengths come with some tradeoffs. Mixing cell models simplify groundwater flow and contaminant transport by ignoring horizontal flow, geologic heterogeneity, dispersion, diffusion, sorption, and reactive transport. Strong vertical hydraulic gradients induced by pumping in agriculturally dominant systems (like the TLB), produce vertically dominated flow systems \citep{Brush2013, Faunted.2009}. In upscaling these distributed models to the regional scale, the dominant role of vertical flux becomes apparent and explains why the mixing cell model captures the salient features of regional ABCSAL degradation. For more sub-regional or local applications, a fully three-dimensional distributed parameter model would be more appropriate \citep{zhang2006nonpoint, guo2019upscaling, guo2019adaptive, henri2019}.
 
-\section{Conclusions} \label{Conclusions}
+Additionally, we assume that the early-groundwater-development TDS-depth relationship is approximately equal to observed pre-1960 TDS data. Over the model domain (212 $m$ deep), these measurements (SI Appendix Figure \ref{ap_b_predev_tds_map}) are well distributed. We experimented with different values for the initial TDS-depth profile, and found that the results were relatively insensitive to the initial conditions, as the imported salt and the salt generated by rock-water interactions greatly exceeds the initial salt load. 
 
-This research explores the sensitivity of hydraulic properties and subsurface geologic architecture on MAR processes with the variably-saturated water flow code, ParFlow, in a highly heterogeneous geologic domain that reflects the complex, unconsolidated alluvial geologic architecture of the northern Central Valley, CA that is consistent with many alluvial aquifer systems. This work comprises two fundamental components. First, exploratory simulations were performed at 100 randomly-sampled sites across the domain to to evaluate the correlation between 17 geologic and hydrologic site characteristics and simulated recharge benefits. Results from the exploratory simulations show that site characteristics representing subsurface geologic configuration by upscaling vertical $K$ can produce good correlations with the average 30-day recharge rate ($R\textsubscript{30d}$). Regression relations between site-averaged $K\textsubscript{geom}$ $\times$ $WTD$ and $R\textsubscript{30d}$ were shown to be the most correlated ($r = 0.70$, $p < 0.01$, $r^2 = 0.70$). Conversely, site characteristics describing unsaturated-zone thickness ($WTD$), fraction of coarse-texture unsaturated-zone ($UZ\textsubscript{coarse}$), and fraction of coarse-texture surface facies ($Surf\textsubscript{coarse}$) alone were all poorly correlated with $R\textsubscript{30d}$. These results highlight the value of characterizing subsurface geologic configuration through $K$ upscaling. For subsequent sensitivity analyses, $K\textsubscript{geom}$ $\times$ $WTD$ was designated as a geologic proxy parameter, $GPP$, for recharge potential using aforementioned predictive regression relation.
- 
-Results from local sensitivity analyses indicated that $GPP$  is the most sensitive parameter for $R\textsubscript{30d}$, more so than any parameters describing hydraulic properties of each facies. Sensitivity analyses also indicated that permeability and unsaturated-zone pore volume (i.e., $K\textsubscript{s}$ and $\phi$, respectively) were relatively more important than other hydraulic properties, including unsaturated-zone geologic texture, soil water retention, and saturated-zone storage properties (i.e., $\alpha$, $n$, $S\textsubscript{res}$, and $S\textsubscript{s}$) for $R\textsubscript{30d}$. Results from global sensitivity analyses were consistent with local sensitivity analyses, indicating that $GPP$ is relatively more important than $K\textsubscript{s}$ of coarse- and fine-texture facies for $R\textsubscript{30d}$. Agreement of local and global approaches regarding the importance of $GPP$ shows a degree of robustness of these findings. The results presented here demonstrate the importance of thoroughly characterizing subsurface geologic configuration when considering recharge feasibility. To our knowledge, this study is the first of its kind to incorporate of a measure of geologic configuration with a geologic proxy parameter in formal sensitivity analyses. Our approach outlines a novel combination of subsurface site characterization with simulations of variably-saturated water flow physics within a sensitivity analysis framework to (1) improve understanding the role of geologic heterogeneity on MAR processes and (2) provide insight into potential strategies to characterize subsurface geologic heterogeneity when considering recharge feasibility.
 
-\section{Acknowledgements}
-We gratefully thank Jon Herman, Mary Hill, Robert Reinecke, Lauren Thatch, Mary Michael Forester, Nick Engdahl, and Thomas Harter for their assistance, along with anonymous reviewers for helpful comments on the manuscript. Support for this research was provided by the National Science Foundation (NSF) Climate Change, Water, and Society (CCWAS) Integrated Graduate Education and Research Traineeship (IGERT) program at the University of California, Davis and Colorado School of Mines (http://ccwas.ucdavis.edu, DGE-10693333) (SM, GF, RM), the NSF Graduate Research Fellowship (SM), the University of California Water (UC Water) Security and Sustainability Research Initiative (SM, GF, LF). We would like to acknowledge high-performance computing support from Cheyenne (doi:10.5065/D6RX99HX) provided by NCAR's Computational and Information Systems Laboratory, sponsored by NSF. All data used in the analysis can be made available by SM (srmap@ucdavis.edu).
 
+%--------------------------------------------------------%
+% Discussion
+%--------------------------------------------------------%
+\section{Discussion}
+
+%
+%----------- new type of gw overdraft ---------------%
+%
+\subsection{ABCSAL threatens regional groundwater quality and sustainable yield}
+\label{ss_4_1}
+
+In this study we show that ABCSAL is a hydrologic process where salts accumulate within an aquifer because basin closure eliminates exits for the salts. In the TLB, our calculated ABCSAL timescales have similar timescales to aquifer depletion, are consistent with 3D random walk salt transport simulations, and agree with observed decadal changes in shallow groundwater salinity in the TLB.
+
+Our estimates of decadal timescales for shallow aquifer (36 $m$) salinization, and two to three centuries for intermediate (132 $m$) and deep aquifers (187 $m$) are similar to the estimated 390 year timescale of Central Valley aquifer depletion by \cite{Scanlon2012}, who %\cite{Scanlon2012} used the CV Hydrologic Model \citep{Faunted.2009} to estimate the lifespan of the Central Valley aquifer at 390 years, 
+assumed a remaining water storage of 860 $km^3$ in the year 2000, and a depletion rate of 2.2 $km^3/yr$. \cite{Scanlon2012} also noted that aquifer lifespan is likely shorter than 390 years in the TLB due to focused groundwater depletion in the area. Thus, ABCSAL, which constitutes a slow-moving form of regional groundwater quality degradation may significantly constrain groundwater sustainable yield on similar timescales to aquifer depletion in the TLB. 
+
+This study's predicted salinization time frames (i.e., decades for shallow systems, centuries for deep systems) are consistent with random walk salt and nitrate particle transport simulations in detailed 3D heterogeneous alluvial aquifers \citep{henri2019, zhang2006nonpoint}, which suggests that the simple mixing cell model captures key transport dynamics. Thus, these results provide a useful benchmark for future research using more complex, distributed parameter, regional-scale transport models incorporating geologic heterogeneity and transient boundary conditions.
+
+Morevoer, measured TDS change from historic (1910) to modern (1993-2015) time periods in the TLB \citep{Hansen2018} agree with this study's modeled changes in TDS over similar timescales (1960 to 2010), especially given that groundwater development for agriculture in the TLB largely commenced around 1950. \cite{Hansen2018} measured a 110 - 850 $mg/L$ increase in the interquartile range (IQR) of %median 
+shallow aquifer TDS %of 143 - 241 $mg/L$ 
+from historic to modern timescales, depending on the region considered in the TLB. Our results indicate an IQR %median 
+increase in shallow aquifer TDS of %469-605 $mg/L$ with an IQR increase of 
+365 - 759 $mg/L$, depending on the inclusion of rock-water interactions ($\rho$ in equation \ref{eq: c_in_cell}) in the model. % modeled, the median increase in shallow aquifer TDS is slightly greater: 605 $mg/L$ with an IQR increase of 601 - 759 $mg/L$. %Although this study's modeled IQR ranges of TDS increase generally agree with the IQR range increase measured by \cite{Hansen2018}, differences may be explained in a number of ways. %First, the spatial distribution of TDS samples reported by \cite{Hansen2018} is not representative of the entire TLB; in particular, missing samples from the west side of the valley where shallow TDS are known to be higher due to more soluble marine sediments might explain why our lumped model (which averages conditions across the TLB) estimates a larger lower range increase. 
+This study's smaller IQR compared to \cite{Hansen2018} may suggest that our model parameters are over-constrained, and thus, do not reproduce the wider distribution of observed TDS IQR increase. However, it is also possible that the larger IQR from \cite{Hansen2018} indicates insufficient sampling (i.e., a perfectly random spatial sample with enough observations might yield a more constrained distribution of TDS measurements that more closely approximate the true population IQR). Nonetheless, given the broad aim of this study %not to perfectly predict increases in shallow aquifer TDS (which is why we do not calibrate the model), but rather 
+to estimate the approximate timescales of regionally downward salinization of the production aquifer under ABCSAL, the evolution of mass flux described by our model generally agrees with observations of shallow aquifer TDS increase in the TLB.
+
+Unsustainable groundwater management eventually leads to undesirable effects \citep{Giordano2009, SGMA}, such as: chronic groundwater level declines and depletion of groundwater storage; well failure \citep{pauloo2020domestic}; increased energy costs for pumping \citep{wada2010global}; land subsidence \citep{smith2017estimating}; sea water intrusion \citep{zektser2005environmental}; desiccation of groundwater dependent ecosystems \citep{TNC2014}; and groundwater quality degradation \citep{smith2018overpumping, Foster2000}. The negative externalities above are recognized consequences of unsustainable groundwater extraction. However, ABCSAL, which progressively deteriorates groundwater quality over decades to centuries, may be considered an additional, unrecognized threat to regional groundwater quality and sustainability in the TLB, and a constraint on groundwater sustainable yield in other food production regions of the world. 
+
+
+\subsection{Key features of ABCSAL}
+\label{ss_4_2}
+
+%ABCSAL provides a conceptual model for early observations of salt accumulation California's TLB \citep{Kenneth1975} via the process of basin closure. Moreover, ABCSAL's impact on shallow groundwater is well supported by field-based observations that TDS has increased in the TLB over the past half century, and that most of this increase is observed in shallow aquifers \citep{Hansen2018, CRWQCB2018}. These results extend previous modeling efforts to estimate shallow aquifer salt transport \citep{Schoups2005} by including transport into deeper aquifers and multi-century simulation to evaluate the long-term consequences of basin closure in an agriculturally intensive basin.  
+
+ABCSAL arises from groundwater development, and is sustained by basin closure. Once a basin in closed, salinization does not depend on groundwater overdraft per se, but rather, on the closure itself, which prevents the basin from discharging salts.
+
+Our findings indicate that the long-term fate of basins closed by groundwater pumping may be similar to that of naturally closed basins \citep{Hardie1970, Jones1978}. However, unlike naturally-occurring closed basins, salt cycling in agriculturally intensive closed basins is driven by human-made water management decisions, and may progress more rapidly. Near the onset of the 21st century, average vertical groundwater movement in the Central Valley increased by about 6 times the rate from pre-development conditions, mainly as a result of agricultural recharge and withdrawal from public-supply and irrigation wells \citep{Williamson1989}. Strong vertical transport coupled in a closed basin drives TDS migration into deeper aquifers.
+
+Although groundwater levels in the TLB are in chronic decline \citep{Scanlon2012}, groundwater overdraft is not a necessary condition for ABCSAL to occur. To illustrate this point, we eliminated overdraft (equation \ref{eq: gw_budget_mod}) by increasing clean recharge $M$ (TDS = 32.5 $mg/L$) at 0.68 $km^3/yr$ following \cite{Hanak2019}, and reducing pumping by 15 \%. We still observed groundwater salinization, even though the water budget remained in steady state. We also applied completely clean recharge with TDS = 0 $mg/L$ (SI Appendix Table \ref{ap_b_p_sim_m_with_tds_0}), and found that it was insufficient to stop or reverse ABCSAL because it did not fix the underlying basin closure. Thus, an area will accumulate salts if groundwater storage is stable or even increasing, as long as the basin remains closed and salts cannot exit.  
+
+Our study shows that ABCSAL is exacerbated by imported salts in surface water for irrigation, and by groundwater pumping. Although both surface water and groundwater irrigation are present in our study area, like overdraft, they are not necessary conditions for ABCSAL. However, basins with significant groundwater irrigation are particularly susceptible because pumping lowers groundwater levels and cuts off lateral outflow and subsurface baseflow exits, thus initiating ABCSAL.
+
+The rate and magnitude of salinization depends on a variety of factors (e.g., concentration of total applied water, evapoconcentration, vertical groundwater velocity), but fundamentally depends on the severity of basin closure. Worldwide basins range from open (i.e., natural salt exits maintain freshwater conditions), to partially closed (i.e., some salts exit, but some remain and accumulate), to fully closed (e.g., salts have no exit and hence accumulate in deep groundwater). Groundwater salinization timescales in partially closed basins may be longer than those calculated in this study for the TLB, which is completely closed. Conversely, some basins may salinate at faster rates than calculated for the TLB, depending on the hydrologic features represented in our mixing model.  
+
+
+
+%
+%----------- MGMT implications ---------------%
+%
+\subsection{Implications for groundwater management}
+\label{ss_4_3}
+
+%Mitigation of ABCSAL may involve greater emphasis on subsurface storage, managed aquifer recharge, and the development of regional groundwater quality management models.
+
+%ABCSAL is driven by basin closure, thus one way to prevent salinating groundwater is to re-open the basin by sufficiently filling it up to the point where baseflow to streams and/or lateral flow to adjacent basins resumes. Hence, the mitigation of ABCSAL may require increasing groundwater storage by reducing pumpage, increasing recharge, or both. The increased recharge would have to be accomplished with relatively clean (low TDS) sources of water, such as, in the TLB case, high-magnitude flood flows from streams draining the Sierra Nevada \citep{Kocis2017}. %As long as a basin remains closed, and most of the recharge comes from applied irrigation water, groundwater quality will only worsen due to the salinity of applied water, as well as nitrates \citep{Harter2012}. 
+
+This study demonstrates that if irrigated groundwater basins are operated in a way that hydrologically closes them, groundwater salinization (ABCSAL) is inevitable. It further demonstrates that the timescales of this phenomenon in the TLB are similar to those over which the groundwater in storage would be virtually exhausted according to classic concepts of overdraft. We know how to prevent overdraft by, for example, decreasing pumping or increasing recharge. This raises the parallel question: ``How do we prevent ABCSAL?" In other words, how do we both develop groundwater resources, while also keeping groundwater basins hydrologically open? 
+
+Conceptually, one way to both pump abundant amounts of groundwater and to keep the water table sufficiently shallow to produce groundwater discharge (via baseflow and lateral flow to adjacent basins) is to significantly increase groundwater recharge. In California this could in theory be accomplished by storing less water in surface reservoirs and storing more water in groundwater via managed aquifer recharge operations \citep{Kocis2017, ghasemizade2019integrated, gailey2019maximizing}. Such an approach would be a radical shift from how our current civilization chooses to store water -- mainly in surface reservoirs. In the discussion that follows we are not so much advocating such a paradigm shift in water resources management as we are suggesting the need for the beginnings of new conversations in water resources management about how to manage groundwater and surface water jointly in a way that better ensures the sustainability of both.
+
+One challenge of filling up a groundwater basin enough to open it is to manage the water table sufficiently to prevent undesirable waterlogging effects. This would require changes in basin water resources management within a carefully managed scheme in which the pumping and recharge are optimized such that the basin opens up, while preventing the water table from getting so high that bare soil evaporation exacerbates salinization, as happened on the west side of the San Joaquin Valley \citep{Schoups2005, belitz1995alternative}. The technology to monitor a groundwater basin and model it sufficiently to tightly manage it for optimal water table elevations does in fact exist, but would require levels of groundwater monitoring, modeling, and decision-making that are well beyond what is normally done. In the TLB, a further challenge would be that additional sources of clean recharge water within the TLB watersheds are not large enough to accomplish the requisite amounts of recharge, as rather drastic amounts of pumping reduction would likely be necessary, unless water for recharge could be imported from wetter northern Central Valley watersheds \citep{Hanak2019}. Moreover, the short- and long-term consequences on groundwater quality of increasing clean recharge and reducing pumping need investigation. This in turn would require the development of regional groundwater quality management models \citep{Fogg2006, kourakos2014vectorized}.% that can represent the effects of heterogeneity and non-Fickian transport.  
+
+If re-operation of the groundwater basin to increase groundwater storage and open the basin does not happen, water users in the TLB will ultimately be faced with desalinating pumped groundwater for drinking water and irrigation, the ultimate costs of which remain unknown. If inland closed basin salinization proceeds at the historical rates projected in this study, the salinity of pumped groundwater may exceed thresholds safe for crop health within decades to a few centuries, depending on the depth of pumped groundwater. As prices for technology like reverse osmosis fall, and arid countries pioneer large-scale inland desalination plants for brackish groundwater \citep{Nativ2004, Tal2006}, desalination cost must be weighed against the cost of adaptive water management (e.g., fallowing fields, securing higher quality imported water, managed aquifer recharge) \citep{Hanak2019}. %Nevertheless, the prospect of possibly having to eventually desalinate much or most of the groundwater used for irrigation worldwide point to potentially catastrophic effects on long-term world food supply and economy. We should anticipate these future costs and impacts now rather than later, and consider whether the longer term stability of the Green Revolution, which occurred in part due to irrigated agriculture \citep{evenson2003assessing}, is now in serious question.
+
+In order to probe the full impact of ABCSAL in the TLB, particularly on shallow aquifers, which are critical to food and drinking water security worldwide, in this study we assumed no water management intervention as salinity accumulates. In reality, water users would adapt to increasingly saline aquifers by pumping from deeper, less saline aquifers, fallowing fields, mixing saline water with cleaner water, and desalinating pumped groundwater. Two and three centuries into the model, the assumption of no intervention is increasingly unrealistic as the concentration of total applied water approaches thresholds dangerous to crop health, and is likely to have prompted prior adaptive management. We deemed it necessary to evaluate the model at timescales upwards of two and three centuries in order to allow salinization to reach intermediate and deep aquifers. As our model assumes no intervention, results past 50 years of simulation (year 2010) should be interpreted as a worst case scenario.
+
+Urban groundwater pumping might also close groundwater basins. However, there are two key differences between the hydrology of urban and agricultural areas. First, in urban areas, high evapotranspiration rates and subsequent salt concentration are unlikely unless large volumes of water are applied for landscape irrigation. Second, a substantial fraction of urban groundwater pumping (e.g., drinking water, household use, and industrial use) typically exits the basin via wastewater discharge, thus it is not returned to groundwater where it might salinate shallow aquifers (as in the case of the TLB). Hence, the threat of ABCSAL in urban basins is likely to be much less than the threat in agriculturally intensive basins where groundwater is developed and recycled internally.  
+
+
+%--------------------------------------------------------%
+% Conclusion
+%--------------------------------------------------------%
+\section{Conclusions}
+\label{s_5}
+
+Irrigated agriculture in overdrafted aquifer systems supplies much of the world's demand for food \citep{dalin2017groundwater}. %The conventional understanding of groundwater quality in these systems fails to acknowledge that observed changes in shallow groundwater TDS may arise from 
+In this study, we demonstrate that intensive groundwater development can transform a fresh, open basin into an evaporation-dominated, closed-basin system. A closed basin is effectively a salt sink: aquifer salinization is inevitable because dissolved solids in groundwater cannot escape, and are recycled through pumpage, irrigation, and evapoconcentration by crops. This study provides a conceptual framework to understand this process, which we call ``\textbf{A}nthropogenic \textbf{B}asin \textbf{C}losure and groundwater \textbf{SAL}inization'' (ABCSAL), and a mixing cell model to provide first-order estimates of ongoing aquifer salinization in the TLB, located in California's Central Valley.  
+
+%How long can a basin undergoing ABCSAL remain closed while accumulating dissolved solids before groundwater quality becomes too poor for use? 
+Our model indicates progressive salinization ($>$ 1,000 $mg/L$) of shallow aquifers (36 $m$) within decades. Intermediate (132 $m$) and deep aquifers (187 $m$) are impacted within two to three centuries. The TLB in California's southern Central Valley is less than one century into this ``experiment" and the first signs of shallow aquifer salinization have been observed \citep{Hansen2018, CRWQCB2018}. Estimated salinization timescales are similar to estimated aquifer depletion timescales in the area \citep{Scanlon2012}, underscoring the urgency of regional-scale groundwater quality management.
+
+%Worldwide, groundwater development for agriculture is converting open, fresh basins into closed basins that salinate over time. Thus, ABCSAL constitutes a new and unrecognized type of groundwater overdraft.  
+
+This study is a first-order calculation of ABCSAL in an agriculturally intensive groundwater basin. Future research should emphasize a more comprehensive representation of subsurface transport processes through the development of groundwater quality management models. Key research questions that remain include investigating if managed aquifer recharge with relatively clean water may slow groundwater salinization. It also remains to be tested if it is possible to reverse groundwater salinization by increasing recharge until a basin ``fills up'' and discharges TDS into streams and lateral outflow which exit the basin. The practical likelihood of this mitigation strategy would require re-imagining integrated water resources management with a greater emphasis on subsurface storage. Ongoing ABCSAL without intervention may necessitate inland desalination to remediate saline groundwater resources, the costs of which remain presently unknown.  
+
+Traditionally, the concept of long-term sustainability of groundwater has hinged on the intuitive notion of not managing the basin in ways that result in eventual exhaustion of the groundwater stores. Herein we advance the less intuitive concept that long-term sustainability of groundwater also hinges on the salt balance, which in turn depends on how the groundwater quantity is managed. Fundamentally, ABCSAL can only be prevented by managing the basin groundwater quality in ways that open the basin.  
+
+
+\clearpage
 

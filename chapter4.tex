@@ -1,252 +1,500 @@
-\chapter[Comparison of Methods for Estimating Groundwater Budgets in an Agriculturally-Intensive Alluvial Aquifer System]{Comparison of Methodologies for Estimating Groundwater Budgets in an Agriculturally-Intensive Alluvial Aquifer System.\footnote[1]{Portions of this chapter have been submitted to \textit{Journal of Environmental Management}: Escriva-Bou, A; Hui, R.; Maples S.R.; Medellín-Azuara, J.; Harter, T; Lund, J.R. ``Planning for Groundwater Sustainability Accounting for Uncertainty and Costs: an Application to California's Central Valley''.  (Submitted Aug. 2019)}}
+%--------------------------------------------------------%
+%	TITLE
+%--------------------------------------------------------%
 
+\chapter[Mean flow direction modulates non-Fickian transport in a heterogeneous alluvial aquifer-aquitard system]{Mean flow direction modulates non-Fickian transport in a heterogeneous alluvial aquifer-aquitard system.\footnote[1]{This chapter will be submitted to \textit{Water Resources Research}: Pauloo, R. A., Fogg, G. E., Guo, Z. \& Henri, C. V. ``Mean flow direction modulates non-Fickian transport in a heterogeneous alluvial aquifer-aquitard system''.}}
+
+%--------------------------------------------------------%
+%	ABSRACT
+%--------------------------------------------------------%
 \section{Abstract}
 
-\noindent Data availability for groundwater pumping and storage is poor in many semi-arid, agriculturally-dominated groundwater systems, which presents challenges for estimating groundwater budgets and ensuring groundwater sustainability. This is especially true in California's Central Valley, which comprises a vast interconnected aquifer system with complex surface water routing networks and poor historical measurements of groundwater pumping and heads. To estimate groundwater budgets in these systems, most approaches rely on agricultural (i.e., landscape) water balance methods of varying complexity that require data on surface water deliveries, crops, weather, and climate to estimate crop water demand and calculate demand for agricultural groundwater pumping, which is fundamentally estimated as the residual of combined surface water and precipitation deliveries minus crop water demand and irrigation efficiency. Iteratively-coupled models, including the Integrated Water Flow Model (IWFM) and MODFLOW Farm Process (MF-FMP2) are commonly used to link a groundwater model with an agricultural water balance model. Coupling agricultural and groundwater components can, in theory, more accurately simulate feedbacks between climate, agricultural, vadose-zone, and groundwater processes and simulate phenomena on crops such as soil-moisture-deficit impacts and direct groundwater uptake, but there is uncertainty regarding the degree of complexity necessary to conceptualize and parameterize these processes. Here, we compare results from IWFM and MF-FMP2 water budget estimates at the supra-regional, regional, and subregional scale in the Central Valley during a concurrent 42-year period. Results show varied agreement for water budget components between models, with generally better agreement at larger spatial scales and for aggregated water budget components. Model agreement generally decreases for smaller spatial scales, especially in the Northern Central Valley, and for more granular, individual water budget components. Systematic biases reflecting the partitioning of outflows from the landscape systems were observed between models and appear to be related to differences in model’s physical conceptualization of processes other than the goundwater flow equation that control the boundary conditions for the latter. Some differences were also observed for input data that ostensibly are derived from similar or identical sources and likely contribute to differences in simulated output discrepancies.
+\noindent Regional-scale groundwater quality degradation from nonpoint source pollution threatens the long-term %water quality 
+sustainability of major alluvial aquifer-aquitard systems worldwide. Upscaled transport models can efficiently model regional nonpoint source transport, but fail to accurately characterize non-Fickian (anomalous) transport caused by transience in the mean flow direction. %Owing to the large spatial and temporal scale of nonpoint source pollution, the lack of field data, and uncertainty in geologic heterogeneity, upscaled contaminant transport models are needed. These upscaled models must accurately characterize non-Fickian (anomalous) transport caused by transience in the mean flow direction. 
+In this study we demonstrate that hydrogeologic factors explain this failure. Specifically, vertical anisotropy in K and seasonal pumping and recharge in typical alluvial aquifer systems can %cause vertical hydraulic gradient values to exceed horizontal hydraulic gradient values by 10-100 times, 
+fundamentally change hydraulic gradients and shift the mean flow direction between mostly horizontal and mostly vertical flow. In order to understand the relationship between large shifts in mean flow direction and transport phenomena, we simulate 3D flow and transport of a conservative solute in a heterogeneous alluvial aquifer under varying mean flow directions representative of typical seasonal hydraulic gradient fluctuations. We examine tailing, plume spreading, and the spatial distribution of final particle positions. Results indicate that alterations to hydraulic gradients which control the mean flow direction can lead to increasingly non-Fickian transport. %At low VHGR (e.g., ambient hydraulic gradient conditions that correspond to a more horizontal flow direction), 
+When flow is mostly horizontal, diffusion and slow advection dominant low-K facies slow mass transfer rates out of low-K material, and preferential flow along connected high-K networks cause increased spatial spreading along the mean flow direction. In contrast, %high VHGR (e.g., 
+predominantly vertical flow caused by spatially distributed pumping and recharge shifts mass transfer processes in low-K material from diffusion and slow advection dominant to advection dominant, which results in vertically oriented particle trajectories that compactly migrate through high and low K facies alike, and leads to increasingly Fickian transport. Thus, fluctuations in mean flow direction driven by vertical anisotropy of K and seasonal pumping and recharge in a typical alluvial aquifer-aquitard system create oscillating patterns of transport, ranging from persistently non-Fickian to more Fickian. Results %bear importantly on the management and modeling of widespread nonpoint source contamination in alluvial basins worldwide, and 
+illustrate the hydrogeologic factors that explain why upscaled transport models fail to capture non-Fickian transience in mean flow direction.
 
+%--------------------------------------------------------%
+%	INTRO
+%--------------------------------------------------------%
 \section{Introduction}
 
-The Central Valley’s vast interconnected aquifer system and complicated network of land use and surface water routing creates challenges for estimating water budgets \citep{hanak_managing_2011}. System complexity is compounded by a lack of historical groundwater level measurements and groundwater pumping data \citep{harter2008legal}. Where comprehensive monitoring is lacking, accurate estimation of the groundwater budget remains challenging, and information gaps limit effective groundwater-resource management by policy makers \citep{hanak_managing_2011}. Overdraft estimates for the Central Valley are inherently uncertain given hydrological variability and uncertinaty in estimating aquifer characteristics, groundwater inflows, recharge, pumping, stream depletion, and connections with nearby aquifers. Reported estimates of overdraft rates in the Central Valley range from 1.3--9.0 million acre-ft yr$^{-1}$ for different periods and assessment methods \citep{brush2013development,hanak2018replenishing,famiglietti2011satellites,faunt2009groundwater,xiao2017much}.
+Basin-scale groundwater quality in alluvial aquifer systems is threatened by nonpoint source contaminants including agricultural fertilizers \citep{Burow2008}, pesticides \citep{Burow2008, Burow1998}, nitrates \citep{Harter2012, henri2019stochastic}, and total dissolved solids \citep{Hansen2018, Lindsey2018} on large temporal (e.g., decades to centuries) and spatial scales (e.g., tens to hundreds of kilometers). Thus, regional groundwater quality management models \citep{Fogg2006} are needed that can robustly represent non-Fickian (i.e., anomalous) transport under a range of geologic heterogeneity and transient flow boundary conditions encountered on large temporal and spatial scales. However, modeling regional nonpoint transport remains a challenging task due to %differences between the temporal and spatial scales at which processes are typically measured and modeled \citep{cushman2002primer, bastani2020effects}, and due to 
+ubiquitous non-Fickian spreading which is difficult to model at regional scales with existing approaches, especially when the boundary conditions shift from steady state to transient flow \citep{guo2020adaptive, labolle2001role}.
 
-Methods for simulating water budgets in agriculturally-dominated groundwater systems typically rely on crop-irrigation accounting methods of varying complexity usually involving an uncoupled or iteratively coupled groundwater model. Uncoupled agricultural water balance models are used extensively in semi-arid agricultural basins, with unquantified groundwater pumping and recharge treated as closure terms for the land-surface water budget \citep{belitz1993numerical,ruud2004estimation}. Coupled models, such as the Integrated Water Flow Model (IWFM) \citep{dogrul2012integrated} and MODFLOW Farm Process (MF-FMP2) \citep{schmid2006user} are common, with iteratively-coupled codes linking a groundwater model with an agricultural water balance model. Coupling agricultural and groundwater components can, in theory, more accurately simulate feedbacks between agricultural, vadose, and groundwater processes and simulate crop processes such as soil-moisture-deficit and direct groundwater uptake. Both uncoupled and coupled approaches require data on crops, weather, and climate to estimate crop water demand, and they require surface water delivery estimates to calculate demand for groundwater pumping. When measured or reported pumping data is absent, agricultural groundwater pumping is fundamentally estimated as the residual of combined surface water and precipitation deliveries minus crop water demand and irrigation efficiency. The main input data for the agricultural water components of each model are generally the same: crop information, weather and climate data, and surface water deliveries. 
+Transport modeling is challenged by non-Fickian transport across pore \citep{kang2014pore, morales2017stochastic}, field \citep{garabedian1991large, le2008non}, and regional scales \citep{sivakumar2005fractal, henri2019stochastic}, and in diverse heterogeneous geologic formations such as alluvial aquifers \citep{weissmann2002dispersion, labolle2001role, guo2019upscaling} and discrete fracture networks \citep{hyman2015influence, edery2016structural}. Non-Fickian transport may be measured by features including nonlinear scaling of the second spatial moment (i.e., the mean squared displacement), early breakthrough, and late-time arrival (i.e., tailing) of solutes \citep{valocchi1985validity, freyberg1986natural, zhang2007predicting, haggerty2000late}. The ubiquity of non-Fickian effects across disciplines and natural systems, and the inherent uncertainty in characterizing the scale and space-time dependencies of anomalous transport in heterogeneous media has led to multiple conceptualizations of how to mathematically model and upscale non-Fickian transport \citep{neuman2009perspective}.
 
-In the past, the choice of numerical groundwater modeling code to simulate a groundwater flow problem was largely inconsequential, in that resulting computed hydraulic heads and water budgets were not very dependent on the choice of the code, as long as the data inputs (i.e., aquifer properties, initial and boundary conditions) were similar. For well known initial and boundary conditions, all solve the governing groundwater flow equation, and yield comparable results when discretized and parameterized similarly \citep{wang1977finite,anderson2015applied}, regardless of whether they are formulated as finite difference or finite element. However, coupled agricultural groundwater models like IWFM and MF-FMP that are used to simulate agricultural water demand not only solve the groundwater flow equation, but also employ varied conceptual and mathematical representations of land-surface and soil zone processes, most notably in the methods for estimating water supplied to and consumed by agricultural and natural plants. These, in turn control the boundary conditions for the groundwater flow problem. Consequently, large uncertainty appears to be related directly to the choice of code. These differences obfuscate the scientific value of these models. At best, model discrepancies reflect, and may help bracket, the true uncertainty of Central Valley water budgets; at worst, the differences reflect model bias stemming from poor understanding and/or representation of the fundamental physical processes. This is a research problem that demands further scientific scrutiny.
+Numerous studies show that anomalous transport in geologic media depends strongly on spatially heterogeneous hydraulic conductivity \citep{gelhar1993stochastic, dagan2005subsurface, de2005dealing}, which gives rise to the velocity field \citep{berkowitz2006modeling}. In many alluvial aquifer-aquitard complexes, variability in the hydraulic conductivity ($K$) of sediments can range over 4-7 orders of magnitude \citep{Fetter2001, fogg2016debates}. The fluvial deposition processes that form alluvial aquifer-aquitard systems over millennia result in correlated fields \citep{galloway2012terrigenous}, with interconnecting, high-K, coarse sand and gravel lenses \citep{fogg1986groundwater} that can percolate in all spatial dimensions \citep{fogg2000connected}, even at substantially low volume fractions, such as 13\% as noted in 3D percolation studies by \citet{harter2005finite}. These high-K preferential flowpaths facilitate anomalous early time arrival, and are embedded within low-K, fine-grained clays and silts, which typically comprise the majority of alluvial aquifer-aquitard volume fractions \citep{galloway2012terrigenous}, and contribute to mass hold back and anomalous late-time solute tailing \citep{labolle2001role, berkowitz2006modeling, haggerty2000late, benson2000application}. %Thus, stochastic hydrofacies models \citep<e.g.>{carle1996transition} which explicitly represent the geologic heterogeneity that gives rise to non-Fickian transport are a powerful tool to understand flow and transport properties of subsurface plumes, and have greatly informed the development of upscaled models \citep<e.g.>{guo2020adaptive}.
 
-Several studies have highlighted the methodological differences between IWFM and MF-FMP2 in hypothetical settings \citep{harter2013peer,dogrul2011integrated,schmid2011comparison}, but none are diagnostic of how model differences affect the assessment of future conditions in applied settings. These studies show that conceptual differences between these codes primarily relate to the partitioning of ET requirements, representation of soil-moisture conditions, and prioritization of water allocation. For instance, MF-FMP2 assumes steady-state soil-moisture conditions, while IWFM simulates transient soil-moisture storage conditions. The MF-FMP2 and IWFM methodologies have each been separately applied for the Central Valley to estimate historical groundwater budgets \citep{brush2013development,faunt2009groundwater}. These models, named CVHM and C2VSim, were developed by the U.S. Geological Survey (USGS) and California Department of Water Resources (DWR), respectively \citep{faunt2009groundwater,brush2013development}. Preliminary investigations have shown that water budgets and storage estimates are significantly different for each model, especially at the sub-regional scale that is important for water management \citep{chou2012groundwater, maples2015estimation}. 
+The interaction between spatial heterogeneity and hydraulics determines transport processes. However, anomalous transport studies commonly investigate simple hydraulic boundary conditions characterized by a unidirectional gradient \citep{benson2001fractional, edery2014origins, edery2016structural, harvey2000rate, pedretti2014apparent, willmann2008transport, leblanc1991large, julian2001numerical, Zhang1999nonideal, henri2015random}, which is typical of natural, ambient groundwater flow \citep[e.g. a horizontal hydraulic gradient on the order of $10^{-3}$][]{Fetter2001}. Many of these studies hold hydraulic boundary conditions constant in order to investigate how changing the spatial heterogeneity of the domain impacts solute transport. However, because of horizontal stratification of coarse- and fine-grained facies typical of many clastic sedimentary environments and hence significant vertical anisotropy of effective hydraulic conductivity (K), the vertical hydraulic gradients commonly exceed horizontal gradients by a factor of $10^1 - 10^2$ \citep[e.g.][]{fogg1986groundwater, belitz1993numerical}. In even moderately developed groundwater basins, and especially in agriculturally intensive ones, high rates of seasonal pumping and recharge from irrigation can further increase vertical hydraulic gradients \citep{styles1999subsurface, gailey2018using}. Yet, only a few modeling studies investigate non-Fickian transport under such large shifts in regional hydraulic gradient, and these studies tend to emphasize local scale breakthrough measured at extraction wells or control planes. \citet{matheron1980transport} demonstrated in a 2D model with limited spatial heterogeneity that flow parallel to the bedding direction leads to preasymptotic anomalous transport, even at very long timescales because the solute travels along an increasingly non-stationary medium. \citet{henri2019stochastic} demonstrated that well design characteristics (e.g., well depth, pumping rate, and screen length) have a significant impact on the uncertainty of late arrival times generated by heterogeneity. Similarly, \citet{libera2017influence} demonstrated that temporally variable pumping rates strongly affected contaminant breakthrough curves at the pumping well. \citet{guo2019upscaling} investigated anomalous transport arising from the transition from predominately horizontal to vertical flow, and found that internal hydraulic gradients between the high‐ and low‐K materials strongly affect mass transfer between hydrofacies. Furthermore, \citep{guo2020adaptive} showed that an upscaled multirate mass transfer model failed to capture tailing effects when the mean flow direction changed. Thus, prior work suggests that hydraulic boundary condition transience can strongly impact non-Fickian transport, we still lack an understanding of how shifting hydraulic gradients (as opposed to the unidirectional gradient that most studies explore) may modulate the degree of anomalous transport observed in a heterogeneous aquifer-aquitard complex. 
 
-Broadly, this research aims to fill scientific knowledge gaps related to estimating groundwater pumpage and recharge processes in agriculturally-dominated groundwater basins. Specifically, this work reviews estimates of landscape and groundwater budgets for two regional-scale groundwater models of California's Central Valley, CVHM and C2VSim. This work examines two related, fundamental scientific questions: (1) To what extent can unmeasured water budget components (i.e., agricultural groundwater pumping) in agriculturally-dominated groundwater systems be constrained with a combination of agricultural irrigation accounting methods and groundwater models? (2) Do methodological or conceptual differences contribute to differences in water budget estimates in CVHM and C2VSim? That is to say, to what degree do the differences in water budget estimates reflect propagation of the inherent parametric uncertainty of input data (i.e., data on crops, weather and climate, and surface water deliveries) or structural uncertainty of the methods, which may oversimplify, omit, or misrepresent important physical processes? 
+To the best of our knowledge, no studies have investigated the impact of mean flow direction on non-Fickian transport within a 3D, kilometer-scale, alluvial aquifer-aquitard system. Such a question bears importantly on modeling macroscopic nonpoint source transport in large alluvial groundwater systems, and may shed light on how to build better upscaled transport models that perform well across a range of transient hydraulic gradient conditions.
 
-%%% MATERIALS & METHODS %%%
-\section{Materials and Methods}
-\subsection{Estimates of Groundwater Balance Components of California’s Central Valley}
+In this study, we simulate groundwater flow and random walk particle tracking in a detailed hydrofacies model of a typical alluvial aquifer-aquitard complex (with high vertical anisotropy in K) subject to an increasingly high \textbf{v}ertical to \textbf{h}orizontal hydraulic \textbf{g}radient \textbf{r}atio (VHGR), which is an indicator of the mean flow direction. In other words, if we increase the vertical hydraulic gradients in a system by a factor of 10, 100, or 1000 (e.g., due to natural geologic variation in vertical anisotropy of K, or during the transition from a fallow winter season to a summer growing season characterized by pumping and recharge), does this makes the transport more non-Fickian, and if so, by how much, and why? Changes in anomalous nonpoint source transport are compared between differing steady-state VHGR scenarios which collectively represent snapshots along a transition from predominantly horizontal (low VHGR) to vertical flow (high VHGR). We examine tailing, spatial variance of the nonpoint source plume, and the spatial distribution of final particle position to quantify and explain differences in non-Fickian spreading. Results are discussed in the context of the transition from advection to diffusion dominant systems, and related to the hydrogeology of the study site. We explore how our findings support a conceptualization of regional scale nonpoint source contaminant migration characterized by oscillating patterns of non-Fickian transport, and how this perspective might inform the development of upscaled regional groundwater quality management models \citep{Fogg2006}.
 
-The Central Valley aquifer system includes three interconnected regional aquifers (i.e., the Sacramento Valley, San Joaquin Valley, and Tulare Lake aquifers). The California Department of Water Resources (DWR) has additionally designated 21 aquifer sub-regions within this Central Valley aquifer system (Fig. \ref{fig:ch3_regions}). CVHM and C2VSim provide estimates of historical hydrologic budgets for each of these subregions during an overlapping, multi-decadal simulation period from 1962-2003. This spatial and temporal overlap aids in estimating the effects of methodological differences between models on the estimation of regional and sub-regional water budgets. The models use some similar data for precipitation, surface water inflows, and surface water diversion volumes \citep{dogrul2011integrated}, as well as identical estimates for urban groundwater pumping \citep{brush2013development, faunt2009groundwater}.
 
-%% FIG Regions and subregion overview figure  
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=100mm,keepaspectratio]{ch3_figs/CV_subregions_fig_Alvar_040819.png}}
-\caption{Spatial extent of sub-regional, regional, and supra-regional areas used for model comparison.}
-\label{fig:ch3_regions}
+
+
+%--------------------------------------------------------%
+%	METHODS
+%--------------------------------------------------------%
+\section{Methods}
+
+First, a heterogeneous, hydrofacies-based geostatistical model of the Kings River alluvial fan in California's Central Valley was developed. Next, four VHGR scenarios of increasingly vertical groundwater flow were simulated, and used to solve the particle transport of a conservative solute. Lastly, the resulting 3D Lagrangian particle trajectories were analyzed in terms of their tailing, second spatial moment, and spatial distribution of final particle position. 
+
+%
+%---------------- Hydrofacies model  ------------------%
+%
+\subsection{Heterogeneous hydrofacies model and study site}
+\label{ss_2_1}
+
+The three‐dimensional, spatially-correlated hydraulic conductivity domain (Figure \ref{fig:model}) was simulated with Transition Probability Geostatistical Software (T-PROGS), which uses the transition probability approach described by \citet{carle1996transition, carle1997modeling, carle1999tprogs}. Details of the facies model are provided in \citet{weissmann1999three, weissmann1999multi, weissmann2002glacially, weissmann2004influence}, and a brief summary is provided here.
+
+A subsection of the Central Valley aquifer (California, USA) in the Kings River fan, was chosen as a study site representative of a typical alluvial aquifer for its high vertical anisotropy ($K_h/K_v =$ 238), and its validated performance in simulating both flow (hydraulic head) and transport (groundwater age distribution) \citep{weissmann2002dispersion}. The hydrofacies model was conditioned by analyzing more than 40 000 surface and shallow subsurface ($<$ 2 $m$) features (e.g., borings, excavations, road cuts, and natural exposures) \citep{huntington1981soil}, approximately 150 $m$ of core and geophysical logs \citep{burow1997hydrogeologic}, approximately 1,000 $m$ of continuous core \citep{harter2005deep}, and numerous drillers' logs from water wells in the study area \citep{weissmann1999multi}. These analyses defined a conceptual geologic model and the T-PROGS model parameters. 
+
+The Kings River alluvial fan is composed of four sequences created during Pleistocene glacial cycles and a fifth basal depositional unit prior to major glaciation events, each separated by laterally-extensive paleosols that formed during inter-glacial periods of pedogenesis \citep{weissmann2002glacially}, which, owing to their relatively low hydraulic conductivity, act as aquitards. Notably, one unit represents a incised valley fill of coarse-grained sediment, created by large glacial outwash in the east-west $y$ direction of the domain. Key parameters derived from these analyses that constrained the T-PROGS model include the hydrofacies proportions, mean lengths in $xyz$, and the embedded transition probabilities in $xyz$, which reflect the cross-correlation between facies and thus the probability that one facies contacts another in a given direction \citep{carle1996transition}. Next, Markov chain models corresponding to each unit were developed and combined to represent the highly heterogeneous stratigraphy: overlapping alluvial fans, interspersed with laterally-extensive paleosols, and a cross-cutting incised valley fill. \citet{weissmann2004influence} provides a detailed overview of the development and combination of these models into a single conductivity field. 
+
+
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code\00_interpolate_paths_extract_trajectories.R
+% creates: C:/Users/rpauloo/Documents/GitHub/kings-river-fan-tprogs/code/rw3d//2019_11_20_100s_10kp/dat/part_traj_paraview_00_03.csv
+% which is read into Paraview, and edited in Illustrator in C:\Users\rpauloo\Documents\GitHub\kings-river-fan-tprogs\paraview
+% Paraview: krf_plus_part_traj_FINAL_00_03.pvsm
+% AI: krf_part_traj_00_03.ai
+% PNG: krf_part_traj_00_03-01.png
+% 01_mm\ai\study_site_water_budget.ai
+% numbers come from archived (commented out Table 5)
+\begin{figure}[ht]
+\centering
+  \includegraphics[width=\textwidth]{ch4_figs/krf_part_traj_00_03-01.png}
+  \caption{The Kings River alluvial fan hydrofacies model in California's Central Valley (USA) with a section cut away to reveal the geologic heterogeneity and four representative particle trajectories from the four VHGR scenarios in this study (section \ref{ss_2_3}). The location of the instantaneous nonpoint source term (10 000 particles, 10 $m$ below the water table) is represented by a horizontal pink line. Particle trajectories are increasingly horizontal and non-Fickian with decreasing VHGR. Note that the vectors representing flow in $z$, $y$, (and their geometric sum in the mean flow direction, $y'$) are illustrative, and not drawn to scale.}
+  \label{fig:model}
 \end{figure}
 
-\subsection{Major Water Balance Components}
 
-Simulated model outputs from CVHM and C2VSim were aggregated to estimate the major flow components into and out of the landscape and groundwater systems in each model (Fig. \ref{fig:ch3_conceptual}a). Because IWFM and MF-FMP2 have some important conceptual differences, the major flow components are comprised of various individual water flow components that are output by each model (Fig. \ref{fig:ch3_conceptual}b-e; Tables \ref{table:ch3_LS_flow_components},\ref{table:ch3_GW_flow_components}) and are described in detail for CVHM in Tables \ref{table:ch3_CVHM_LS}, and \ref{table:ch3_CVHM_GW}, as well as for C2VSim in Tables \ref{table:ch3_C2VSim_LS}, and \ref{table:ch3_C2VSim_GW}. In general, IWFM partitions flow components according to land use in C2VSim for landscape water budgeting, whereas MF-FMP2 does not generally partition outputs according to land use, but instead partitions outputs according to physical processes. For example, MF-FMP2 partitions ET by process into individual evaporation and transpiration components for irrigation, precipitation, and groundwater in CVHM (Fig. \ref{fig:ch3_conceptual}b), whereas IWFM partitions ET by land-use designation (i.e., agricultural, urban, and native/riparian areas; Fig. \ref{fig:ch3_conceptual}c).
+The model dimensions in $xyz$ are 12.6 $km$ x 15 $km$ x 100.5 $m$, with discretization $\Delta x = \Delta y = $ 200 $m$, and $\Delta z =$ 0.5 $m$. Spatially variable $K$ estimated from pumping tests, slug tests, core measurements, and literature values for similar lithologies \citep{burow1999evaluation, weissmann1999three} were assigned to each of the model cells by their simulated hydrofacies, which include gravel, sand, sandy mud, muddy sand, and paleosols (Table \ref{tab:model_l_k_pe}).
 
-%% FIG Landscape and GW components conceptual model    
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=150mm,keepaspectratio]{ch3_figs/Landscape_system_compare_ALLcompact_082919.pdf}}
-\caption{Conceptual model showing (a) the major groundwater and landscape water budget components used for model comparison, as well as individual water budget variables for CVHM (b) and C2VSim (c) landscape systems and CVHM (d) and C2VSim (e) groundwater systems.}
-\label{fig:ch3_conceptual}
-\end{figure}
 
-For the landscape system, fluxes into and out of any given landscape area can be generalized into major flow components that include precipitation, surface diversions, evapotranspiration (ET), runoff and return flows, and deep percolation. For the purposes of this study, the total flows into the landscape system are given as 
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code\tables.R
+% object is called `d`
+\bgroup
+\begin{table}[ht]
+\centering
+%\small\addtolength{\tabcolsep}{-5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrlllll}
+\hline
+Hydrofacies & $l_x (m)$ & $l_y (m)$ & $l_z (m)$ & $K (m/s)$ & $P_e^{100}$ & $P_e^{10}$ & $P_e^{1}$ & $P_e^{0.1}$\\
 
-%landscape in
+\hline
+
+gravel & 200 & 650 & 1.5 & 1.0E-02 & 2.05E+09 & 2.05E+08 & 2.05E+07 & 2.05E+06\\
+sand & 625 & 1500 & 3.3 & 1.0E-03 & 5.13E+08 & 5.13E+07 & 5.13E+06 & 5.13E+05\\
+muddy sand & 400 & 800 & 1.4 & 1.0E-05 & 2.90E+06 & 2.90E+05 & 2.90E+04 & 2.90E+03\\
+mud & NA & NA & 1.0 & 1.0E-06 & 289.86 & 28.99& 2.9 & 0.29 \\
+paleosol & 800 & 1500 & 1.9 & 1.3E-07 & 71.59 & 7.16 & 0.72 & 0.07\\
+
+\hline
+\end{tabular}
+} % for \resizebox
+\caption{Hyrdofacies properties including mean lengths $l$ in $xyz$ directions (strike, dip, and vertical in Figure \ref{fig:model}), hydraulic conductivity $K$ ($m/s$), and average Peclet number across the VHGR scenarios.}
+\label{tab:model_l_k_pe}
+\end{table}
+
+\egroup
+
+We only use one realization of the hydrofacies model (Figure \ref{fig:model}) because previous studies demonstrate that non-Fickian transport behavior does not appreciably differ between realizations due to good connectivity of aquifer facies \citep{guo2019upscaling, weissmann2002dispersion}.
+
+
+%
+%---------------- Groundwater flow simulation  ------------------%
+%
+\subsection{Groundwater flow and transport simulation}
+\label{ss_2_2}
+
+Steady state, groundwater flow in the geostatistical model grid (Section \ref{ss_2_1}) is simulated in MODFLOW \citep{harbaugh2000modflow, mcdonald1988modflow}. The 3D groundwater flow equation used to compute long-term, average confined flow is:   
+
+
 \begin{equation}
-\begin{aligned}
-Total \; Landscape \; (in) ={} & Precipitation \; (in) \\
-& + Groundwater \; Pumping \; (in) \\
-& + Surface \; Water \; Diversions \; (in)
-\end{aligned}
+    \frac{\partial{}}{\partial{x}}(K_{xx} \frac{\partial{h}}{\partial{x}}) +
+    \frac{\partial{}}{\partial{y}}(K_{yy} \frac{\partial{h}}{\partial{y}}) +
+    \frac{\partial{}}{\partial{z}}(K_{zz} \frac{\partial{h}}{\partial{z}}) +
+    W = S_s \frac{\partial{h}}{\partial{t}}
+\label{eq:gwflow}
 \end{equation}
 
-\noindent and the total flows out of the landscape system are given as
+where $K_{xx}$, $K_{yy}$, and $K_{zz}$ [$LT^{-1}$] are the hydraulic conductivities along the $x$, $y$, and $z$ coordinate axes; $h$ $[L]$ is the potentiometric head; $W$ [$T^{-1}$] is the volumetric flux per unit volume of sources ($W >$ 0) or sinks ($W <$ 0); $S_s$ [$L^{-1}$] is the specific storage; and $t$ $[T]$ is time. 
 
-%landscape out
+The water table is represented on the top of the domain with a constant head boundary condition, which is the same across all scenarios. Vertical flow out of the bottom of the model and into deeper groundwater, due to a combination of pumping at depth and recharge from above, is represented by another constant head boundary condition on the bottom of the domain, and is altered depending on the VHGR scenario in question (discussed in section \ref{ss_2_3}). Two more constant head boundary conditions on the front and back faces of the model maintain a horizontal groundwater flow gradient of 0.001 along the $y$ direction (Figure \ref{fig:model}), and represent mountain front recharge along the eastern model boundary. Head values are spatially distributed across all active faces such that the mean flow direction is uniform across the entire domain (SI Appendix Figure \ref{ap_c_heads_vhgr}). No flow boundaries are specified along the right and left faces of the domain (along the $x$ direction). 
+
+
+%Particle tracking transport simulation
+
+Solute transport is simulated by the random‐walk particle tracking method \citep{labolle1998diffusion, labolle2000diffusion} applied in the code RW3D \citep{fernandez2005differences, henri2014toward, henri2015random, salamon2006modeling} that solves the advection-dispersion equation: 
+
 \begin{equation}
-\begin{aligned}
-Total \; Landscape \; (out) ={} & Evapotranspiration \; (out) \\
-& + Runoff \; \& \; Return \; Flow \; (out) \\
-& + Deep \; Percolation \; (out)
-\end{aligned}
+    \theta \frac{\partial{c}}{\partial{t}} = \nabla \cdot (\theta D \nabla c) - \nabla \cdot (qc)
+\label{eq:ade}
 \end{equation}
 
-\noindent where each flow component comprises CVHM and C2VSim variables described in Table \ref{table:ch3_LS_flow_components}.
+%\begin{equation}
+%    D = (\alpha_T |q| + D^*) \delta + (\alpha_L - \alpha_T)qq^t / |q|
+%\label{eq:d}
+%\end{equation}
 
-%% TABLE of landscape variables
-\input{ch3_tables/Landscape_Flow_components.tex}
+where $c$ is the concentration of the dissolved solute [$ML^{-3}$], $\theta$ is the effective porosity [$-$], and $\textbf{D}$ is the dispersion tensor, defined as $\textbf{D} = (\alpha_T |\textbf{q}| + D^*) \textbf{I} + (\alpha_L - \alpha_T) \textbf{qq}^t / |\textbf{q}|$, where $D^*$ is the molecular diffusion coefficient [$L^2 T^{-1}$], $\alpha_L$ and $\alpha_T$ are the longitudinal and transverse dispersivities [$L$], $\textbf{I}$ is the Dirac delta function, and $|\textbf{q}|$ is the magnitude of the velocity vector [$LT^{-1}$].
 
-For the groundwater system, fluxes into and out of any groundwater area can be generalized into flow components that include exchanges with surface water and the landscape, subsurface exchanges with adjacent groundwater areas, and groundwater pumping. For the purposes of this study, the total flows into the groundwater system are given as 
+The source term is a discrete, instantaneous pulse injection of 10 000 particles at 10 $m$ below the water table (Figure \ref{fig:model}). To simulate the spatial variability of contaminant mass arrival at the water table, flux-weighted injection is used to initialize particle motion. Simulations are run for a sufficient number of time steps such that all particles exit the domain (SI Appendix Table \ref{ap_c_rw3d_params}), and that the mean Lagrangian hydrofacies proportions (i.e., the proportion of particles in each hydrofacies) converge on the actual hydrofacies proportions over time (SI Appendix Figure \ref{ap_c_heads_vhgr}). The Lagrangian particle tracking methods used in this study can be very computationally intensive, especially for the case of a regional-scale nonpoint source term, where the size of the domain (and hence the number of particles used to sample it) is large. Adding multiple injections of particles was computationally unrealistic, and moreover, under steady state flow, a continuous source injection and instantaneous pulse injection yield similar results. %(this is not the case for a transient flow simulation, which we do not investigate). 
 
-%groundwater in
+\citet{labolle2001role} demonstrated for a similar hydrofacies-based domain that solute transport results were insensitive to local-scale $\alpha$, which was insignificant compared to the dispersion caused by the hydrofacies-scale heterogeneity of the conductivity domain. Moreover, \citet{weissmann2002dispersion} investigated sensitivity analyses with $\alpha_L$ and $\alpha_T =$ 0.1 $m$ and $=$ 0.01 $m$ in the same Kings River Fan domain that we use in this study, and found that between geostatistical realizations, the simulation results did not differ appreciably in terms of the overall transport. Thus, we set longitudinal, transverse horizontal, and transverse vertical dispersivities to 0.01 times the cell discretization, $\alpha_L = \alpha_{TH} = $ 2.0 $m$, and $\alpha_{TV} = $ 0.005 $m$. These local-scale dispersivities were maintained across the VHGR scenarios in order to ensure comparability. We assume a conservative (non-reactive, non-sorbing) solute and set the molecular diffusion coefficient $D^*$ = 6.9E-10 $m^2/s$, based on \citet{weissmann2002dispersion}. 
+
+% $D^* = D_d / \tau^2$ \citep{Fetter2001}, where $D_d$ is an average diffusion coefficient for common ions, 2.0E-9 $m^2/s$, \citep{domenico1998physical} and $\tau$ is an average tortuosity (arc to chord ratio) of 1.7, according to
+
+
+
+%---------------- hydraulic gradient scenarios  ------------------%
+\subsection{Hydraulic gradient scenarios}
+\label{ss_2_3}
+
+This aim of this study is to investigate the influence of mean flow direction on non-Fickian transport, thus we compare systems under different \textbf{v}ertical to \textbf{h}orizontal \textbf{g}radient \textbf{r}atio (\textbf{VHGR}):
+
 \begin{equation}
-\begin{aligned}
-Total \; Groundwater \; (in) ={} & Surface \; Water \; Gains \; (in) \\
-& + Landscape \; Recharge \; (in) \\
-& + Net \; Boundary \; Inflows \; (in)
-\end{aligned}
+    VHGR = i_v / i_h
+\label{eq:vhgr}
 \end{equation}
 
-\noindent and the total flows out of the landscape system are given as
+where $i_v$ is the vertical gradient $\partial{h}/\partial{z}$, and $i_h$ is the horizontal gradient $\partial{h}/\partial{y}$ (Figure \ref{fig:model}). Increasing VHGR corresponds to increasingly vertical flow. Four scenarios are simulated, in which VHGR is varied over four orders of magnitude by fixing $i_h$ = 0.001 (representing ambient horizontal groundwater flow from mountain front recharge), and adjusting $i_v$:
 
-%groundwater out
+\begin{itemize}
+    \item VHGR = 0.1 ($i_v =$ 0.0001): primarily horizontal flow with minimal recharge
+    \item VHGR = 1 ($i_v =$ 0.001): equal horizontal and vertical gradients  
+    \item VHGR = 10 ($i_v =$ 0.01): substantial component of vertical groundwater flow
+    \item VHGR = 100 ($i_v =$ 0.1): dominantly vertical flow 
+\end{itemize}
+
+Because of the strong vertical anisotropy caused by the stratified interbedding of coarse and fine facies, the ratio between effective $K_h$ and $K_v$ in our study site is 238, which tends to produce natural values of VHGR $>$ 1 in such systems \citep[e.g.][]{fogg1986groundwater}. Groundwater development by pumping can further increase VHGR, and the augmentation of recharge due to irrigation can still further increase it. For example, values of $i_v$ in portions of the Central Valley can vary from order $10^{-3}$ in winter (non-pumping season) to $10^{-1}$ in summer (pumping season). Hence, taken independently, the four steady state VHGR flow fields represent stages along a transition from ambient, primarily horizontal groundwater flow to predominantly vertical flow induced by natrual anisotropy in K and pumping and recharge, and permit an investigation of long-term plume evolution across these different hydraulic gradient conditions. 
+
+
+Across each VHGR, the Peclet number, $P_e$ (i.e., the ratio of the characteristic time scales of advection to diffusion) was calculated for each hydrofacies (Table \ref{tab:model_l_k_pe}).
+
 \begin{equation}
-\begin{aligned}
-Total \; Groundwater \; (out) ={} & Surface \; Water \; Losses \; (out) \\
-& + Groundwater \; Pumping \; (out) \\
-& + Net \; Boundary \; Outflows \; (out)
-\end{aligned}
+    P_e = K i l \: / \: D^* \theta
+\label{eq:pe}
 \end{equation}
 
-\noindent where each flow component comprises CVHM and C2VSim variables described in Table \ref{table:ch3_GW_flow_components}.
+where $i$ is the vertical hydraulic gradient of the VHGR scenario and $D^* =$ 6.9E-10 $m^2/s$ \citep{weissmann2004influence, weissmann2002modeling}, and $\theta$ is the hydrofacies porosity. Due to the influence of vertical gradients, $P_e$ of gravel, sand, and muddy sand were calculated using mean horizontal length scales ($l_x, \: l_y$), whereas the $P_e$ of mud and paleosol were calculated using vertical length scales ($l_z$). For gravel, sand, and muddy sand, $\theta =$ 0.3, and for mud and paleosol, $\theta =$ 0.5. Mud was used as a background category, thus its lateral mean lengths ($l_x$ and $l_y$) were already determined in the process of Markov chain modeling of the transition probability \citep{weissmann1999three}.
 
-%% Table of groundwater variables
-\input{ch3_tables/GW_Flow_components.tex}
 
-Annual water budget volumes were calculated for each major landscape and groundwater flow component at the supra-regional, regional, and subregional scales for each model during a concurrent simulation period from water years 1962--2003. Water budget values were gathered from model output files and were parsed at to the regional and subregional scales with the ZONEBUDGET and Z-Budget post-processing packages for MODFLOW and IWFM, respectively. In C2VSim, groundwater pumping outputs are partitioned by land use, so urban or agricultural groundwater pumping volumes were easily differentiated. In CVHM, however, model outputs are generally not partitioned by land use. Fortunately, urban pumping is specified in both models using identical values for each subregion \citep{brush2013development,faunt2009groundwater}, so any variation in estimated total pumping is due to differences in estimated agricultural groundwater pumping alone.
+Generally, system-wide $P_e > 1$ is considered advection dominant, $P_e < 1$ indicates diffusion dominance, and slow advection (which may resemble a more diffusion-like process) may occur at relatively small $P_e$ less than 1 \citep{guswa2000slow}. In heterogeneous aquifer-aquitard systems, which vary in terms of the hydraulic conductivity field, porosity, and hydraulic gradient, $P_e$ varies spatially. Importantly, the $P_e$ of low-K mud and paleosol hydrofacies in this study can transition between advection and diffusion dominance due to changes in flow rates in these hydrofacies caused by different VHGR, with consequences for macroscopic transport behavior. 
 
-In addition to major landscape and groundwater flow components described above, total annual groundwater storage values were gathered for both models to compare groundwater storage trends. Average annual groundwater storage trends for each model during 1962--2003 were calculated using linear regression. Area-averaged groundwater change-in-storage trends were compared using the respective linear regression for each model.
 
-\subsection{Water Budget Comparison Methods}
 
-To evaluate differences in annual water budgets between CVHM and C2VSim, several statistical analyses were applied. Specifically, the root mean square error ($RMSE$), Pearsons $r$, and mean bias error ($MBE$) statistics were calculated on annual volumes of each generalized landscape and groundwater flow component for each model during water years 1962--2003. In order to compare these statistics for different flow components and across spatial scales, flow components for each model were normalized according to 
 
-%normalization eqn
-\begin{align}
-X_{norm, i} = \frac{X_i}{X_{max}} && Y_{norm, i} = \frac{Y_i}{Y_{max}}
-\end{align}
 
-\noindent where $X_i$ and $Y_i$ are annual volumes of flow components from CVHM and C2VSim, respectively, and $X_{norm,i}$ and $Y_{norm,i}$ are the values normalized by the maximum values $X_{max}$ and $Y_{max}$. Flow components, $X_i$ and $Y_i$ are net values that are partitioned such that flows into and out of the landscape and groundwater systems are all represented as positive values. For example, if a surface water system has a net loss during one year, this is represented as a single positive inflow to the groundwater system, with no corresponding outflow from the groundwater system. Conversely, if the surface water system is gaining in another year, it is represented as a positive outflow from the groundwater system with no corresponding inflow.  Accordingly, normalized $RMSE$, normalized Pearsons $r$ , and normalized $MBE$ are each calculated as follows
 
-%Normalized RMSE
+%
+%---------------- Metrics of non-Fickian transport  ------------------%
+%
+\subsection{Metrics of non-Fickian transport}
+\label{ss_2_5}
+
+In order to compare the impact of various VHGR scenarios on anomalous transport, we measure tailing by fitting a tempered fractional advection-dispersion equation (TFADE) to breakthrough curves and comparing the tempering parameter. Tailing is the late-time arrival of solutes at a control plane, and indicates mass holdback in fines. We also compute the time and space evolution of the mean squared displacement (MSD), or second spatial moment, which measures the variance in plume displacement and represents how ``spread out'' all of the particles are from one another due to mass holdback and preferential flow. Lastly, we investigate the spatial distribution of final particle positions with respect to the site's geologic heterogeneity, which illustrates preferential flow.
+
+Between VHGR scenarios, travel times are re-scaled by $t_c = l_c / \bar{v}$, where $t_c$ is the characteristic travel time to travel the average facies length, and $l_c$ and $\bar{v}$ are the characteristic length and mean velocity along the mean flow direction $y'$ (details provided in SI Appendix Section \ref{s_ap_c_part_rot} and Table \ref{ap_c_tc}). 
+
+
+%
+%---------------- Tailing  ------------------%
+%
+\subsubsection{Tailing}
+\label{ss_tailing}
+
+In order to quantify differences in tailing, a tempered fractional advection-dispersion equation (TFADE) model \citep{meerschaert2008tempered} was fit to breakthrough at a control plane along the bottom face of the model:
+
 \begin{equation}
-RMSE = \sqrt{\frac{1}{n}\sum\limits_{i=1}^{n}{(X_{norm, i} -Y_{norm, i})^2}}
+\label{eq:tfade}
+    \frac{\partial C(y', t)}{\partial t}+\beta e^{-\lambda t} \frac{\partial^{\gamma}\left[e^{\lambda t} C(y', t)\right]}{\partial t^{\gamma}}-\beta \lambda^{\gamma} C(y', t)=-V_{L} \frac{\partial C(y', t)}{\partial y'}+D_{L} \frac{\partial^{2} C(y', t)}{\partial y'^{2}}
 \end{equation}
 
-%Pearsons r
+where $t$ $[T]$ is time; $C$ $[ML^{-3}]$ is the concentration; $y'$ $[L]$ is the position along the longitudinal direction; $V_L$ $[LT^{-1}]$ is the longitudinal velocity; $D_L$ $[L^2T^{-1}]$ is the molecular dispersion coefficient; $\beta$ $[T^{\gamma^{-1}}]$ is the fractional capacity coefficient, which governs the mobile fraction; $\gamma$ $[-]$ is the time fractional order; $\lambda$ $[T^{-1}]$ is the tempering parameter. Importantly, $\lambda$ represents the probability that the waiting times in the immobile phase transfer from a power‐law to exponential distribution and thus, provides a quantitative measure of tailing: as $\lambda$ approaches infinity, the TFADE reverts to the classic advection-dispersion equation, and a decreasing $\lambda$ indicates longer tailing. 
+
+It was assumed that the sample of initial particles that exit the bottom face of the domain represented macroscopic breakthrough along this plane if the domain was infinitely wide in the $x$ and $y$ dimensions, and if simulation time was unlimited. As VHGR decreases, horizontal flow causes more particles to exit the down-gradient face, yet a substantial fraction of 10 000 initial particles exit the bottom face in each simulation: 78.0, 74.7, 16.8, 7.7 \% of particles break through the bottom of the domain after 1000 characteristic times in VHGR = 100, 10, 1, and 0.1 respectively. 
+% 03_residence_time_distribution.R    rt %>% filter(z <= 1) %>% count(sim) %>% pull(n)/10000*100
+
+
+%
+%---------------- Spatial variance - MSD  ------------------%
+%
+\subsubsection{Spatial variance}
+\label{ss_msd}
+
+Next, the time evolution of the plume spatial variance is calculated. The mean squared displacement along a given direction $x$ is:  
+
 \begin{equation}
-r = \frac{\sum\limits_{i=1}^{n}{(X_{norm, i} -\bar{X}_{norm})}{(Y_{norm, i} -\bar{Y}_{norm})}}{\Bigg\{\sum\limits_{i=1}^{n}{(X_{norm, i} -\bar{X}_{norm})^2}\sum\limits_{i=1}^{n}{(Y_{norm, i} -\bar{Y}_{norm})^2}\Bigg\}^{1/2}}
+\label{eq:msd}
+    \sigma_{x}^2 = \left\langle (x(t) -  \left\langle x(t) \right\rangle)^2 \right\rangle
 \end{equation}
 
-%Normalized mean bias
-\begin{equation}
-MBE = \frac{1}{n}\sum\limits_{i=1}^{n}{(X_{norm, i} -Y_{norm, i})}
-\end{equation}
+where $\left\langle \cdot \right\rangle$ denotes the average position in the $x$ direction over all particles, and every particle is first initialized to an identical reference location (i.e., centered spatial moment). We calculate the spatial variance in the longitudinal, transverse vertical, and transverse horizontal directions using (\ref{eq:msd}). Fickian diffusion occurs when the plume MSD varies as $t^{\phi}$, where $\phi = $ 1 \citep{berkowitz1991dispersion, neuman1990universal}. By contrast, non-Fickian transport occurs when $\phi$ does not equal unity. Super- and subdiffusion refer to $\phi > $ 1 and $\phi < $ 1 respectively. In order to ensure the MSD represented an accurate measure of macroscopic spatial variance of the plume (and not boundary effects created by early exiting particles), we restrict our analysis of the MSD results to before 32 characteristic time scales ($t/t_c \approx 10^{1.5}$). %when approximately 95.4, 87.8, 62.5, 59.5 \% of particles remain in VHGR = 100, 10, 1, and 0.1 respectively. Decreasing particle proportions as VHGR decreases are due to particles with short residence times that take horizontal flowpaths out of the top and down-gradient sides of the model, discussed more thoroughly in Sections \ref{ss_3_3} and \ref{ss_4_2}. 
+% 02_ade/code/03_residence_time_distribution:   100-100*(bind_rows(ll) %>% filter(log_t_ta >= 1.5 & log_t_ta <= 1.6) %>% group_by(sim) %>% slice(1) %>% pull(cbtc) %>% rev() )
 
-This combination of statistics provides various measures of agreement between each model. $RMSE$ describes the absolute agreement of values along the 1:1 line, ranging from 0 to 1 when calculated with normalized values $X_{norm,i}$ and $Y_{norm,i}$, where 0 indicates perfect agreement. Pearsons $r$ describes the linear correlation between the values, ranging from 0 to 1, where 1 indicates perfect correlation and 0 indicates no correlation. $MBE$ describes model bias, ranging from 0 to 1, where 0 indicates no model bias.
 
-\subsection{Comparison of Model Hydraulic Properties}
+%
+%---------------- Residence time and final particle position  ------------------%
+%
+\subsubsection{Final particle position}
+\label{ss_rtd_pp}
 
-Differences in the distribution vertical and horizontal hydraulic conductivity ($K$) were compared for coincident model layers in each model (Fig. \ref{fig:ch3_model_layers}) at the supra-regional, regional, and subregional scales. C2VSim represents the groundwater system with 4 model layers, while CVHM uses 10 model layers. The Corcoran clay, a laterally-continuous fine-texture confining layer that is present in the majority of the Tulare region and parts of the San Joaquin region, is represented in model layer 2 and layers 4--5 in C2VSim and CVHM, respectively, where it is present. Layer 1 and layers 1-3 represent the uppermost coincident model layers that overly the Corcoran clay (where present) in C2VSim and CVHM, respectively, while layers 3--4 and layers 6--10 represent sediments underlying the Corcoran clay (where present). For the purposes of this comparison, layer 3 and layers 6--7 as well as layer 4 and layers 8--10 were treated as coincident in C2VSim and CVHM, respectively. C2VSim does not simulate lateral groundwater flow through the Corcoran clay, so comparison of horizontal $K$ was not conducted for these layers.
+Lastly, we compare %the range and tailing of the particle residence time distribution across VHGR scenarios. The residence time of a particle is the time at which it exits the domain, which can be thought of as breakthrough at a control plane along any of the faces of the domain. We relate differences in the particle residence time distribution to the 
+spatial distribution of final particle positions (i.e., the location at which particles exit the domain), and the geologic heterogeneity of the domain. The spatial patterns of particle exit points strongly illustrate preferential flow along high-K hydrofacies and lend insight into transport dynamics across VHGR scenarios.
 
-%% FIG GW model layers
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=140mm,keepaspectratio]{ch3_figs/GW_conceptualization.png}}
-\caption{Groundwater model layers for CVHM and C2VSim. Coincident layers are indicated by dashed lines.}
-\label{fig:ch3_model_layers}
-\end{figure}
 
-%%% RESULTS %%%
+
+
+
+
+
+%--------------------------------------------------------%
+%	RESULTS
+%--------------------------------------------------------%
 \section{Results}
-\subsection{Major Landscape Water Budget Components}
+\label{s_3}
 
-Annual landscape water budget components were compared for CVHM and C2VSim at the supra-regional, regional, and sub-regional scales. Detailed comparisons of landscape water budget components for each of these regions are presented in Appendix \ref{app:compare_figs}. At the supra-regional scale (i.e., the entire Central Valley), the magnitudes of total fluxes into and out of the landscape were similar for each model (Fig. \ref{fig:LS_budget_SR26}). For both models, results show that the largest landscape water budget component into and out of the landscape were precipitation and ET, respectively, for the entire Central Valley. While the overall magnitudes of total fluxes out of the landscape were similar, results showed that C2VSim had a greater proportion of water leaving the landscape as runoff and return flows, while CVHM showed a greater proportion of deep percolation (Fig. \ref{fig:multi_LS_budget_SR26}c).
+%We simulated 3D flow and particle transport in a highly heterogeneous alluvial aquifer along a range of VHGR corresponding to increased pumping and recharge that would cause the transition between relatively horizontal ambient flow (VHGR = 0.1) to predominately vertical flow (VHGR = 100). In order to investigate non-Fickian transport between the VHGR scenarios, we measured mean squared displacement, compared the range and tailing in the particle residence time distribution, analyzed the spatial distribution of final particle positions with respect to residence time and domain geology, and fit a TFADE model to breakthrough along the bottom face of the model to quantify late time tailing. 
 
-All statistical measures showed greater agreement for all landscape water budget components at the supra-regional and regional scales than for the subregional scales (Fig. \ref{fig:ch3_LS_components}). For example, average $RMSE$, $r$, and $|MBE|$ were 0.17, 0.83, and 0.15, respectively, for all water budget components at the supra-regional scale, 0.20, 0.73, and 0.17 at the regional scale, and 0.23, 0.67, and 0.19 at the subregional scale. Average $RMSE$ and $|MBE|$ were especially poor for water budget components in subregions 1--9 that comprise the Sacramento Valley and Delta and East Side Streams (i.e., $RMSE$ = 0.26 and $|MBE|$ = 0.23). For subregions comprising the San Joaquin and Tulare Lake regions in southern part of the Central Valley  (i.e., subregions 10--21) agreement was generally better (i.e., $RMSE$ = 0.19 and $|MBE|$ = 0.15). However, $r$ was greater for subregions 1--9 than for subregions 10--21 (i.e., $r$ = 0.71 and 0.56, respectively), which suggests that while the absolute agreement between water budgets in these subregions was general worse, the budget components typically showed similar interannual variations.
 
-%% FIG LS components compare
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=165mm,keepaspectratio]{ch3_figs/RMSE_r_bias_LS_082219.pdf}}
-\caption{Statistical measures of correspondence, including normalized root mean square error (RMSE), pearsons $r$, and normalized mean bias for similar annual landscape water budget components for C2VSim and CVHM (1962-2003; horizontal axis) at the sub-regional, regional, and supra-regional scale (vertical axis). Landscape water budget components include precipitation in, surface water (SW) diversions in, and groundwater (GW) pumping in, runoff and return flows out, actual evapotranspiration ($ETa$) out, and deep percolation (i.e., recharge) out to the groundwater system.}
-\label{fig:ch3_LS_components}
+%
+%----------- TFADE ---------------%
+%
+
+\subsection{Tailing in breakthrough}
+\label{ss_3_1}
+
+Tailing is quantified in the vertical dimension, because downward contaminant migration is of practical concern to water quality in groundwater wells, and exacerbates site cleanup efforts. We fit a TFADE model \citep{meerschaert2008tempered} to breakthrough measured at a control plane along the bottom face of the model for each scenario, then compared fitted values of the tempering parameter $\lambda$ (Section \ref{ss_tailing}), which controls the immobile phase transfer from a power‐law to exponential distribution (e.g., decreasing $\lambda$ indicates more tailing) between scenarios. 
+The fitted TFADE models agree well with the simulated breakthrough across all VHGR scenarios (Figures \ref{fig:tfade}a-d). Importantly, as VHGR decreases, the fitted tempering parameter $\lambda$ also decreases (Table \ref{tab:tfade}), suggesting that between VHGR = 100 and VHGR = 0.1, the probability that particle waiting times transfer from power-law to exponential distribution decrease by about a factor of $10^2$, roughly corresponding to the $10^3$ change in vertical gradient across the scenarios (Table \ref{tab:model_l_k_pe}). 
+
+
+Late time slopes of the breakthrough curves were also measured, and are consistent with the TFADE results: as VHGR decreases and flow is increasingly horizontal, more tailing is observing, and consequently, late time slopes are increasingly positive (Figure \ref{fig:tfade}e). Furthermore, the change in $\lambda$ between between VHGR = 100 and 10 and between VHGR = 10 and 1 (about an order of magnitude difference) decreases to about a twofold difference of $\lambda$ change between VHGR = 1 and 0.1 (Table \ref{tab:tfade}). These differences in the change in $\lambda$ are consistent with the change in the slope of the breakthrough curves (Figure \ref{fig:tfade}e). Hence, results suggest that as VHGR decreases and the transport is increasingly dominated by diffusion limited trajectories, the late time tails reflect this limit.
+
+
+
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code\tables.R
+% object is called `d`
+\bgroup
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrr}
+\hline
+VHGR & $\beta [T^{\gamma}^{-1}]$ & $\gamma [-]$ & $\lambda [T^{-1}]$ \\
+
+\hline
+100 & 0.50 & 0.88 & 6.0E-4 \\
+10  & 0.65 & 0.88 & 5.0E-5 \\
+1   & 0.80 & 0.85 & 7.5E-6 \\
+0.1 & 0.80 & 0.85 & 4.0E-6 \\
+
+\hline
+\end{tabular}
+\caption{Fitted TFADE model parameters indicate an increasingly small tempering parameter as VHGR decreases, consistent with the observation of increased tailing in low VHGR scenarios.}
+\label{tab:tfade}
+\end{table}
+
+\egroup
+
+
+
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code\04_tfade.R
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\results\tfade.ai
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{ch4_figs/tfade.pdf}
+	\caption{(a-d) RW3D breakthrough curves (colored points) and fitted TFADE models (black line) measured at the bottom face of the domain (Figure \ref{fig:model}) for the four VHGR scenarios. Note the difference in x-axis travel times. (e) Breakthrough curves are normalized by the characteristic travel time (see SI Appendix Table \ref{ap_c_tc} for details). Measured slopes of tails (denoted as $m$) increase as VHGR decreases, corresponding to increasingly anomalous transport.}
+	\label{fig:tfade}
 \end{figure}
 
-Some individual water budget components showed particularly good agreement. Namely, precipitation had $RMSE$, $r$, and $|MBE|$ values of 0.03, 0.99, and 0.02, respectively. This is unsurprising given that precipitation is a model input rather than a simulated water budget component. Interestingly other model inputs like surface water diversions and evapotranspiration showed less agreement, despite that CVHM and C2VSim claim to use similar or identical datasets for land use and surface water inputs. Evapotranspiration showed good agreement for $RMSE$ and $|MBE|$ (0.15 and 0.11, respectively), but relatively poor correlation ($r$ = 0.43), suggesting that the overall magnitudes were similar, but the models showed less agreement for interannual and spatial variations. Surface water diversions, on the other hand, showed generally poor agreement for $RMSE$, $r$, and $|MBE|$ (0.30, 0.59, and 0.27, respectively), especially for subregions 1--9 in the northern Central Valley regions (0.38, 0.51, and 0.35, respectively).
 
-Some systematic bias was shown for some water budget components, including runoff and return flow and deep percolation (Fig. \ref{fig:ch3_LS_components}). For all subregions, runoff and return flows were biased higher for C2VSim, while deep percolation was biased toward CVHM. These biases were especially pronounced for subregions 1--9 in the northern Central Valley regions.
 
-In general, better agreement was observed for aggregated water budget components (i.e., Total in and Total out). These water budget components had  average $RMSE$, $r$, and $|MBE|$ of 0.13, 0.71, and 0.10, respectively, while those values for each of the water budget components that comprise the total fluxes averaged 0.26, 0.68, and 0.21 respectively. Finally, the statistical measures were generally consistent with each other, especially for $RMSE$ and $|MBE|$, so for example, if water budget comparison showed low $RMSE$, they typically also showed low $|MBE|$ and often high $r$ as well.
+%
+%----------- MSD ---------------%
+%
+\subsection{Temporal evolution of the plume spatial variance}
+\label{ss_3_2}
 
-\subsection{Major Groundwater Budget Components}
+Temporal evolution of the centered second spatial moments (Equation \ref{eq:msd}) in the longitudinal and transverse directions are superdiffusive and non-Fickian at early times across all VHGR scenarios; late time transitions either remain persistently preasymptotic, or revert to Fickian scaling, depending on the hydraulic gradient conditions (Figure \ref{fig:msd}). We now summarize spreading in the three directions:
 
-Annual groundwater budget components were compared for CVHM and C2VSim at the supra-regional, regional, and sub-regional scales (Fig. \ref{fig:ch3_GW_components}). Detailed comparisons of groundwater budget components are presented in Appendix Section \ref{app:compare_figs}. Results show that the largest water budget components into and out of the groundwater system were landscape recharge and groundwater pumping, respectively (Fig. \ref{fig:GW_budget_SR26}) for the entire Central Valley. CVHM showed greater total flows into and out of the groundwater system as compared to C2VSim at the supra-regional scale (Fig. \ref{fig:multi_GW_budget_SR26}c), and regional scale for the Sacramento Valley (Fig. \ref{fig:multi_GW_budget_SR22}) and Delta and East Side Streams regions (Fig. \ref{fig:multi_GW_budget_SR23}), where flows into and out of the groundwater system were about 2$\times$ and 1.5$\times$ greater, respectively, for CVHM than for C2VSim.
 
-Compared with landscape water budgets, groundwater budget components were generally more challenging to compare statistically because some water budget components contained insufficient measurements to calculate these statistics, especially for $r$ (Fig. \ref{fig:ch3_GW_components}b), which was not included in most subsequent analyses. In general, there was less agreement for groundwater water budgets than for landscape water budgets. Similar to the landscape water budgets, statistical measures showed slightly greater agreement for groundwater budget components at the regional scales than for the subregional scales. For example, average $RMSE$ and $|MBE|$ were 0.33 and 0.25, respectively, at the regional scale, and 0.35 and 0.27 at the subregional scale. However, agreement at the supra-regional scale was slightly worse than for the regional scale ($RMSE$ = 0.35 and $|MBE|$ = 0.30). Average $RMSE$ and $|MBE|$ were especially poor for water budget components in subregions 1--9 that comprise the Sacramento Valley and Delta and East Side Streams (i.e., $RMSE$ = 0.44 and $|MBE|$ = 0.37). For subregions comprising the San Joaquin and Tulare Lake regions in southern part of the Central Valley  (i.e., subregions 10--21) agreement was generally better (i.e., $RMSE$ = 0.28 and $|MBE|$ = 0.19). 
+\subsubsection{Longitudinal spatial variance}
+\label{ss_3_2a}
+The magnitude of longitudinal spatial variance (Figure \ref{fig:msd}a) increases with decreasing VHGR, and is preasymptotic and non-Fickian after 32 characteristic times for VHGR = 10, 1, and 0.1. In contrast, when VHGR = 100, late time longitudinal spreading is asymptotic and nearly Fickian ($\phi = $ 0.95 ). Spatial plume variance is around 4 orders of magnitude greater for VHGR = 0.1 compared to VHGR = 100 at all times. This large difference in the scale of spreading results in a wider-ranging residence time distribution between the scenarios (Figure \ref{fig:bottom_yx}a). A strong vertical hydraulic gradient when VHGR = 100 forces particles through nearly all facies in the downward, longitudinal direction (perpendicular to bedding layers), effectively generating an ergodic sample of the system heterogeneity much more rapidly than in scenarios with lower VHGR, thus late time spreading becomes in more Fickian nature. By contrast, at low VHGR, some of the plume remains trapped in fines, and some spreads longitudinally along preferential pathways--both of which stretch the plume.
 
-%% FIG GW components compare
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=165mm,keepaspectratio]{ch3_figs/RMSE_r_bias_GW_082219.pdf}}
-\caption{Statistical measures of correspondence, including normalized root mean square error (RMSE), pearsons $r$, and normalized mean bias for similar annual groundwater budget components for C2VSim and CVHM (1962--2003; horizontal axis) at the sub-regional, regional, and supra-wide scale (vertical axis). Groundwater budget components include gains from landscape recharge, gains from surface water leakage, gains from boundary flows in, losses from pumping, losses to groundwater discharge to surface water and the landscape, and losses from boundary flows out. Blank (white) boxes indicate instances where statistics could not be calculated due to insufficient data.}
-\label{fig:ch3_GW_components}
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code/01_msd.R creates msd_time_2amean_ta1.pdf
+% which is edited in AI in 02_ade/results/ msd_time_2amean_ta1_ai.pdf
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{ch4_figs/msd_time_2amean_ta1_ai.pdf}
+  \caption{Temporal evolution of the centered second spatial moments (Equation \ref{eq:msd}) calculated from the distribution of particle trajectories along the (a) longitudinal, (b) transverse vertical, and (c) transverse horizontal directions indicate superdiffusive early time scaling that reduces to less superdiffusive or Fickian scaling in late times, depending on the VHGR and direction of scaling. Triangles at early and late times show the slope of MSD temporal scaling, $\phi$ (Section \ref{ss_msd}).}
+  \label{fig:msd}
 \end{figure}
 
-Some systematic bias was observed for some groundwater budget components (Fig. \ref{fig:ch3_GW_components}c). For example, total groundwater inflows and outflows were biased toward CVHM for most regions ($MSE$ = -0.17 and -0.18), indicating that there generally was more groundwater `throughput' in the CVHM groundwater system. Biases were especially large for subregions 1--9 in the northern Central Valley regions. For example, for model inflows, surface water gains and net boundary inflows had $MSE$ values of 0.27 and 0.23, showing bias toward C2VSim, but were offset by CVHM-biased landscape recharge ($MSE$ = -0.39). The strong CVHM bias in landscape recharge was similarly observed in the landscape budgets highlighted in the previous section. The compensatory effect of water budget components was apparent across scales for $RMSE$ and $MBE$. For example the average $RMSE$ and $|MBE|$ for \textit{Total in} and \textit{Total out} were 0.27, and 0.21, whereas the average $RMSE$ and $|MBE|$ for each of water budget components that comprise the total inflows and outflows were substantially greater (0.37 and 0.29, respectively).
 
-Net boundary fluxes were calculated for all subregions to evaluate differences in groundwater flows and exchanges from model boundaries and adjacent subregions for each model. Surprisingly, 6 of 21 subregions showed opposite average net boundary groundwater fluxes during 1962--2003 (Fig. \ref{fig:ch3_GW_net_bound}). These discrepancies were especially pronounced in subregions 1--9 that comprise the northern Central Valley, where 5 of 9 subregions showed opposite signs, and the average discrepancies were 0.22 million acre-ft yr$^{-1}$ for these subregions. The magnitude of boundary flow discrepencies were somewhat less for subregions 10--21 that comprise the southern Central Valley (0.10 million acre-ft yr$^{-1}$, on average). 
+\subsubsection{Transverse vertical spatial variance}
+\label{ss_3_2b}
+Like longitudinal spreading, transverse vertical spreading (Figure \ref{fig:msd}b) in VHGR = 100 differs between the other three VHGR scenarios. VHGR = 100 is ballistic (i.e., $\phi >$ 2) at early times ($\phi$ = 2.84) due to entirely advection dominant facies (Table \ref{tab:model_l_k_pe}) and strong lateral connectivity of a high-K incised valley fill (Figure \ref{fig:ivf_xz}a) in the transverse vertical direction that facilitates preferential flow (discussed further in Sections \ref{ss_3_4} and \ref{ss_4_2}). However this spatial variance slows to nearly Fickian spreading ($\phi$ = 0.95) at late times. By contrast, VHGR = 10, 1, and 0.1 are super diffusive at early times (1.77 $\leq \phi \leq$ 1.91) but remain persistently preasymptotic and superdiffusive (1.34 $\leq \phi \leq$ 1.36) at late times rather than reverting to Fickian scaling as in VHGR = 100. 
 
-%% FIG GW boundary flows
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=85mm,keepaspectratio]{ch3_figs/net_bound_flows_no_reg.pdf}}
-\caption{Annual average net boundary groundwater flux directions and magnitudes at the regional and subregional scales. CVHM and C2VSim fluxes are shown in orange and blue, respectively, in million acre-ft yr$^{-1}$ units.}
-\label{fig:ch3_GW_net_bound}
+The smaller magnitude of transverse vertical spatial variance observed when VHGR = 100 and 0.1 is explained by plume interactions with aquifer heterogeneity. When flow is vertical and downward (VHGR = 100), transverse transport is horizontal, tends to occur along extensive preferential pathways, and is driven toward these pathways by a powerful vertical gradient and all advection dominant facies. When flow is horizontal (VHGR = 0.1), transverse vertical transport is limited by diffusion dominant, laterally extensive paleosols and muds, which prevent spreading along this direction. The middle scenarios (VHGR = 1 and 10) by contrast have stronger vertical gradients to move particles past the first laterally extensive low-K layers, and then a combination of advection, slow advection, and diffusion dominant facies, which creates in greater transverse vertical spreading. 
+
+The smaller magnitude of transverse vertical spatial variance observed when VHGR = 100 and 0.1 compared to VHGR = 10 and 1 is explained by plume interactions with aquifer heterogeneity. When flow is vertical and downward (VHGR = 100), transverse vertical transport occurs along the $y$ direction, which due to relatively high $K'_y$ compared to $K'_z$ should facilitate rapid spreading. However because all facies are advection dominant (Table \ref{tab:model_l_k_pe}) under the influence of powerful vertical gradients, particle trajectories tend to move relatively straight down along non-tortuous particle trajectories. For a different reason, when flow is horizontal (VHGR = 0.1), transverse vertical transport is limited by diffusion dominant, laterally extensive paleosols and muds, which prevent spreading along this direction. The middle scenarios (VHGR = 1 and 10) have a combination of advection, slow advection, and diffusion dominant facies, which simultaneously hold some mass back, and also move particles through laterally extensive low-K facies and layers, all of which results in relatively greater transverse vertical spreading. 
+
+
+\subsubsection{Transverse horizontal spatial variance}
+\label{ss_3_2c}
+The absence of a gradient in the transverse horizontal direction (Figure \ref{fig:msd}c) limits superdiffusive early time scaling (1.13 $\leq \phi \leq$ 2.09), and leads to late time asymptotic Fickian scaling ($\phi$ = 1) after 32 characteristic times across all VHGR scenarios. We suspect that transverse horizontal early time superdiffusive scaling when VHGR = 100 is related to the same processes that create early time superdiffusive transverse vertical spreading: migration into preferential pathways. However, since the mean lengths of gravels (and the incised valley fill) in the transverse horizontal $x$ direction are less than in the transverse vertical $y$, the slope of early time superdiffusion is also less.  
+
+In all directions and across all VHGR scenarios tested in this study (except for the VHGR = 100 in the longitudinal direction), superdiffusive early time scaling becomes more Fickian in late times as particles explore more of the system space, and hence the transport is increasingly ergodic. When VHGR = 100, late time longitudinal and transverse second moments approach Fickian scaling (rather than remaining persistently asymptotic), which suggests that an advection dominant system with powerful vertical hydraulic gradients can have a homogenizing impact on the anomalous transport created by system-scale heterogeneity. Furthermore, it illustrates how the degree of non-Fickian effects created when the mean flow direction changes (e.g., persistent superdiffusive scaling) may challenge upscaled approaches that currently fail to capture non-Fickian effects under similar boundary condition transience \citep{guo2020adaptive}.
+
+
+
+%
+%----------- Influence of preferential flow ---------------%
+%
+\subsection{Influence of geology on preferential flow and tailing}
+\label{ss_3_4}
+
+Non-Fickian transport is influenced by geologic heterogeneity in the hydrofacies model, including a high-K, interconnected incised valley fill, laterally extensive low-K paleosols, and the large volume fraction of low-K mud that plays an important role in diffusion and slow advection dominant transport.
+
+The incised valley fill runs the laterally along the $y$ direction, and interconnects to an exit on the down-gradient side of the domain (Figures \ref{fig:ivf_xz}a-b). As VHGR decreases, particles take increasingly horizontal trajectories, and the incised valley fill and other interconnecting sand and gravel lenses act as a conduit for preferential flow that cause more particles exit the down-gradient side of the domain (Figures \ref{fig:ivf_xz}d,f,h,j), where they form clusters around gravel and sand facies (Figure \ref{fig:ivf_xz}b). Across all VHGR scenarios, particle trajectories that exit via the incised valley fill on the down-gradient side tend to exit at earlier timescales compared to other particles that exit the down-gradient side (lighter colored dots in the black oval compared to darker colored dots without outlines in Figures \ref{fig:ivf_xz}c,e,g,i), and compared to particles that take longer flowpaths and exit the bottom of the model at late times (darker colored dots in Figures \ref{fig:bottom_yx}c,e,g,i).
+
+Notably, even at VHGR = 100 when most particle trajectories take vertical paths and exit the bottom face of the domain (yellow points in Figure \ref{fig:bottom_yx}d), some particles rapidly migrate in the transverse vertical direction along the incised valley fill to exit the down-gradient side (purple dots in the black oval in Figure \ref{fig:ivf_xz}d). Moreover, early time arrival through the incised valley fill when VHGR = 100 (Figure \ref{fig:ivf_xz}c) suggests that transverse horizontal preferential flow still occurs along interconnected coarse facies even under strong vertical gradients, and explains the ballistic early time transverse vertical scaling ($\phi = $ 2.84) in this scenario (Figure \ref{fig:msd}b).
+
+Laterally extensive low-K paleosols limit (Figure \ref{fig:ivf_xz}b) the vertical migration of particles, and create segmented breakthrough along the down-gradient side of the domain where particles tend to exit above or below paleosol layers, but rarely through them (Figures \ref{fig:ivf_xz}d,f,h,j).
+
+
+
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code/
+% 03_residence_time_distribution.R creates R objects `p5` and `p6` which are saved as PDFs: rt_t_final_xz_t.pdf, rt_t_final_xz_y.pdf. These are combined with paraview files (front_face_ivf.png and front_face.png) in  C:\Users\rpauloo\Documents\GitHub\kings-river-fan-tprogs\paraview. The generating .pbsm files should also be in that directory.
+% finally, these are all combined in 02_ade/results/krf_front_face_ivf.ai
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{ch4_figs/krf_front_face_ivf_low_res-01.png}
+  \caption{(a) Transparent 3D hydrofacies domain highlighting a lateral, interconnected sand and gravel incised valley fill; (b) The down-gradient side of the domain. A black oval marks the incised valley fill exit, and black outlines mark prominent interconnecting sands and gravel bodies that promote preferential flow. These same regions are marked in black in all other subplots; (c,e,g,i) The final $z$ and $x$ position of particles, colored by the time they exit the domain (residence time); (d,f,h,j) the final $z$ and $x$ position of particles, colored by the length ($y$) into the page, where yellow is the up-gradient side and purple is the down-gradient side. Particle clusters at $z =$ 0 $m$ indicate trajectories that exit the bottom face (Figure \ref{fig:bottom_yx}).}
+  \label{fig:ivf_xz}
 \end{figure}
 
-\subsection{Groundwater Storage Trends}
 
-Average annual groundwater storage trends were calculated for each model at the supra-regional, regional, and sub-regional scales during 1962--2003 (Fig. \ref{fig:ch3_GW_delta_stor}a). To compare trends across spatial scales, annual volumetric change-in-storage trends were also converted to area-averaged values (Fig. \ref{fig:ch3_GW_delta_stor}b). For the area-averaged values, results show good agreement between models at the supra-regional scale, where differences in annual groundwater storage trends were $<$ 0.02 ft yr$^{-1}$. Average differences were progressively greater at the regional scale (0.08  ft yr$^{-1}$, on average) and subregional scale (0.13 ft yr$^{-1}$, on average). Interestingly, regional-scale change-in-storage discrepancies were smallest in the Sacramento Valley region (0.03 ft yr$^{-1}$), where other groundwater and landscape water budget components showed large discrepancies relative to other regions. Despite the small difference in the Sacramento Valley region groundwater storage trends, the directions of the trends for each model were opposite, i.e., CVHM showed a small overall increasing storage trend, while C2VSim showed groundwater losses. This type of behavior was also present in 6 of 21 subregions, namely those in the southern Sacramento and Delta and East Side Stream regions. The largest subregional trend discrepancies were for several subregions in the Tulare Lake region, where 3 subregions showed discrepancies $>$ 0.35 ft yr$^{-1}$. In general, we see a error compensation effect with scale for changes in groundwater storage, wherein larger local (i.e., sub-regional) discrepancies are partially mitigated as they are aggregated at larger spatial scales. When considering the volumetric change-in-storage trends for both models, it is notable that the average annual subregional change-in-storage magnitude for CVHM and C2VSim was 0.09 million acre-ft yr$^{-1}$ (Fig. \ref{fig:ch3_GW_delta_stor}a), which is less than the average annual subregional net boundary groundwater flow magnitude of 0.13 million acre-ft yr$^{-1}$ (Fig. \ref{fig:ch3_GW_net_bound}).
 
-%% FIG GW delta stor
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=160mm,keepaspectratio]{ch3_figs/delta_stor_discrepency_082619.pdf}}
-\caption{(a) Total and (b) area-averaged groundwater change-in-storage trend (1962--2003) discrepancies for CVHM and C2VSim at the sub-regional, regional, and supra-regional (i.e., Central Valley-wide) scale.}
-\label{fig:ch3_GW_delta_stor}
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code/
+% 03_residence_time_distribution.R creates R objects `p`, `p2`, `p3`, and `p4` which are saved as PDFs: rtd.pdf, rtd_inset.pdf rt_t_final_yx_t.pdf, rt_t_final_yx_z.pdf. 
+% subplot (b) is made in /paraview/top_face.png and .pvsm
+% finally, these are all combined in 02_ade/results/krf_top_face_rtd.ai
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{ch4_figs/krf_top_face_rtd_low_res-01.png}
+  \caption{(a) The 3D hydrofacies domain; (b) the bottom of the domain with prominent sand and gravel bodies outlined in black; (c,e,g,i) the final $x$ and $y$ position of particles, colored by the time they exit the domain (residence time); (d,f,h,j) the final $x$ and $y$ position of particles, colored by the length ($z$) into the page, where yellow is the bottom face and purple is the top face. Particle clusters at $y =$ 15 000 $m$ indicate trajectories that exit the down-gradient side of the domain (Figure \ref{fig:ivf_xz}).}
+  \label{fig:bottom_yx}
 \end{figure}
 
-\subsection{Groundwater Model Hydraulic Properties}
 
-Hydraulic properties, including horizontal and vertical hydraulic conductivity ($K$) and storage properties were compared for coincident model layers at the supra-regional, regional, and sub-regional scales (Appendix \ref{app:compare_figs}). Results show substantial differences in hydraulic conductivity estimates between models (Fig. \ref{fig:ch3_hyd_prop_OOM}). The average order-of-magnitude difference in horizontal $K$ for the entire Central Valley was 0.73. Relatively good agreement was observed for horizontal $K$ in the uppermost model layers (order-of-magnitude difference $<$ 0.10), but differences were especially pronounced for horizontal $K$ in model layers underlying the Corcoran clay. Large discrepancies were observed for horizontal $K$ for the bottom-most coincident layers in each model (average order-of-magnitude difference = 1.57). The Central-Valley wide mean, median, and maximum horizontal $K$ were 446, 288, and 6636 ft d$^{-1}$, respectively, for CVHM layers 6--10 and were 43.1, 21.7, and 100 ft d$^{-1}$, respectively, for coincident layers 3--4 in C2VSim. Especially high horizontal $K$ values were specified for CVHM layers 6--10 in the Sacramento Valley region, where mean and median horizontal $K$ were 611 and 576 ft d$^{-1}$, respectively. Reported values of horizontal $K$ in layers 6--10 of CVHM are markedly outside the range of expected values for an alluvial aquifer system that is dominated by fine-texture facies \citep{anderson2015applied,botros2009spatial,fleckenstein2004managing,frei2009patterns,maserjian1993hydrogeologic,niswonger2008influence,sager2012effects}. Horizontal $K$ values were greater for all coincident layers in CVHM than for C2VSim in all but one subregion. 
 
-Vertical $K$ agreement between models was generally better relative to the agreement for horizontal $K$. The average order-of-magnitude difference in vertical $K$ for the entire Central Valley was 0.45. For layers representing the Corcoran clay, which exert large control over vertical exchange between the shallow, semi-confined aquifer system and the deeper confined system in much of the southern Central Valley, CVHM and C2VSim median vertical $K$ values were similar (i.e., 1.5\times10$^{-4}$ and 7.1\times10$^{-4}$ ft d$^{-1}$, respectively).
 
-%% FIG OOM difference in K
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=75mm,keepaspectratio]{ch3_figs/hyd_prop_OOM_diff_082819.pdf}}
-\caption{Order-of-magnitude differences in median horizontal and vertical hydraulic conductivity ($K$) for coincident layers and layer groups in C2VSim and CVHM. Blank (white) boxes indicate instances where a layer in either C2VSim or CVHM was not active.}
-\label{fig:ch3_hyd_prop_OOM}
-\end{figure}
+%--------------------------------------------------------%
+%	DISCUSSION
+%--------------------------------------------------------%
 
-\subsection{Unmeasured Agricultural Groundwater Pumping}
-
-Average annual groundwater pumping discrepancies and percent differences in average annual groundwater pumping for CVHM and C2VSim are shown at the sub-regional, regional, and supra-regional scale (i.e., Central Valley-wide) during 1962–2003 (Fig. \ref{fig:ch3_GW_pumping}). Because specified urban groundwater pumping volumes are identical for each subregion in CVHM and C2VSim \citep{faunt2009groundwater}, any discrepancies in total groundwater pumping volumes are due to differences in estimated unmeasured agricultural groundwater pumping alone. Similar to other water budget components, substantial error compensation was observed as a function of spatial scale when comparing the percent differences in pumping volumes in each model (Fig. \ref{fig:ch3_GW_pumping}b). For example, the average groundwater pumping discrepancy between CVHM and C2VSim was 0.25 million acre-ft yr$^{-1}$ at the supra-regional scale (Fig. \ref{fig:ch3_GW_pumping}a), which amounts to only a 2\% difference between the total pumping volumes for the entire Central Valley (Fig. \ref{fig:ch3_GW_pumping}b). At the subregional scale, the average volumetric discrepancies were similar in magnitude to the Central Valley-wide discrepancies (i.e., 0.17 and 0.25, million acre-ft yr$^{-1}$, respectively) for subregions 1--9 and 10--21, which represent the northern and southern portions of the Central Valley. However, on average, these volumes represent a much larger fraction of the estimated pumping in each subregion (percent difference = 76\% and 54\%, respectively). The average subregional discrepancies were 0.22 million acre-ft yr$^{-1}$ (63\% average percent difference) for all subregions. From a volumetric standpoint, these differences are similar in magnitude to the volumetric discrepancies for net boundary groundwater flows at the subregional scale (0.18 million acre-ft yr$^{-1}$, on average).
-
-%% FIG GW delta stor
-\begin{figure}[ht!]
-\centerline{\includegraphics[width=160mm,keepaspectratio]{ch3_figs/pumping_discrepency_082619.pdf}}
-\caption{(a) Average annual groundwater pumping discrepancies and (b) percent differences in average annual groundwater pumping for CVHM and C2VSim at the sub-regional, regional, and supra-regional (i.e., Central Valley-wide) during 1962--2003.}
-\label{fig:ch3_GW_pumping}
-\end{figure}
-
-%%% DISCUSSION %%%
 \section{Discussion}
 
-CVHM and C2VSim both estimate landscape and groundwater budgets in the Central Valley aquifer system during 1962--2003, using agricultural groundwater models that are conceptually different and fraught with uncertainties that have not been previously investigated. Results presented here review annual water budget components for each model for coincident regions in the Central Valley during 1962--2003 to help provide insight into two related questions. (1) To what extent can unmeasured water budget components (i.e., agricultural groundwater pumping) in agriculturally-dominated groundwater systems can be constrained with a combination of agricultural irrigation accounting methods and groundwater models? (2) Do methodological or conceptual differences between models contribute to differences in water budget estimates in CVHM and C2VSim? Absent measured data for important water budgets---specifically for agricultural groundwater pumping---both of these questions are challenging to answer with quantitative metrics alone, but some valuable insights are gained by considering several specific examples.
+%
+%----------- hydraulics ---------------%
+%
+\subsection{Mean flow direction modulates the degree of non-Fickian transport}
+\label{ss_4_1}
 
-For example, results show that the discrepancies between annual estimated groundwater pumping are similar in magnitude to discrepancies for other groundwater and landscape water budget components. At the subregional scale, the average annual volumetric discrepancy between CVHM and C2VSim estimated groundwater pumping was 0.22 million acre-ft yr$^{-1}$. Compared with specified model inputs, which are derived from similar or identical observations, i.e., precipitation, surface water diversions, and ET, average annual volumetric discrepancies were 0.04, 0.26, and 0.21 million acre-ft yr$^{-1}$, respectively. This suggests that the propagation of error was not substantially amplified by the agricultural irrigation accounting methods in either CVHM and C2VSim. When comparing groundwater pumping discrepancies with discrepancies for other simulated model outputs, e.g., groundwater boundary flows and groundwater change-in-storage trends, average annual volumetric discrepancies for also similar in magnitude (0.18 and 0.13 million acre-ft yr$^{-1}$, respectively). Interestingly, average annual volumetric discrepancies were substantially greater for deep percolation estimates (i.e., 0.40 million acre-ft yr$^{-1}$), which is largely a function of irrigation efficiency, a seldom measured crop- and irrigation practice-dependent factor that that is represented with distinctly different approaches in CVHM and C2VSim. 
+In clastic sedimentary environments, significant vertical anisotropy in K and seasonal pumping and recharge can create strong vertical hydraulic gradients that in turn cause oscillations in mean flow direction. This study aimed to assess impacts of these shifting flow directions on the regional-scale, non-Fickian transport of nonpoint source contaminants in a typical alluvial aquifer-aquitard complex. Results demonstrate that shifting VHGR can \textit{modify the degree} of non-Fickian transport. Decreasing VHGR led to increasingly non-Fickian transport, measured by tailing at a control plane along the bottom face of the model, increased and persistent non-Fickian scaling of the second spatial moment, and increased preferential flow along interconnected high-K facies. 
 
-Results suggest that there is some systematic bias in how excess irrigation water is represented in CVHM and C2VSim. For example, in the landscape system, all subregions showed a greater proportion of excess irrigation as deep percolation in CVHM, while C2VSim showed a greater proportion of excess irrigation as runoff and return flow (Fig. \ref{fig:LS_budget_SR26}). This discrepancy is reflected in groundwater budgets as well, where C2VSim offsets the smaller proportion of deep percolation with greater recharge from surface water gains and boundary inflows (Fig. \ref{fig:GW_budget_SR26}). However, greater deep percolation CVHM is not completely offset by these flows in C2VSim. Instead, CVHM shows systematically greater inflows and outflows in the groundwater system as compared to C2VSim, especially for subregions 1--9 in the northern Central Valley (Fig. \ref{fig:GW_budget_SR22}, \ref{fig:GW_budget_SR22}). This behavior likely reflects the fact that vertical and (especially) horizontal $K$ are typically orders of magnitude greater in CVHM as compared to C2VSim, especially in the northern Central Valley, where horizontal $K$ values are outside the expected range of values for this type of system. This discrepancy in horizontal $K$ would benefit from additional scrutiny and calibration by the developers of CVHM. 
+Our results are consistent with previous studies which demonstrate that non-Fickian spreading measured (at a target well) can accompany the change from plume migration along an ambient groundwater gradient, to transient pump-and-treat conditions \citep{labolle2001role, guo2019upscaling, guswa2000slow}, which facilitates the release of mass stored in fine-grained material. Results illustrate that non-Fickian spreading of a nonpoint source plume depends on the mean flow direction, modified in many aquifer systems worldwide by ubiquitous pumping wells \citep{Famiglietti2014, Gleeson2012, wada2010global} that increase vertical head gradients and drive flow downward. 
 
-In general, greater differences were observed for landscape and groundwater budgets in the northern Central Valley. The author speculates that this behavior likely reflects the shallow water table depths in this region, which allow for more exchange between the groundwater and surface water systems. Results presented here suggest that areas with greater exchange of groundwater and surface water can amplify methodological differences and propagates errors and uncertainties. For example, Subregion 4, where the majority of crops are rice \citep{faunt2009groundwater} shows the greatest discrepancies for groundwater pumping (Fig. \ref{fig:ch3_GW_pumping}). In this subregion, C2VSim estimates that a substantial proportion of the landscape water budget is from groundwater pumping, while CVHM estimates effectively zero pumping \ref{fig:LS_budget_SR4} because most of the landscape water budget is satisfied from ET from groundwater. In areas with deeper groundwater levels, smaller differences in most water budget components likely reflect the fact that there are fewer feedbacks between the groundwater and landscape systems in those areas. These findings highlight the importance of gathering measurements of fluxes (e.g., ET and groundwater pumping), especially in areas with ample exchanges of water between the groundwater and landscape systems.
+Together, the increasingly non-Fickian effects (e.g., increased tailing, greater spatial spreading) that result as the mean flow direction shifts from horizontal to vertical suggest a conceptual model of nonpoint source transport in agriculturally intensive alluvial groundwater basins characterized by oscillating patterns of more Fickian vertical migration during periods of intense pumping and recharge, interspersed by periods of persistently non-Fickian lateral plume stretching under ambient groundwater flow when pumps are off and fields are not irrigated, except perhaps in areas with significant natural vertical anisotropy in K. These insights into the dependence of non-Fickian transport on mean flow direction bear importantly on efforts to model and manage nonpoint source contamination like salts \citep{hansen2018quantifying} and nitrates \citep{pasten2014assessment} in large irrigated basins where the flow boundary conditions (and hence VHGR) are inherently transient. Thus, an unresolved challenge for existing methods that upscale the advection-dispersion equation \citep{neuman2009perspective} is the ability to capture the varying non-Fickian behavior of regional, nonpoint source transport resulting from changes in the mean flow direction \citep{guo2020adaptive}. This study advances a hydrogeologic perspective towards understanding the physical genesis of this challenge.
 
-Results suggest that it may be possible to estimate groundwater pumping by agriculture with landscape water budget accounting methods alone in areas where there is little exchange of groundwater and surface water (i.e., in areas with deep groundwater tables). Similarly, changes in groundwater storage may be more readily estimated with uncoupled approaches in areas with deep groundwater tables for the same reasons. In areas with relatively shallow water table depths like subregions 1--9 in the northern Central Valley, coupled methods like CVHM and C2VSim likely have a greater potential for accurately predicting water budgets and accounting for groundwater/surface-water exchanges, but it remains to be seen whether CVHM or C2VSim methodologies are better suited absent more measurements of groundwater pumping. Other studies have shown the importance of groundwater table depth on feedbacks between groundwater and the landscape in agriculturally-dominated systems \citep{condon2014feedbacks, condon2014groundwater}. The author speculates that many of the large discrepancies in water budget components observed in this region reflect unrealistic conceptualization of the aquifer system in CVHM.
+%We emphasize that non-Fickian transport is driven by the interaction of hydraulics with well-characterized geologic heterogeneity. VHGR controls the ratio of advective to diffusive flux in hydrofacies (i.e., the Peclet number), and the mean flow direction, and hence the anisotropy encountered (i.e., flow parallel, perpendicular, or oblique to layers). Furthermore, results indicate that multiple scales of geologic heterogeneity (e.g., laterally extensive paleosols, a highly conductive incised valley fill) clearly influence plume-level non-Fickian transport, and hence, better characterization of multi-scale geology is imperative to modeling regional-scale transport \citep{zhang2006nonpoint}.
 
-Results make clear that substantial error compensation occurs as a function of spatial scale when comparing these models. Discrepancies between water budgets are typically larger at the subregional scale that is important for water management. This is especially important in light of the 2014 passage of California’s Sustainable Groundwater Management Act (SGMA), which required the formation of local Groundwater Sustainability Agencies (GSAs), which oversee groundwater management in $>$ 40 distinct areas in the Central Valley alone. These GSAs are typically smaller than the 21 Central Valley subregions, and are typically delineated according to political, rather than hydrologic boundaries. There is substantial interest on the part of SGMA stakeholders to use water budget estimates from both CVHM and C2VSim, either directly or to provide boundary conditions or water budget data for a finer-resolution nested model to develop water budget estimates for GSAs. In the Central Valley, where there is substantial groundwater flow across GSA boundaries, these boundary flows into and out of GSA boundaries are an important consideration and a challenging water budget component to estimate. Results presented here show large discrepancies for boundary flows at the subregional scale, especially in the northern Central Valley, where 6 of 9 subregions showed average annual boundary flows with opposite signs. Results show that the average annual discrepancy for net boundary flows at the subregional scale is 0.18 million acre-ft yr$^{-1}$, which is similar in magnitude to discrepancies for one of the largest groundwater budget components---groundwater pumping---between models (0.22 million acre-ft yr$^{-1}$). It is likely that uncertain boundary flow estimates will be major points of contention between adjacent GSAs as the SGMA process moves forward, and results from this study suggest that CVHM and C2VSim alone may not be particularly helpful in constraining these estimates.
 
-Interestingly, some differences were observed for input data that ostensibly are derived from similar or identical sources. While some model inputs, e.g., precipitation, showed small average annual discrepancies between models at the subregional scale (0.04 million acre-ft yr$^{-1}$), other inputs like surface water diversions, showed larger average annual discrepancies at this scale (0.26 million acre-ft yr$^{-1}$), especially in the northern Central Valley (0.35 million acre-ft yr$^{-1}$). ET, which is not necessarily a model input, but is informed by similar land use and climate data in each model, showed a similar magnitude of average annual discrepancies at the subregional scale (0.21 million acre-ft yr$^{-1}$) to discrepancies for surface water diversions.
 
-Despite the limitations and uncertainties in water budget estimates from these models, coupled agricultural groundwater models will likely remain the predominant approach for constraining water budgets in agriculturally-dominated groundwater systems like the Central Valley. Recent work has highlighted the value of ex-situ satellite measurements of groundwater abstraction at the global scale. For example, the Gravity Recovery and Climate Experiment (GRACE) satellites have estimated dramatic groundwater depletion in the Central Valley \citep{famiglietti2011satellites} and elsewhere \citep[e.g.,][]{rodell2009satellite,scanlon2012groundwater,scanlon2015hydrologic} during recent decades using remotely-sensed gravity measurements coupled with models; however, these ex-situ gravity measurements lack spatial and temporal resolution to adequately estimate groundwater storage changes on the monthly time scales that are important for water management \citep{alley2015bringing}. Indeed, a single GRACE pixel (about 77,000 sq. miles) \citep{famiglietti2011satellites} exceeds the total area of the Central Valley several times over, complicating attempts to isolate storage changes there. Given these limitations, coupled groundwater and agricultural surface-water models will likely continue to see widespread use for simulating groundwater response to irrigation demand and for estimating regional and sub-regional water budgets. 
+%
+%----------- geology ---------------%
+%
+\subsection{Hydrogeologic heterogeneity underpins non-Fickian transport}
+\label{ss_4_2}
 
-%%% FUTURE WORK %%%
-\section{Future Work}
+Differing degrees of non-Fickian transport and plume spreading arise from hydrogeologic heterogeneity in the study site, which can be understood in terms of high ln-K variance, the transition from diffusion to advection dominant transport, and persistently non-Fickian transport caused by preferential flow and mass holdback.
 
-Methodological differences between MF-MFP2 and IWFM and conceptual and parameterization differences in CVHM and C2VSim cannot be entirely separated with the comparisons presented here. In order to fully understand the degree to which differences in water budget estimates reflect propagation of the inherent parametric uncertainty of input data (i.e., data on crops, weather and climate, and surface water deliveries) or structural uncertainty of the methods, a more targeted approach in which MF-FMP2 and IWFM methods are separately applied to a groundwater basin in which the major water budgets are well known. For example, the Pajaro groundwater basin along the California coast has, for decades, collected comprehensive groundwater pumping data and detailed groundwater head data. A model using an the MF-FMP2 approach has already been developed for the region \citep{hanson2012method}. Future research could, in theory, develop a companion model using the same land use, geology, and water budget input data with the IWFM approach to help tease out whether methodological differences between approaches contribute to differences in estimated water budgets for this system.
+%
+%----------- ln K variance ---------------%
+\subsubsection{The role of high ln-K variance}
+\label{ss_4_2_1}
 
-%%% CONCLUSIONS %%%
+The geologically-based conductivity field in this study represents multi-scale heterogeneity, by which we mean multiple geologic sequences with large variance in K \citep{weissmann1999multi}, in contrast to stochastic Gaussian models with typical ln-K variances, $\sigma^2_{lnK} < $ 1 or 2 \citep{gelhar1993stochastic, rubin2003applied}. For our study site, $\sigma^2_{lnK} = $ 8.3, approximated by $\sigma^2_{lnK} \approx R^2/3$ \citep{fogg2016debates}, where $R$ is the range between the minimum and maximum values of K in orders of base 10 magnitude (i.e., 5 in this study).  Results suggest that non-Fickian transport is strongly affected by the transition of low-K facies along diffusion, slow advection, and advection dominated system states (Section \ref{ss_4_2_2}); and by the presence of an incised valley fill and laterally extensive, low-K paleosols (Section \ref{ss_4_2_3}). Furthermore, the persistently preasymptotic MSD scaling observed in some VHGR scenarios reinforce the notion suggested by other researchers \citep[e.g.][]{matheron1980transport, neuman1990universal, zhang2007persistence} that the late-time transition from non-Fickian to Fickian transport may never occur in natural geologic formations under certain gradient conditions. Thus, a key component to capturing non-Fickian effects is proper parameterization of the ln-K variance of the spatial heterogeneity.
+
+%
+%----------- Pe ---------------%
+\subsubsection{Transitions between diffusion and advection dominant transport}
+\label{ss_4_2_2}
+In a spatial model with ln-K variance, transience in the hydraulic gradients can create systems that range from fully advection dominant, to systems of mixed advection and diffusion dominance, the latter of which will have greater non-Fickian effects.
+
+As VHGR increases and flow is increasingly vertical, the hydrofacies Peclet number (Table \ref{tab:model_l_k_pe}) and hence advection dominant transport also increases. Importantly, in our study site, as VHGR increases from 0.1 to 100, the mud and paleosol facies shift from diffusion dominant ($P_e < $ 1) to slow advection and advection dominant ($P_e > $ 1). Consequently, high VHGR causes mass to migrate nearly straight through fines, consistent with the findings of \citet{guswa2000slow}, who observed accelerated solute release from low permeability zones under the influence of pumping in a slow-advection mass transfer system. In contrast to a diffusion dominant system, pumping would have little to no effect on the mass release from fines. Slow-advection is thus more related to the groundwater velocity, as opposed to a mass transfer model that strictly assumes diffusive controls on mass release from low permeability lenses. In this study, the decrease in non-Fickian transport observed at increasing VHGR and hence $P_e$ leads us to speculate that hydraulic forcings may exert a similar effect on transport as aquifer-aquitard spatial properties \citep[e.g.][]{zhang2006nonpoint, zhang2007predicting, yin2020super, zhang2013impact}. For instance, \citet{zhang2013impact} found that in domains containing hydrofacies with relatively short mean lengths, particles moved more rapidly between hydrofacies, which increased the likelihood for solutes to sample the full range of flow velocities, and thus more rapidly reach ergodicity. Similarly, we find that strong vertical flow (e.g., VHGR = 100) can push particles through all facies alike, thus accelerating mass transport between hydrofacies and rapidly reaching ergodicity. Furthermore, \citet{zhang2007predicting, zhang2013impact} observed that diffusion limited vertical floodplain layer thicknesses controlled late time non-Fickian solute tailing. Similarly, our results suggest that higher VHGR can shift facies from diffusion to advection dominance and diminish non-Fickian tailing. Hence, non-Fickian transport imparted by spatial heterogeneity should not be viewed as constant, but rather, as continually modified by hydraulic transience.
+
+%
+%----------- preferential flow and massholdback ---------------%
+\subsubsection{Persistent non-Fickian transport}
+\label{ss_4_2_3}
+
+Describing persistent, late time, non-Fickian transport observed in this study (Section \ref{ss_3_2}) remains a modeling challenge. We now discuss the factors that control persistently preasymptotic non-Fickian transport, specifically how it relates to hydrofacies heterogeneity, preferential flow, and the transition from diffusion to advection dominant transport.
+
+First, the super-linear growth of early time plume spatial variance observed in this study (i.e., superdiffusion, $\phi > $ 1) is consistent with other simulations in heterogeneous porous media \citep{zhang2013impact, kang2014pore, hunt2011dispersion}. The conventional understanding of this phenomenon is that preferential flow in highly permeable facies stretches the plume front downstream, while the trailing plume tail remains trapped by low-permeability facies near the source \citep{fiori2003flow, dagan2003flow, zhang2014linking, labolle2001role}. As ergodicity is reached in late times, plume spatial variance approaches Fickian scaling, which has been observed in numerous experiments \citep[e.g.][]{kang2014pore, le2010non, cortis2004numerical} and is relatively easier to model. However, persistently asymptotic behavior may never arise because the time needed to reach asymptotic behavior in natural geologic systems may be sufficiently large that the solute will encounter new spatial nonstationarities along the displacement distance before Fickian scaling is reached, and is thus always in a state of transition, never reaching asymptotic behavior \citep{matheron1980transport, gillham1984advection, neuman1990universal}.
+
+We speculate that the multiple-scale geologic heterogeneity in our study area causes persistently non-Fickian superdiffusion at late times in longitudinal and transverse directions for all VHGR $\leq$ 10. This persistent late time non-Fickian transport is supported by \citet{labolle2001role}, who noted persistent preasymptotic ambient transport in a similar well-connected, hydrofacies-based alluvial fan model. Moreover, \citet{zhang2007persistence} found that transition times in simple, 2D uniform media were so large, that the authors speculated that in natural geologic media with multiple‐scale heterogeneity, the transition from anomalous to Fickian transport may never complete. Complimentary to these observations, our results indicate that sufficiently high VHGR can reduce the impact of mass sequestration in fines, lead to a more compact plume in all directions, and hence, promote asymptotic late time Fickian scaling in all dimensions, thus lending itself towards being more appropriately described by an upscaled model.  
+
+The important role of preferential flow on persistent non-Fickian transport is illustrated by the impact of a lateral, connected, incised valley fill and other prominent interconnecting sand and gravel bodies (Figure \ref{fig:ivf_xz}a). When VHGR = 100, rapid particle migration into the incised valley fill transverse vertical to the mean flow direction resulted in early time hyper-ballistic scaling ($\phi = $ 2.84) of transverse vertical MSD that slowed to nearly Fickian scaling ($\phi = $ 0.95) at late times as ergodicity was reached. In contrast, when VHGR = 10, 1, and 0.1, preferential flow along high-K networks stretched some of the plume at the same time that fines sequestered other parts of it, leading to persistent and oftentimes a greater magnitude of late-time spreading ($\phi = $ 1.34 - 1.36). Across all scenarios, particles traveled laterally through the incised valley and exited the down-gradient side at relatively earlier times (Figure \ref{fig:ivf_xz}c). Observations of faster transport along highly-permeable, interconnected sand and gravel lenses are consistent with numerous studies of preferential flow \citep{winograd1976major, jussel1994transport, moreno1994flow, tsang1998flow, fogg1986groundwater, heeren2010preferential, maxwell2008contamination, zheng2003analysis, weissmann2004influence, labolle2001role}. 
+
+Final particle positions and the hydrofacies they occupy at that time further illustrate the importance of advection and diffusion dominant transport and preferential flow. When VHGR = 100 and advection dominates transport, particles are nearly indiscriminate in terms of the facies they occupy upon exiting the bottom face of the domain (i.e., even spatial distribution of yellow dots in Figure \ref{fig:bottom_yx}d). By contrast, when VHGR = 0.1, spatial patterns of particles that exit the bottom face of the domain (yellow dots in Figure \ref{fig:bottom_yx}j)) and the down-gradient side (purple dots in Figure \ref{fig:ivf_xz}j) correlate with more conductive, high K facies (blue and dark blue sand and gravel in Figures \ref{fig:bottom_yx}b and \ref{fig:ivf_xz}b). This indicates preferential flow along interconnecting sand and gravel lenses, and partly explains the increased non-Fickian transport with decreasing VHGR as a result of relatively rapid plume stretching along these fast flowpaths. 
+
+%Surprisingly, VHGR = 0.1 and 100 exhibit a more similar magnitude of transverse vertical MSD, even though the mean flow directions in these scenarios were the most extreme tested in this study, ranging from mostly horizontal to mostly vertical. However, this seemingly counter-intuitive finding can be reconciled by considering the interaction of mean flow direction, the spatial heterogeneity of the domain, and the role of advection and diffusion dominant hydrofacies on transport. When VHGR = 100, particle trajectories move nearly straight down (Figure \ref{fig:res_time_dist_yx}d), even migrating through laterally extensive low-K hydrofacies, which under the influence of strong gradients become advection dominant (Table \ref{tab:model_l_k_pe}), thus helping to facilitate this vertical transport. 
+%The temporal evolution of the hydrofacies proportions support these observations, and show higher paleosol occupancy for high VHGR, and advection-driven mass transfer out of paleosols (Figure \ref{fig:phft}). 
+%For a different reason, we observe similar scaling of the transverse vertical MSD when VHGR = 0.1. In this case, flow is more horizontal and parallel to the bedding layers, but the transverse vertical mass transfer is limited by abundant, laterally extensive, and muds and paleosols which are diffusion dominant at these hydraulic gradients (Table \ref{tab:model_l_k_pe}), which prevents mixing along the transverse vertical direction, and thus limits the magnitude of transverse vertical MSD scaling. By contrast, plumes in the intermediate scenarios (VHGR = 1 and 10) exhibit a greater magnitude of transverse vertical spreading. In these scenarios, vertical hydraulic gradients are sufficiently large enough to drive vertical transport, and the mud and paleosol hydrofacies can be advection dominant, which increases transverse mass exchange along these facies, and thus the plume spreads more in the transverse vertical direction.
+
+
+
+%
+%----------- upscaled models ---------------%
+%
+\subsection{Implications for upscaled transport models}
+\label{ss_4_3}
+
+The varying degrees of non-Fickian transport that arise from the interaction of hydraulics and geologic heterogeneity challenge the application of the advection-dispersion equation towards subsurface transport problems in natural geologic media. At regional scales (e.g., tens to hundreds of kilometers), subsurface characterization may be intractable or cost-prohibitive, and even if reliable subsurface models were available, the computational complexity of solving transport over these scales would be enormous. Hence, regional upscaled transport models are needed. These upscaled models must be able to represent non-Fickian effects created by preferential flow in connected high‐conductivity facies, mass transfer processes between high‐ and low‐conductivity media, and as we show in this study, the different degrees of non-Fickian transport introduced by changes in the mean flow direction due to varying VHGR (e.g., in the case of significant pumping and recharge).
+
+In a previous study, \citet{guo2020adaptive} demonstrated an adaptive multirate mass transfer (aMMT) model which improved breakthrough curve estimation for diffusion dominant transient flow by incorporating time-dependent mass transfer coefficients based on the equivalent flow velocity. However, the aMMT approach failed to capture tailing in breakthrough curves when the mean flow direction changed, as in the case of shifting VHGR. In this study, we extend the work of \citet{guo2020adaptive} and illustrate that as VHGR changes, the transition from diffusion to slow advection and advection dominance in the discrete hydrofacies of a system can fundamentally change the mass transfer processes. Specifically, high VHGR (provided it creates system-wide advection dominance) can cause solutes to move nearly straight through facies (e.g., Figures \ref{fig:model} \ref{fig:bottom_yx}d even though the vertical effective K is much less than the horizontal effective K, whereas low VHGR (diffusion to slow advection dominance some facies) can lead to mass holdback in fines (Figure \ref{fig:tfade}) and strong preferential flow (Figures \ref{fig:ivf_xz}h,j and \ref{fig:bottom_yx}h,j). Thus, a future promising direction towards the goal of improving estimation of late time tailing under transient flow is to quantify changes in VHGR, $P_e$, mean flow direction, and characteristic length scales along the mean flow direction, and relate these to mass transfer processes parameters in a upscaled model (e.g., aMMT).
+
+
+
+
+%
+%----------- limitations ---------------%
+%
+\subsection{Study limitations and additional considerations}
+\label{ss_limitations}
+
+We explore highly detailed nonpoint source plume evolution across a series of steady state flow simulations in order to observe regional-scale, long term transport under conditions that represent the transition from relatively ambient groundwater flow to predominantly vertical flow. However, these steady state simulations do not the capture mass transfer effects that occur when hydraulic boundary conditions rapidly change, as in the case of a pumping well being turned on. For example, \citet{bastani2020effects} found that transport models based on steady state flow did not capture short-term oscillations of nitrate concentrations in pumping wells at the local scale. Similarly \citet{guo2020adaptive} showed that the aMMT model failed to reproduce transport when the flow direction changed, and \citep{labolle2001role} observed the release of mass stored in fine-grained material when boundary conditions changed from plume migration along an ambient groundwater gradient, to transient pump-and-treat conditions. Thus a future challenge is to explore nonpoint source plume evolution in a transient simulation that incorporates transitions between each VHGR scenario, and which represents the hydraulic conditions observed in natural irrigated basins with extensive pumping. 
+
+Heterogeneous porous media affects reactive solute transport by controlling solute mixing and residence times \citep{perez2019organic}, which may be more important for certain solutes and depth zones. In this study, we simulate a nonreactive solute, which may not be suitable for some nonpoint source contaminants in fully saturated groundwater. More research needed on how reaction rates may alter the non-Fickian effects explored in this study, for instance, by mineral dissolution of the domain which adds a source term \citep{schoups2005sustainability}, or in the case of nitrates, by denitrification in the soil zone \citep{lee2006nitrogen}. 
+
+It is well known that hydrofacies geometry influences contaminant transport, and hence, our study is best interpreted with respect to the characteristic geology of the domain. For example, \citet{yin2020super} found that larger hydrofacies width increased high-permeability connectivity, and thus superdiffusion; conversely, larger mean hydrofacies thickness slowed solute migration and reduced plume scaling. Any extrapolation the results presented herein to other areas should be accompanied by a careful consideration of the hydrogeology of the new study site.
+
+
+
+%--------------------------------------------------------%
+%	CONCLUSIONS
+%--------------------------------------------------------%
 \section{Conclusions}
+\label{s_5}
 
-Accurate estimation of groundwater budgets and effective management of agricultural groundwater pumping in California’s Central Valley is a priority for achieving new, legally-mandated groundwater management goals. Comprehensive measurements of agricultural groundwater pumpage in the Central Valley are uncommon, despite that this is typically one of the largest components of the groundwater budget. Without these measurements, accurate estimation of groundwater budgets remains a challenge in much of the Central Valley. CVHM and C2VSim are two regional-scale hydrologic models that couple groundwater and agricultural water budget models to provide historical and current estimates of groundwater and landscape water budgets in the Central Valley. However, both models estimate these water budget components using conceptually different representations of the agricultural landscape system. This work reviews groundwater and landscape water budgets for coincident areas in the Central Valley at the supra-regional, regional, and sub-regional scale during a concurrent 42-year simulation period from 1962--2003. 
 
-Results showed wide-ranging, and sometimes large differences in the magnitude of simulated water budget components between models, with generally better agreement at larger spatial scales and for aggregated water budget components. Agreement of water budget components was relatively poor at sub-regional scales that are important for water management, especially in the northern Central Valley region, where major aquifer-conceptualization discrepancies are observed. Improved agreement observed at larger spatial scales reflects an error compensation effect. Systematic biases reflecting the partitioning of outflows from the landscape systems were observed between models, likely reflecting conceptual differences in the process representation of the soil zone system. Some differences were also observed for input data that ostensibly are derived from similar or identical sources and likely contribute to differences in simulated output discrepancies. These findings have important implications for the utility of these models for estimating water budgets for recently-passed groundwater legislation in California.
+We simulated 3D steady state groundwater flow and nonpoint source contaminant transport in a regional scale (15 $km$ x 12.6 $km$ x 100 $m$) geostatistical representation of a heterogeneous alluvial aquifer-aquitard system. In horizontally stratified clastic sedimentary aquifer systems it is common for the strong vertical anisotropy of hydraulic conductivity to produce spatially and temporally varying vertical and horizontal components of the hydraulic gradient, in turn producing a complex interplay between the stratified heterogeneity and physical transport processes. These effects can be augmented and made highly transient by the effects of pumping and recharge in, for example an agricultural system where oscillations between primarily horizontal and primarily vertical flow are caused by seasonal fluctuations in pumping as well as the recharge produced by irrigation. Thus we tested the impact of these varying mean flow directions on non-Fickian transport, and observed increasingly non-Fickian transport as flow was increasingly horizontal (i.e., when the VHGR decreased). Importantly, when VHGR was large (e.g., 100), the plume was more compact: particle trajectories exhibited late time asymptotic Fickian scaling of spatial variance, and moved perpendicular to the direction of aquifer bedding (even though the vertical effective K is much less than the horizontal effective K), and nearly straight through high- and low-conductivity facies alike. As VHGR decreased (e.g., 10 and 1) flow became more horizontal and transport was more non-Fickian -- particle trajectories increasingly moved along laterally extensive facies, took preferential flowpaths, and exhibited greater (and preasymptotic) spatial spreading and tailing in breakthrough measured along a control plane at the bottom face of the model. Hence, the non-Fickian transport imparted by spatial heterogeneity should not be viewed as constant, but rather, as continually modified by hydraulic transience that may transition facies from diffusion to advection dominance and thus alter non-Fickian mass transfer dynamics. These results illustrate why conventional methods to upscale anomalous transport under transient flow conditions remains a challenge, and indicates that future efforts to upscale regional-scale, transient nonpoint source transport may benefit by incorporating information on the time-dependent changes in VHGR, $P_e$, mean flow direction, and characteristic length scales along the direction of mean flow.
 
-\section{Acknowledgements}
-We gratefully thank Alvar Escriva-Bou, Emin Dogrul, Claudia Faunt, Charlie Brush, Jonathan Traum, Rich Niswonger, and Gus Tolley for their assistance. Support for this research was provided by the National Science Foundation (NSF) Climate Change, Water, and Society (CCWAS) Integrated Graduate Education and Research Traineeship (IGERT) program at the University of California, Davis and Colorado School of Mines (http://ccwas.ucdavis.edu, DGE-10693333) (SM, GF, RM), the NSF Graduate Research Fellowship (SM), the University of California Water (UC Water) Security and Sustainability Research Initiative (SM, GF, LF). All data used in the analysis can be made available by SM (srmap@ucdavis.edu).
+
+

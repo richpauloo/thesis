@@ -1,29 +1,37 @@
-UCD Thesis - Latex Templates
-=====================
+# UCD Thesis/Dissertation Template
 
-About
-------------------------
-The following set of files are the components needed to write your thesis or dissertation using Latex for the University of California, Davis  
+## About
+The following set of files are the components needed to write your thesis or dissertation using Latex for the University of California, Davis.  
 
 Originally based on the File for a general UC Dissertation / Thesis  
 Modfied specifically to the UCD thesis class by Shwaine <shwaine@shwaine.com>  
 
-2006 - More recent changes by Dylan Beaudette  
-2010 Clarification and posting to github by Alex Mandel <tech@wildintellect.com>  
-2011 E-filing tweak by Jason Moore  
-2014 Style updates to fit recent requirements  
-(See the Changelog for more details)  
-2019 - some changes by Stephen Maples  
-2020 - additional changes by Rich Pauloo
+* 2006 - More recent changes by Dylan Beaudette  
+* 2010 Clarification and posting to github by Alex Mandel <tech@wildintellect.com>  
+* 2011 E-filing tweak by Jason Moore  
+* 2014 Style updates to fit recent requirements (See the Changelog for more details)  
+* 2019 - some changes by Stephen Maples  
+* 2020 - additional changes by Rich Pauloo
 
-Contact us with questions and updates, we've posted the source on github so it's easier to accept changes and allow people to post their own variations.
+## Quickstart
 
-Preview of the Stock Build  
-------------------------
-[![PDF Status](https://www.sharelatex.com/github/repos/wildintellect/ucdthesis/builds/latest/badge.svg)](https://www.sharelatex.com/github/repos/wildintellect/ucdthesis/builds/latest/output.pdf)
+```
+git clone https://github.com/richpauloo/thesis.git
+cd Github/thesis
 
-How to write your thesis
-------------------------
+pdflatex -synctex=1 -interaction=nonstopmode thesis.tex
+biber thesis.tex
+pdflatex -synctex=1 -interaction=nonstopmode thesis.tex
+```
+
+Note that `thesis.tex` lines 14 and 15 are used to compile the draft (much faster) and final (much slower) versions.  
+
+```
+\documentclass[11pt,oneside,draft]{ucdthesis} 
+%\documentclass[11pt,oneside,final]{ucdthesis}
+```
+
+## How to write your thesis
  * Download Source (button above)
  * Using your favorite Latex Editor
 	* Edit the Chapter files, add more if you need (also add reference in the thesis.tex)

@@ -1,7 +1,8 @@
-%This is an example for a chapter, additional chapter can be added in the skeleton-thesis
-%To generate the final document run latex, build and quick build commands on the skeleton-thesis file not this one.
+%--------------------------------------------------------%
+%	TITLE
+%--------------------------------------------------------%
 
-\chapter[Domestic Well Vulnerability to Drought Duration and Unsustainable Groundwater Management in California's Central Valley.]{Domestic Well Vulnerability to Drought Duration and Unsustainable Groundwater Management in California's Central Valley.\footnote[1]{This chapter has been published: Pauloo, R. A., Escriva-Bou, A., Dahlke, H., Fencl, A., Guillon, H., \& Fogg, G. E. (2020). Domestic well vulnerability to drought duration and unsustainable groundwater management in California’s Central Valley. \textit{Environmental Research Letters}, 15(4), 044010.}}
+\chapter[Domestic Well Vulnerability to Drought Duration and Unsustainable Groundwater Management in California's Central Valley.]{Domestic Well Vulnerability to Drought Duration and Unsustainable Groundwater Management in California's Central Valley.\footnote[1]{This chapter has been published: Pauloo, R. A., Escriva-Bou, A., Dahlke, H., Fencl, A., Guillon, H., \& Fogg, G. E. (2020). ``Domestic well vulnerability to drought duration and unsustainable groundwater management in California’s Central Valley''. \textit{Environmental Research Letters}, 15(4), 044010.}}
 
 
 %--------------------------------------------------------%
@@ -12,15 +13,6 @@
     
 \noindent Millions of Californians access drinking water via domestic wells, which are vulnerable to drought and unsustainable groundwater management. Groundwater overdraft and the possibility of longer drought duration under climate change threatens domestic well reliability, yet we lack tools to assess the impact of such events. Here, we leverage 943,469 well completion reports and 20 years of groundwater elevation data to develop a spatially-explicit domestic well failure model covering California's Central Valley. Our model successfully reproduces the spatial distribution of observed domestic well failures during the severe 2012-2016 drought (n = 2,027). Next, the impact of longer drought duration (5 to 8 years) on domestic well failure is evaluated, indicating that if the 2012-2016 drought would have continued into a 6- to 8-year long drought, a total of 4,037 - 5,460 to 6,538- 8,056 wells would fail. The same drought duration scenarios with an intervening wet winter in 2017 lead to an average of 498 and 738 fewer well failures. Additionally, we map vulnerable wells at high failure risk and find that they align with clusters of predicted well failures. Lastly, we evaluate how the timing and implementation of different projected groundwater management regimes impact groundwater levels and thus domestic well failure. When historic overdraft persists until 2040, domestic well failures range from 5,966 - 10,466 (depending on the historic period considered). When sustainability is achieved progressively between 2020 and 2040, well failures range from 3,677 - 6,943, and from 1,516 - 2,513 when groundwater is not allowed to decline after 2020. 
 
-
-%--------------------------------------------------------%
-%	BODY TEXT
-%--------------------------------------------------------%
-
-% Start double spacing here if you want
-%\doublespacing
-
-% Main Text
 
 %--------------------------------------------------------%
 % Introduction
@@ -49,7 +41,7 @@ The domestic well failure model was developed for the California CV alluvial gro
 % code/00_figures/study_site/pnas_study_site3.ai
 \begin{figure}%[tbhp]
 	\centering
-	\includegraphics[width=\linewidth]{ch1_figs/fig_study_site3.pdf}
+	\includegraphics[width=\linewidth]{ch2_figs/fig_study_site3.pdf}
 	\caption{California's Central Valley is a major agricultural hub in the Western US, approximately 720 $km$ long and 64 to 97 $km$ wide. (A) The 2,027 reported domestic well failures during the 2012-2016 drought (red dots) cluster in the southeast. 67,011 domestic wells (blue dots) reported in OSWCR and constructed after 1976 were used to define the study area (SI Appendix \ref{ap_a_study_area} for details). (B) Average groundwater level change from 2012-2016 in unconfined to semi-confined aquifers. Areas of large groundwater level decline correspond to areas of high reported well failure.}
 	\label{fig:study_site}
 \end{figure}
@@ -75,7 +67,7 @@ The study used well completion reports from 943,469 wells from the California De
 %%%%%%%%%%%%%%%%%%% Conceptual model of well failure
 \subsection{Classification of failing and vulnerable wells}
 
-We distinguish between three classes of well status: \textit{active}, \textit{failing}, and \textit{vulnerable}. A well is classified as \textit{active} when the groundwater level at the location of the well is above the level of the pump intake. If the groundwater level falls at or below the pump intake, the well is classified as \textit{failing} (Figure \ref{fig:conceptual_model}). The well failure data collected during the 2012-2016 drought did not distinguish between failing wells and wells experiencing a decrease in pump efficiency, thus for the model calibration, wells are considered as either failing or active. Further detail is provided in SI Appendix \ref{ap_a_formal_wf}.
+We distinguish between three classes of well status: \textit{active}, \textit{failing}, and \textit{vulnerable}. A well is classified as \textit{active} when the groundwater level at the location of the well is above the level of the pump intake. If the groundwater level falls at or below the pump intake, the well is classified as \textit{failing} (Figure \ref{fig:conceptual_model_wf}). The well failure data collected during the 2012-2016 drought did not distinguish between failing wells and wells experiencing a decrease in pump efficiency, thus for the model calibration, wells are considered as either failing or active. Further detail is provided in SI Appendix \ref{ap_a_formal_wf}.
 
 Wells are classified as \textit{vulnerable} to well failure when the groundwater level in a well falls within 3 $m$ of the pump intake. As the distance between a well's pump intake and the groundwater level decreases, the fluid pressure (i.e. the net positive suction head) declines, causing cavitation, which may physically damage the pump and decrease its efficiency \citep{Tullis1989, Helweg1983}. In this study, we estimate the minimum separation distance required to avoid decreases in well function as 3 $m$ (see SI Appendix \ref{ap_a_vi}).
 %Vulnerability is mapped in the four extended drought scenarios discussed in \ref{ss_2_7}, and in one additional scenario close to present day groundwater levels at the time of writing (Fall 2018).  
@@ -83,9 +75,9 @@ Wells are classified as \textit{vulnerable} to well failure when the groundwater
 % code/00_figures/conceptual_mod/pnas_conceptual_mod.ai
 \begin{figure}%[tbhp]
 	\centering
-	\includegraphics[width=\linewidth]{ch1_figs/fig_conceptual_mod.pdf}
+	\includegraphics[width=\linewidth]{ch2_figs/fig_conceptual_mod.pdf}
 	\caption{Conceptual model of well failure in an unconfined to semi-confined alluvial aquifer (details provided in SI Appendix, \ref{ap_a_formal_wf}). (A) Groundwater level is above all pump intakes, and all wells are active. (B) Groundwater level falls below the pump intake of the shallow well, causing it to fail. The deep well remains active. In our study site, shallow wells tend to be domestic, and deep wells tend to be agricultural and public supply wells.}
-	\label{fig:conceptual_model}
+	\label{fig:conceptual_model_wf}
 \end{figure}
 
 
@@ -144,7 +136,7 @@ To analyze how different groundwater management regimes might impact groundwater
 % .R and .ai files: pnas_sgma.ai
 \begin{figure}%[tbhp]
 	\centering
-	\includegraphics[width=\linewidth]{ch1_figs/fig_sgma.pdf}
+	\includegraphics[width=\linewidth]{ch2_figs/fig_sgma.pdf}
 	\caption{Projected groundwater management regimes using actual groundwater elevation change for a point in Tulare County as an example. Groundwater level change is approximated by three linear trends, based on different time periods. In this figure, we show the different projected groundwater management regimes using the linear approximation based on the 1998-2017 period. In the analysis, we calculate groundwater levels across the entire CV, using all three trends, and all three regimes.}
 	\label{fig:SGMAscenarios}
 \end{figure}
@@ -172,7 +164,7 @@ Unsurprisingly, both observed and predicted failures tend to cluster in the sout
 % code/00_figures/pred_obs/pnas_pred_obs_accuracy.ai
 \begin{figure}%[tbhp]
 	\centering
-	\includegraphics[width=14cm,keepaspectratio]{ch1_figs/fig_pred_obs_accuracy.pdf}
+	\includegraphics[width=14cm,keepaspectratio]{ch2_figs/fig_pred_obs_accuracy.pdf}
 	\caption{Model performance in predicting the spatial intensity of observed domestic well failures during the 2012-2016 drought. (A) Observed well failure point pattern and kernel density estimate. (B) Predicted well failure mean estimate (n = 2,513) and kernel density of the mean prediction. The 5 and 95\% confidence intervals of predicted well failures span the interval from 2,144 - 2,868. (C) Residual (predicted minus observed) error, with red areas indicating areas of over-prediction, and blue areas indicating under-prediction.}
 	\label{fig:pred_obs}
 \end{figure}
@@ -188,7 +180,7 @@ Longer drought duration results in widespread well failure episodes concentrated
 % density_pred_1_2_3_4 in `09_plot_pred_future_failures.Rmd`
 % code/00_figures\pred_1_2_3_4/pnas_pred_1234_small_2.ai
 \begin{figure}%[tbhp]
-	\includegraphics[width=\linewidth]{ch1_figs/fig_pred_1234_small_2.pdf}
+	\includegraphics[width=\linewidth]{ch2_figs/fig_pred_1234_small_2.pdf}
 	\caption{Simulated domestic well failure point patterns and associated kernel density estimates for 5 to 8 year drought duration scenarios beginning in Fall 2016 (maps show mean prediction). $n$ is the 5 and 95\% confidence interval of cumulative well failure count in each scenario, including the 2,027 failing wells in the 2012-2016 drought.}
 	\label{fig:p_1_2_3_4}
 \end{figure}
@@ -199,7 +191,7 @@ In the ``continuous drought'' simulation, two- and four-year long droughts immed
 % `p` in `13_trendline_d-2012_2016_and_future_d.Rmd`
 % code/00_figures/cum_sum_fail/pnas_cum_sum_fail.ai
 \begin{figure}%[tbhp]
-	\includegraphics[width=\linewidth]{ch1_figs/fig_cum_sum_fail.pdf}
+	\includegraphics[width=\linewidth]{ch2_figs/fig_cum_sum_fail.pdf}
 	\caption{Left: Cumulative domestic well failures from 2012-2016. Right: Cumulative domestic well failures resulting from simulated drought durations 5 to 8 years in length. The continuous drought duration scenario (blue) leads to more well failure compared to the intervening wet winter scenario (green). Points represent the mean well failure estimate, and shaded regions represent the 5 and 95\% confidence intervals. %Observed well failures from 2012-2016 reflect when the failure was reported, not necessarily when the well actually failed. Data collection by the state did not begin in a systematic way until late 2014, and many of the reports received in 2016 may be motivated by the fact that the state made financial assistance available to households on private wells in this year.
 	}
 	\label{fig:cum_sum_failure}
@@ -217,7 +209,7 @@ Vulnerable wells (Figure \ref{fig:vi}) are those with estimated pump intakes wit
 % figure starts in code/15_vulnerability_index.R
 % 00_figures/vi/pnas_vi.ai 
 \begin{figure}
-	\includegraphics[width=17.8 cm]{ch1_figs/fig_vi.pdf}
+	\includegraphics[width=17.8 cm]{ch2_figs/fig_vi.pdf}
 	\caption{Top row: kernel density estimates of low vulnerability (white) and high vulnerability (red) regions in extended drought duration scenarios and in Fall 2018. Bottom row: histograms of failing wells (grey), vulnerable wells (red), and active wells (blue) for the extended drought scenarios and Fall 2018 scenario. The black dotted line at 3 meters is the threshold at which wells are at risk of decreased efficiency. All numbers reported are the mean estimate of dry, vulnerable, and failing wells.}
 	\label{fig:vi}
 \end{figure}
@@ -238,7 +230,7 @@ The groundwater depth changes and associated well failures are sensitive to the 
 % pnas_sgma_dry_wells.pdf | pnas_dry_well_grid.pdf
 % 00_figures/alvar_sgma/sgma_scens.R for pnas_sgma_trends.pdf
 \begin{figure}
-	\includegraphics[width=17.8 cm]{ch1_figs/fig_sgma_grid_trim.pdf}
+	\includegraphics[width=17.8 cm]{ch2_figs/fig_sgma_grid_trim.pdf}
 	\caption{Domestic well failures projected for three groundwater management regimes (columns) based on three different time periods of linear groundwater level change (rows). The left plot of each pair is the mean projected groundwater level change from 2017-2040. Groundwater level decline (red) is more common than groundwater level increase (blue). The right plot of each pair shows the mean predicted well failure point pattern for that combination of groundwater management regime and groundwater level change approximation. See SI Appendix Table \ref{tab:dom_failures} for confidence intervals.}
 	\label{fig:sgma_grid}
 \end{figure}

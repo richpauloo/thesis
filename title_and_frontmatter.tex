@@ -7,18 +7,18 @@
 \iselectronic{1}
 
 %\title{TEST}
-\title{Simulating Recharge Processes and Evaluating Groundwater Budget Estimates in California's Central Valley Aquifer System.}
+\title{Emerging consequences of regional-scale aquifer depletion: data-driven and numerical models of well failure, basin salinization, and contaminant transport}
 
-\author{Stephen Robert Maples}
+\author{Richard Augustus Pauloo III}
 
 % Choices are September, December, March, June
-\degreemonth{December}
-\degreeyear{2019}
+\degreemonth{September}
+\degreeyear{2020}
 %More examples DOCTOR OF PHILOSOPHY
 \degree{DOCTOR OF PHILOSOPHY}
 
 \chair{Graham E Fogg}
-\othermembers{Laura Foglia,Thomas Harter} %comma separated list of committee not including chair
+\othermembers{Thomas Harter, Jonathan Herman} %comma separated list of committee not including chair
 \numberofmembers{3} % size of committee
 
 %\prevdegrees{B.S. (University of Nevada, Reno) 2010\break M.S. (University of Nevada, Reno) 2012}
@@ -74,13 +74,30 @@
 
 %Acknowledgments (optional)
 \begin{acknowledgments}
-I would like to thank my advisor, Graham Fogg, for sharing his love of hydrogeology, for giving me the intellectual freedom to pursue the varied projects that comprise my PhD, and for pointing me back in the right direction when I was too far afield. Thank you to my dissertation committee members, Laura Foglia and Thomas Harter, for their mentorship and support as I navigated this journey. I want to thank Laura especially for helping me move forward when I was losing steam. Thank you to Reed Maxwell for opening his door to me and for being an advisor in every way except on paper. Thank you to the other UC Davis faculty who've helped me along the way, especially Helen Dahlke, Sam Sandoval, and Jon Herman. Thank you to Rich Niswonger, Keith Halford, Brian Andraski, Kip Allander and all of my USGS colleagues for your mentorship and for showing me the important role of federal scientists in this day and age. Thank you especially to Kip for his patience and support as I pursued my PhD research. I have a deep respect for the enthusiasm and intellect of each of these brilliant scientists.
+	
+The Chinese philosopher Chuang Tzu wrote, ``Your life has a limit, but knowledge has none. If you use what is limited to pursue what has no limit, you will be in danger.'' 
 
-Thank you to my funders, the National Science Foundation, the University of California Water (UC Water) Security and Sustainability Research Initiative, and the Henry A. Jastro Foundation. Thank you in particular, to the Climate Change Water and Society (CCWAS) IGERT for the unique opportunity to bring together diverse perspectives of graduate students across disciplines on these important topics. Thank you especially to Carole Hom for supporting this eclectic group over the years.
+This work therefore, is the product of living dangerously. I've spent many years of my life--time I will never get back--in pursuit of knowledge. Some of my most cherished moments have been precisely when I've grasped a sense of how infinite knowledge can feel, where a mind is a drop in an ocean, how the currents of knowledge expand like an inflationary universe, how knowledge accretes from the collective effort of people buried in books, clamoring over computers, laboring in labs, exploring the environment, studying social structures. This small dissertation are three drops of water in an ever-growing ocean of knowledge, three drops of water that I've been honored and humbled to document, three drops of water that I could not have described or understood were it not for a community of people lifting me up, a community of people that have my most sincere and heartfelt appreciation. 
 
-Thank you to my fellow HSGG grad students and postdocs, especially to Katie Markovich, Rich Pauloo, Zhillin Zuo, Jason Wiener, Belize Lane, Amy Yoder, Nick Murphy, and Gus Tolley. Thank you as well to Reed Maxwell's group, especially Lauren Foster, for being so welcoming during my visits. Thank you to all of the other UC Davis grad students who I've crossed paths with, especially my fellow CCWAS-ers Ellen Bruno, Alejo Kraus-Polk, and Stacy Roberts. Thank you to Shila Ruiz for always having her door open. Thank you to Buster Porter for his positivity each week during my year of physical therapy.
+I am deeply grateful for my adviser Graham Fogg. Graham gave me the freedom to make mistakes, to learn how to think independently, and to develop scientific and intellectual curiosity. I also want to thank my dissertation committee members Thomas Harter, Laura Foglia, Jon Herman, Randy Dahlgren, and Robert Hijmans for sharing their ideas with me and steering me in the right direction. I especially want to thank Jon Herman and Robert Hijmans for instilling a love of programming through their obstinate proselytization of Python and R--those courses forever changed how I approach scientific problems and I'm fully converted. Thank you to close collaborators who have helped me along the way, in particular Zhilin Guo, Christopher Henri, Alvar Escriva-Bou, Helen Dahlke, Andrew Calderwood, Darcy Bostic, Herve Guillon, and Amanda Fencl. Aakash Ahmed, Corey Scher, and Kyra Kim have been a tremendous source of inspiration for me--meeting them reassured me that I was on the right path in life. Each of these scientists has selflessly taken the time to educate me, share their ideas and refine mine, and contribute to my work. I have nothing but gratitude, admiration, and respect for these mentors, collaborators, and friends.
 
-To Easton and Emily White, Toby Maxwell, Ross Brennan, Hannah Waterhouse, Peter Henry, Sonya Ekstrom, Nina Fontana, Lily Tomkovich, and all of the other Davis friends, your friendship has enriched my life. Thank you Uncle Steve for being a role model for me in the Geosciences since I was a child. To my parents, Jeff and Sue, and to my sister, Elsa, I can't thank you enough for all of the love and encouragement you've given me throughout my life. Thank you, Dakota, for our intellectual discussions on our walks about the neighborhood. And finally, thank you to my wife Natalie Brazeau for being the best partner and friend that I could have asked for. Your unconditional love and support during all of the ups and downs of this journey were invaluable. I couldn't have done this without you.
+I'm also very thankful for the support of the Guardian Professions Program, specifically the indefatigable and generous Sylvia Sensiper who coached me more than once on the mysteries of graduate school, and who helped fund my education. Carole Hom deserves special thanks for her dedication to training an interdisciplinary group of scientists, which I was fortunate to be a part of. Shila Ruiz always had an open door, an open mind, and a smile to share. Sam Sandoval has been a warm and supportive academic advisor and co-conspirator. 
+
+Many groups have funded my research, travel, and training, including the National Science Foundation Climate Change Water and Society (CCWAS) IGERT, the University of California Water (UC Water) Security and Sustainability Research Initiative, the US Department of Energy's US-China Center for Energy and Clean Energy Research Center for Water-Energy Technologies (CERC-WET), the American Geophysical Union, the West Big Data Hub, NASA, Microsoft, and RStudio. 
+
+My labmates and the greater HSGG community have been a source of friendship, strength, and inspiration throughout the years. Students in the program have enriched my academic and personal life, and in particular I want to thank Katie Markovich, Steve Maples, Gus Tolley, Noelle Ptterson, Jason Weiner, and Marina Mautner for our conversations and camaraderie. Looking forward, the newer HSGG students continue to inspire me, and I'm glad to have overlapped with many, especially Bill Rice, Claire Kouba, Nusrat Molla, Bradley Simms, and Sam Winter.
+
+Exchanges with water policy experts over the years have also transformed how I think about the role of science in society, and I want to thank Jeff Mount, Ellen Hanak, Meredith Lee, Debbie Franco, Greg Gearheart, and Brent Vanderburgh for those energizing dialogues.
+
+There are hundreds, perhaps thousands of people who have directly or indirectly helped me solve coding problems on Stack Overflow, at the UC Davis Data Lab, and within the UC Davis geospatial and R-users group forums. These communities of practice have sustained me when I've hit walls, and selflessly shared their time to help grow and tackle increasingly challenging problems.
+
+To Natalie Popovich and Julia Michaels, my first friends in Davis and housemates of nearly 3 years, thank you for your friendship and humor, for celebrating achievements with me, and for routinely turning our house in a classical music concert hall. These are among my most cherished memories of this sleepy college town. To Ben Dawson, Lillie Mansfield, Bree DeRobbio, and Grace Woodmansee thank you for keeping me grounded, for group meals, and for sharing your pace of life. To Gabe Patterson, Meghan Jones, John Mitchell, Jess Gold, Jake Stahl, and Jenn Nill thank you for being my COVID-19 pod, for trips to the mountains, and for getting me through the final days of my dissertation. 
+
+Three powerful women deserve special recognition, and those women are my mother, sister, and partner. If this dissertation is dedicated to anyone, it's to them. I'm often humbled by the sacrifices my mother made to create opportunity for me. I wouldn't be here today if my she had not decided to immigrate from Thailand to the United States, and then, as a single mother, work two jobs to support her children. She is the meaning of resilience. My sister's love, iron-will, and belief in me has helped me persist in the toughest times. Thank you so much for everything Jen. And finally, I could not have done this without the unconditional love and support of my partner Marisa. Thank you for being my rock, my sanity, and my best friend. 
+
+
+
+
 
 \end{acknowledgments}
 
