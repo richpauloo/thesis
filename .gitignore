@@ -1,7 +1,6 @@
 .DS*
 *.aux
 *.out
-*.pdf
 *.lof
 *.log
 *.xml
