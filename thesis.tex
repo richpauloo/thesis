@@ -11,8 +11,8 @@
 
 % TODO: this makes strange things happen in the header...
 % this is the version that grad studies wants
-\documentclass[11pt,oneside,draft]{ucdthesis} %%SRM compiles faster as draft
-%\documentclass[11pt,oneside,final]{ucdthesis}
+%\documentclass[11pt,oneside,draft]{ucdthesis} %%SRM compiles faster as draft
+\documentclass[11pt,oneside,final]{ucdthesis}
 
 % when we are giving people drafts, use more of the page:
 \usepackage[letterpaper,left=1in,right=1in,top=1.6in,bottom=1in]{geometry}
@@ -263,26 +263,26 @@ defernumbers=true,refsection=chapter,natbib=true]{biblatex}
 
 % chapter 1 introduction
 %\chapter{Real Title Here}
-%\input{chapter1_introduction} %This looks for chapter1.tex
-%\printbibliography[heading=bibliography]
+\input{chapter1_introduction} %This looks for chapter1.tex
+\printbibliography[heading=bibliography]
 
 % chapter 2
 %\chapter{Real Title Here}
-%\input{chapter2} %This looks for chapter2.tex
-%\input{appendix_ch2}
-%\printbibliography[heading=bibliography]
+\input{chapter2} %This looks for chapter2.tex
+\input{appendix_ch2}
+\printbibliography[heading=bibliography]
 
 % chapter 3
 %\chapter{Real Title Here}
-%\input{chapter3} %This looks for chapter3.tex
-%\input{appendi_ch3}
-%\printbibliography[heading=bibliography]
+\input{chapter3} %This looks for chapter3.tex
+\input{appendix_ch3}
+\printbibliography[heading=bibliography]
 
 % chapter 4
 %\chapter{Real Title Here}
-%\input{chapter4} %This looks for chapter4.tex
-%\input{appendix_ch4}
-%\printbibliography[heading=bibliography]
+\input{chapter4} %This looks for chapter4.tex
+\input{appendix_ch4}
+\printbibliography[heading=bibliography]
 
 % chapter 5
 %\chapter{Real Title Here}
