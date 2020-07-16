@@ -55,8 +55,6 @@ The three‐dimensional, spatially-correlated hydraulic conductivity domain (Fig
 
 A subsection of the Central Valley aquifer (California, USA) in the Kings River fan, was chosen as a study site representative of a typical alluvial aquifer for its high vertical anisotropy ($K_h/K_v =$ 238), and its validated performance in simulating both flow (hydraulic head) and transport (groundwater age distribution) \citep{weissmann2002dispersion}. The hydrofacies model was conditioned by analyzing more than 40 000 surface and shallow subsurface ($<$ 2 $m$) features (e.g., borings, excavations, road cuts, and natural exposures) \citep{huntington1981soil}, approximately 150 $m$ of core and geophysical logs \citep{burow1997hydrogeologic}, approximately 1,000 $m$ of continuous core \citep{harter2005deep}, and numerous drillers' logs from water wells in the study area \citep{weissmann1999multi}. These analyses defined a conceptual geologic model and the T-PROGS model parameters. 
 
-The Kings River alluvial fan is composed of four sequences created during Pleistocene glacial cycles and a fifth basal depositional unit prior to major glaciation events, each separated by laterally-extensive paleosols that formed during inter-glacial periods of pedogenesis \citep{weissmann2002glacially}, which, owing to their relatively low hydraulic conductivity, act as aquitards. Notably, one unit represents a incised valley fill of coarse-grained sediment, created by large glacial outwash in the east-west $y$ direction of the domain. Key parameters derived from these analyses that constrained the T-PROGS model include the hydrofacies proportions, mean lengths in $xyz$, and the embedded transition probabilities in $xyz$, which reflect the cross-correlation between facies and thus the probability that one facies contacts another in a given direction \citep{carle1996transition}. Next, Markov chain models corresponding to each unit were developed and combined to represent the highly heterogeneous stratigraphy: overlapping alluvial fans, interspersed with laterally-extensive paleosols, and a cross-cutting incised valley fill. \citet{weissmann2004influence} provides a detailed overview of the development and combination of these models into a single conductivity field. 
-
 
 % F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code\00_interpolate_paths_extract_trajectories.R
 % creates: C:/Users/rpauloo/Documents/GitHub/kings-river-fan-tprogs/code/rw3d//2019_11_20_100s_10kp/dat/part_traj_paraview_00_03.csv
@@ -66,13 +64,15 @@ The Kings River alluvial fan is composed of four sequences created during Pleist
 % PNG: krf_part_traj_00_03-01.png
 % 01_mm\ai\study_site_water_budget.ai
 % numbers come from archived (commented out Table 5)
-\begin{figure}[ht]
-\centering
-  \includegraphics[width=\textwidth]{ch4_figs/krf_part_traj_00_03-01.png}
-  \caption{The Kings River alluvial fan hydrofacies model in California's Central Valley (USA) with a section cut away to reveal the geologic heterogeneity and four representative particle trajectories from the four VHGR scenarios in this study (section \ref{ss_2_3}). The location of the instantaneous nonpoint source term (10 000 particles, 10 $m$ below the water table) is represented by a horizontal pink line. Particle trajectories are increasingly horizontal and non-Fickian with decreasing VHGR. Note that the vectors representing flow in $z$, $y$, (and their geometric sum in the mean flow direction, $y'$) are illustrative, and not drawn to scale.}
-  \label{fig:model}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ch4_figs/krf_part_traj_00_03-01.png}
+	\caption{The Kings River alluvial fan hydrofacies model in California's Central Valley (USA) with a section cut away to reveal the geologic heterogeneity and four representative particle trajectories from the four VHGR scenarios in this study (section \ref{ss_2_3}). The location of the instantaneous nonpoint source term (10 000 particles, 10 $m$ below the water table) is represented by a horizontal pink line. Particle trajectories are increasingly horizontal and non-Fickian with decreasing VHGR. Note that the vectors representing flow in $z$, $y$, (and their geometric sum in the mean flow direction, $y'$) are illustrative, and not drawn to scale.}
+	\label{fig:model}
 \end{figure}
 
+
+The Kings River alluvial fan is composed of four sequences created during Pleistocene glacial cycles and a fifth basal depositional unit prior to major glaciation events, each separated by laterally-extensive paleosols that formed during inter-glacial periods of pedogenesis \citep{weissmann2002glacially}, which, owing to their relatively low hydraulic conductivity, act as aquitards. Notably, one unit represents a incised valley fill of coarse-grained sediment, created by large glacial outwash in the east-west $y$ direction of the domain. Key parameters derived from these analyses that constrained the T-PROGS model include the hydrofacies proportions, mean lengths in $xyz$, and the embedded transition probabilities in $xyz$, which reflect the cross-correlation between facies and thus the probability that one facies contacts another in a given direction \citep{carle1996transition}. Next, Markov chain models corresponding to each unit were developed and combined to represent the highly heterogeneous stratigraphy: overlapping alluvial fans, interspersed with laterally-extensive paleosols, and a cross-cutting incised valley fill. \citet{weissmann2004influence} provides a detailed overview of the development and combination of these models into a single conductivity field. 
 
 The model dimensions in $xyz$ are 12.6 $km$ x 15 $km$ x 100.5 $m$, with discretization $\Delta x = \Delta y = $ 200 $m$, and $\Delta z =$ 0.5 $m$. Spatially variable $K$ estimated from pumping tests, slug tests, core measurements, and literature values for similar lithologies \citep{burow1999evaluation, weissmann1999three} were assigned to each of the model cells by their simulated hydrofacies, which include gravel, sand, sandy mud, muddy sand, and paleosols (Table \ref{tab:model_l_k_pe}).
 
@@ -328,18 +328,18 @@ Temporal evolution of the centered second spatial moments (Equation \ref{eq:msd}
 \label{ss_3_2a}
 The magnitude of longitudinal spatial variance (Figure \ref{fig:msd}a) increases with decreasing VHGR, and is preasymptotic and non-Fickian after 32 characteristic times for VHGR = 10, 1, and 0.1. In contrast, when VHGR = 100, late time longitudinal spreading is asymptotic and nearly Fickian ($\phi = $ 0.95 ). Spatial plume variance is around 4 orders of magnitude greater for VHGR = 0.1 compared to VHGR = 100 at all times. This large difference in the scale of spreading results in a wider-ranging residence time distribution between the scenarios (Figure \ref{fig:bottom_yx}a). A strong vertical hydraulic gradient when VHGR = 100 forces particles through nearly all facies in the downward, longitudinal direction (perpendicular to bedding layers), effectively generating an ergodic sample of the system heterogeneity much more rapidly than in scenarios with lower VHGR, thus late time spreading becomes in more Fickian nature. By contrast, at low VHGR, some of the plume remains trapped in fines, and some spreads longitudinally along preferential pathways--both of which stretch the plume.
 
-% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code/01_msd.R creates msd_time_2amean_ta1.pdf
-% which is edited in AI in 02_ade/results/ msd_time_2amean_ta1_ai.pdf
-\begin{figure}[H]
-  \includegraphics[width=\textwidth]{ch4_figs/msd_time_2amean_ta1_ai.pdf}
-  \caption{Temporal evolution of the centered second spatial moments (Equation \ref{eq:msd}) calculated from the distribution of particle trajectories along the (a) longitudinal, (b) transverse vertical, and (c) transverse horizontal directions indicate superdiffusive early time scaling that reduces to less superdiffusive or Fickian scaling in late times, depending on the VHGR and direction of scaling. Triangles at early and late times show the slope of MSD temporal scaling, $\phi$ (Section \ref{ss_msd}).}
-  \label{fig:msd}
-\end{figure}
-
 
 \subsubsection{Transverse vertical spatial variance}
 \label{ss_3_2b}
 Like longitudinal spreading, transverse vertical spreading (Figure \ref{fig:msd}b) in VHGR = 100 differs between the other three VHGR scenarios. VHGR = 100 is ballistic (i.e., $\phi >$ 2) at early times ($\phi$ = 2.84) due to entirely advection dominant facies (Table \ref{tab:model_l_k_pe}) and strong lateral connectivity of a high-K incised valley fill (Figure \ref{fig:ivf_xz}a) in the transverse vertical direction that facilitates preferential flow (discussed further in Sections \ref{ss_3_4} and \ref{ss_4_2}). However this spatial variance slows to nearly Fickian spreading ($\phi$ = 0.95) at late times. By contrast, VHGR = 10, 1, and 0.1 are super diffusive at early times (1.77 $\leq \phi \leq$ 1.91) but remain persistently preasymptotic and superdiffusive (1.34 $\leq \phi \leq$ 1.36) at late times rather than reverting to Fickian scaling as in VHGR = 100. 
+
+% F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code/01_msd.R creates msd_time_2amean_ta1.pdf
+% which is edited in AI in 02_ade/results/ msd_time_2amean_ta1_ai.pdf
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{ch4_figs/msd_time_2amean_ta1_ai.pdf}
+	\caption{Temporal evolution of the centered second spatial moments (Equation \ref{eq:msd}) calculated from the distribution of particle trajectories along the (a) longitudinal, (b) transverse vertical, and (c) transverse horizontal directions indicate superdiffusive early time scaling that reduces to less superdiffusive or Fickian scaling in late times, depending on the VHGR and direction of scaling. Triangles at early and late times show the slope of MSD temporal scaling, $\phi$ (Section \ref{ss_msd}).}
+	\label{fig:msd}
+\end{figure}
 
 The smaller magnitude of transverse vertical spatial variance observed when VHGR = 100 and 0.1 is explained by plume interactions with aquifer heterogeneity. When flow is vertical and downward (VHGR = 100), transverse transport is horizontal, tends to occur along extensive preferential pathways, and is driven toward these pathways by a powerful vertical gradient and all advection dominant facies. When flow is horizontal (VHGR = 0.1), transverse vertical transport is limited by diffusion dominant, laterally extensive paleosols and muds, which prevent spreading along this direction. The middle scenarios (VHGR = 1 and 10) by contrast have stronger vertical gradients to move particles past the first laterally extensive low-K layers, and then a combination of advection, slow advection, and diffusion dominant facies, which creates in greater transverse vertical spreading. 
 
@@ -364,18 +364,14 @@ Non-Fickian transport is influenced by geologic heterogeneity in the hydrofacies
 
 The incised valley fill runs the laterally along the $y$ direction, and interconnects to an exit on the down-gradient side of the domain (Figures \ref{fig:ivf_xz}a-b). As VHGR decreases, particles take increasingly horizontal trajectories, and the incised valley fill and other interconnecting sand and gravel lenses act as a conduit for preferential flow that cause more particles exit the down-gradient side of the domain (Figures \ref{fig:ivf_xz}d,f,h,j), where they form clusters around gravel and sand facies (Figure \ref{fig:ivf_xz}b). Across all VHGR scenarios, particle trajectories that exit via the incised valley fill on the down-gradient side tend to exit at earlier timescales compared to other particles that exit the down-gradient side (lighter colored dots in the black oval compared to darker colored dots without outlines in Figures \ref{fig:ivf_xz}c,e,g,i), and compared to particles that take longer flowpaths and exit the bottom of the model at late times (darker colored dots in Figures \ref{fig:bottom_yx}c,e,g,i).
 
-Notably, even at VHGR = 100 when most particle trajectories take vertical paths and exit the bottom face of the domain (yellow points in Figure \ref{fig:bottom_yx}d), some particles rapidly migrate in the transverse vertical direction along the incised valley fill to exit the down-gradient side (purple dots in the black oval in Figure \ref{fig:ivf_xz}d). Moreover, early time arrival through the incised valley fill when VHGR = 100 (Figure \ref{fig:ivf_xz}c) suggests that transverse horizontal preferential flow still occurs along interconnected coarse facies even under strong vertical gradients, and explains the ballistic early time transverse vertical scaling ($\phi = $ 2.84) in this scenario (Figure \ref{fig:msd}b).
-
-Laterally extensive low-K paleosols limit (Figure \ref{fig:ivf_xz}b) the vertical migration of particles, and create segmented breakthrough along the down-gradient side of the domain where particles tend to exit above or below paleosol layers, but rarely through them (Figures \ref{fig:ivf_xz}d,f,h,j).
-
-
 
 % F:\Box Sync\Research\Post QE Research\DISSERTATION\02_ade\code/
 % 03_residence_time_distribution.R creates R objects `p5` and `p6` which are saved as PDFs: rt_t_final_xz_t.pdf, rt_t_final_xz_y.pdf. These are combined with paraview files (front_face_ivf.png and front_face.png) in  C:\Users\rpauloo\Documents\GitHub\kings-river-fan-tprogs\paraview. The generating .pbsm files should also be in that directory.
 % finally, these are all combined in 02_ade/results/krf_front_face_ivf.ai
 \begin{figure}[H]
-  \includegraphics[width=\textwidth]{ch4_figs/krf_front_face_ivf_low_res-01.png}
-  \caption{(a) Transparent 3D hydrofacies domain highlighting a lateral, interconnected sand and gravel incised valley fill; (b) The down-gradient side of the domain. A black oval marks the incised valley fill exit, and black outlines mark prominent interconnecting sands and gravel bodies that promote preferential flow. These same regions are marked in black in all other subplots; (c,e,g,i) The final $z$ and $x$ position of particles, colored by the time they exit the domain (residence time); (d,f,h,j) the final $z$ and $x$ position of particles, colored by the length ($y$) into the page, where yellow is the up-gradient side and purple is the down-gradient side. Particle clusters at $z =$ 0 $m$ indicate trajectories that exit the bottom face (Figure \ref{fig:bottom_yx}).}
+  \centering
+  \includegraphics[width=14cm,keepaspectratio]{ch4_figs/krf_front_face_ivf_low_res-01.png}
+  \caption{(a) Transparent hydrofacies domain highlighting a lateral, interconnected sand and gravel incised valley fill; (b) The down-gradient side of the domain. A black oval marks the incised valley fill exit, and black outlines mark prominent interconnecting sands and gravel bodies that promote preferential flow. These same regions are marked in black in all other subplots; (c,e,g,i) The final $z$ and $x$ position of particles, colored by the time they exit the domain (residence time); (d,f,h,j) the final $z$ and $x$ position of particles, colored by the length ($y$) into the page, where yellow is the up-gradient side and purple is the down-gradient side. Particle clusters at $z =$ 0 $m$ indicate trajectories that exit the bottom face (Figure \ref{fig:bottom_yx}).}
   \label{fig:ivf_xz}
 \end{figure}
 
@@ -386,10 +382,16 @@ Laterally extensive low-K paleosols limit (Figure \ref{fig:ivf_xz}b) the vertica
 % subplot (b) is made in /paraview/top_face.png and .pvsm
 % finally, these are all combined in 02_ade/results/krf_top_face_rtd.ai
 \begin{figure}[H]
-  \includegraphics[width=\textwidth]{ch4_figs/krf_top_face_rtd_low_res-01.png}
+  \centering
+  \includegraphics[width=14cm,keepaspectratio]{ch4_figs/krf_top_face_rtd_low_res-01.png}
   \caption{(a) The 3D hydrofacies domain; (b) the bottom of the domain with prominent sand and gravel bodies outlined in black; (c,e,g,i) the final $x$ and $y$ position of particles, colored by the time they exit the domain (residence time); (d,f,h,j) the final $x$ and $y$ position of particles, colored by the length ($z$) into the page, where yellow is the bottom face and purple is the top face. Particle clusters at $y =$ 15 000 $m$ indicate trajectories that exit the down-gradient side of the domain (Figure \ref{fig:ivf_xz}).}
   \label{fig:bottom_yx}
 \end{figure}
+
+
+Notably, even at VHGR = 100 when most particle trajectories take vertical paths and exit the bottom face of the domain (yellow points in Figure \ref{fig:bottom_yx}d), some particles rapidly migrate in the transverse vertical direction along the incised valley fill to exit the down-gradient side (purple dots in the black oval in Figure \ref{fig:ivf_xz}d). Moreover, early time arrival through the incised valley fill when VHGR = 100 (Figure \ref{fig:ivf_xz}c) suggests that transverse horizontal preferential flow still occurs along interconnected coarse facies even under strong vertical gradients, and explains the ballistic early time transverse vertical scaling ($\phi = $ 2.84) in this scenario (Figure \ref{fig:msd}b).
+
+Laterally extensive low-K paleosols limit (Figure \ref{fig:ivf_xz}b) the vertical migration of particles, and create segmented breakthrough along the down-gradient side of the domain where particles tend to exit above or below paleosol layers, but rarely through them (Figures \ref{fig:ivf_xz}d,f,h,j).
 
 
 
@@ -497,4 +499,4 @@ It is well known that hydrofacies geometry influences contaminant transport, and
 We simulated 3D steady state groundwater flow and nonpoint source contaminant transport in a regional scale (15 $km$ x 12.6 $km$ x 100 $m$) geostatistical representation of a heterogeneous alluvial aquifer-aquitard system. In horizontally stratified clastic sedimentary aquifer systems it is common for the strong vertical anisotropy of hydraulic conductivity to produce spatially and temporally varying vertical and horizontal components of the hydraulic gradient, in turn producing a complex interplay between the stratified heterogeneity and physical transport processes. These effects can be augmented and made highly transient by the effects of pumping and recharge in, for example an agricultural system where oscillations between primarily horizontal and primarily vertical flow are caused by seasonal fluctuations in pumping as well as the recharge produced by irrigation. Thus we tested the impact of these varying mean flow directions on non-Fickian transport, and observed increasingly non-Fickian transport as flow was increasingly horizontal (i.e., when the VHGR decreased). Importantly, when VHGR was large (e.g., 100), the plume was more compact: particle trajectories exhibited late time asymptotic Fickian scaling of spatial variance, and moved perpendicular to the direction of aquifer bedding (even though the vertical effective K is much less than the horizontal effective K), and nearly straight through high- and low-conductivity facies alike. As VHGR decreased (e.g., 10 and 1) flow became more horizontal and transport was more non-Fickian -- particle trajectories increasingly moved along laterally extensive facies, took preferential flowpaths, and exhibited greater (and preasymptotic) spatial spreading and tailing in breakthrough measured along a control plane at the bottom face of the model. Hence, the non-Fickian transport imparted by spatial heterogeneity should not be viewed as constant, but rather, as continually modified by hydraulic transience that may transition facies from diffusion to advection dominance and thus alter non-Fickian mass transfer dynamics. These results illustrate why conventional methods to upscale anomalous transport under transient flow conditions remains a challenge, and indicates that future efforts to upscale regional-scale, transient nonpoint source transport may benefit by incorporating information on the time-dependent changes in VHGR, $P_e$, mean flow direction, and characteristic length scales along the direction of mean flow.
 
 
-
+\clearpage

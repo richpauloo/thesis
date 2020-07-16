@@ -1,5 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Supporting Information Appendix} \label{ap_b_abcsal}
+\section{Supporting Information Appendix} 
+\label{ap_b_abcsal}
 
 
 %--------------------------------------------------------%
@@ -155,6 +156,8 @@
 \egroup
 
 
+
+
 %--------------------------------------------------------%
 \subsection{Porosity of sediments in the TLB}
 
@@ -170,7 +173,7 @@
 	\caption{Sample mean porosities from Johnson (1968) Table 10.}
 	
 	\centering
-	
+	\fontsize{10}{10}\selectfont{
 	\begin{tabular}{r}
 		$\eta$\\
 		\hline
@@ -203,6 +206,7 @@
 		0.331\\
 		0.356\\
 	\end{tabular}
+    }
 	
 	\label{ap_b_porosity_boot}
 \end{table}
@@ -226,7 +230,7 @@
 
 
 %--------------------------------------------------------%
-\subsection{Mixing cell model geologic and hydrologic parameters}
+\subsection{Mixing cell model geologic and hydrologic parameters and mass balance error}
 
 
 % 01_mm_plots_tables.R in F:/ ... POst_QE_Research/DISSERTATION/01_mm
@@ -236,7 +240,7 @@
 %[1] 0.0899009 0.1718289
 
 
-\bgroup
+%\bgroup
 
 \renewcommand{\arraystretch}{1.5}
 
@@ -259,31 +263,35 @@
 	\label{ap_b_geometry}
 \end{table}
 
-\egroup
+%\egroup
 
 
 
 %--------------------------------------------------------%
-\subsection{Mixing cell model mass balance error}
+%5\subsection{Mixing cell model mass balance error}
 
 
 
-\bgroup
+%\bgroup
+
+\renewcommand{\arraystretch}{0.8}
 \setlength{\tabcolsep}{3.5 em}
 
-\centering
-\renewcommand{\arraystretch}{1.0}
+
+%\renewcommand{\arraystretch}{1.0}
 
 % 01_mm_plots_tables.R in F:/ ... POst_QE_Research/DISSERTATION/01_mm
 % average annual GW budget table - 1961-10-31 to 2001-09-30
 % but a lot is added in the caption and table footnote, so beware changing this!!
 
 \begin{threeparttable}
+	
 	\begin{table}[H]
+		\centering
 		\caption{Cell by cell budget and mass balance error, per equations (9) and (10).}
 		
 		
-		\fontsize{10}{10}\selectfont{
+		\fontsize{8}{8}\selectfont{
 		\begin{tabular}{rlrrrr}
 			
 			& \textbf{Source} & $\bm{Q \: \: (km^3/yr)}$ &  \\ 
@@ -354,10 +362,10 @@
 		
 		\label{ap_b_cbc}
 	\end{table}
-	
+
 \end{threeparttable}
 
-\egroup
+%\egroup
 
 
 
@@ -366,16 +374,17 @@
 % print(xtable(t3), tabluar.environment = "longtable", include.rownames = FALSE)
 % longtable example: http://users.sdsc.edu/~ssmallen/latex/longtable.html
 
-\bgroup
+%\bgroup
 
-\renewcommand{\arraystretch}{1.1}
+\renewcommand{\arraystretch}{0.7}
 
 \setlength{\tabcolsep}{1.0em}
 
 \begin{table}[H]
 	\caption{Mixing model TDS-depth profile over time. Median and IQR refer to the median and interquartile range of TDS ($mg/L$) at the depth ($d$) of the cell bottom.}
 	\centering
-	\fontsize{12}{10}\selectfont{
+	
+	\fontsize{9}{9}\selectfont{
 		\begin{tabular}{@{\extracolsep{2 pt}}llllll@{}}
 			
 			&  & \multicolumn{2}{c}{\textbf{No RWI}} &  \multicolumn{2}{c}{\textbf{RWI present}}    \\ 
@@ -455,16 +464,17 @@
 % annual_fluxes$TDS = c(0,gwc,gwc,gwc,gwc,gwc,0,gwc,0,0)
 % Note the final value in the vector is the TDS of M, and changes from the gw concentration (104.6 mg/L) to 0 mg/L.
 
-\bgroup
+%\bgroup
 
-\renewcommand{\arraystretch}{1.1}
+\renewcommand{\arraystretch}{0.7}
 
 \setlength{\tabcolsep}{1.0em}
 
 \begin{table}[H]
 	\caption{Mixing model TDS-depth profile over time when the TDS of $M$ = 0 $mg/L$. Median and IQR refer to the median and interquartile range of TDS ($mg/L$) at the depth ($d$) of the cell bottom.}
 	\centering
-	\fontsize{12}{10}\selectfont{
+	\fontsize{9}{9}\selectfont{
+
 		\begin{tabular}{@{\extracolsep{2 pt}}llllll@{}}
 			
 			&  & \multicolumn{2}{c}{\textbf{No RWI}} &  \multicolumn{2}{c}{\textbf{RWI present}}    \\ 
@@ -536,7 +546,7 @@
 \end{table}
 
 
-\clearpage
+%\clearpage
 
 
 
