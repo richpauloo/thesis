@@ -12,7 +12,7 @@
 % TODO: this makes strange things happen in the header...
 % this is the version that grad studies wants
 %\documentclass[11pt,oneside,draft]{ucdthesis} %%SRM compiles faster as draft
-\documentclass[11pt,oneside,final]{ucdthesis}
+\documentclass[11pt,twoside,final]{ucdthesis}
 
 % when we are giving people drafts, use more of the page:
 \usepackage[letterpaper,left=1in,right=1in,top=1.6in,bottom=1in]{geometry}
@@ -197,6 +197,12 @@ defernumbers=true,refsection=chapter,natbib=true]{biblatex}
 \usepackage{changepage}
 \usepackage{lscape}
 \usepackage{amsmath}
+
+%% RP added margin control
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+%% RP force clear double page
+%%\let\cleardoublepage\clearpage
 
 % add counter for subsub sections
 \setcounter{secnumdepth}{3}
